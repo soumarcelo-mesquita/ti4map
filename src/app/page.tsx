@@ -55,6 +55,7 @@ export default function Home() {
     setIsLoading(true);
     try {
       const settings = {
+        playerNames,
         playerCount,
         sliceCount,
         factionCount,
@@ -64,28 +65,8 @@ export default function Home() {
         matchLocation,
       };
 
-      const initialDraft = generateDraft(settings);
-      
-      const players = playerNames.map((name, i) => ({
-        id: `player-${i}`,
-        name: name || `Player ${i + 1}`,
-        position: null,
-        sliceId: null,
-        factionId: null,
-      }));
-
-      const turnOrder = players.map(p => p.id).sort(() => Math.random() - 0.5);
-
+      const initialState = generateDraft(settings);
       const roomName = `Partida TI4 - ${matchLocation || 'Galáxia Desconhecida'}`;
-      const initialState = {
-        ...initialDraft,
-        players,
-        turnOrder,
-        currentTurnIndex: 0,
-        isSnakeDraftDescending: true,
-        status: 'drafting',
-        settings,
-      };
 
       const { data, error } = await supabase
         .from('rooms')

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { Slice, Faction } from '@/lib/game-logic';
+import { Slice } from '@/lib/game-logic';
+import { Faction } from '@/types/game';
 
 export type PickCategory = 'faction' | 'slice' | 'position';
 

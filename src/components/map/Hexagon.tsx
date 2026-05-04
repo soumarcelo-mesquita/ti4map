@@ -25,7 +25,7 @@ export const Hexagon: React.FC<HexagonProps> = ({
 }) => {
     const points = [];
     for (let i = 0; i < 6; i++) {
-        const angle_deg = 60 * i - 30;
+        const angle_deg = 60 * i;
         const angle_rad = (Math.PI / 180) * angle_deg;
         points.push(`${x + size * Math.cos(angle_rad)},${y + size * Math.sin(angle_rad)}`);
     }
@@ -52,10 +52,10 @@ export const Hexagon: React.FC<HexagonProps> = ({
                     >
                         <image 
                             href={image} 
-                            x={size * 0.13} 
-                            y={0} 
-                            width={size * 1.74} 
-                            height={size * 2} 
+                            x={0} 
+                            y={size * 0.134} 
+                            width={size * 2} 
+                            height={size * 1.732} 
                             preserveAspectRatio="xMidYMid slice"
                         />
                     </pattern>
@@ -80,7 +80,9 @@ export const Hexagon: React.FC<HexagonProps> = ({
                     fill={idx === 0 && labelLines.length > 1 ? "#38bdf8" : "white"}
                     fontSize={idx === 0 && labelLines.length > 1 ? size * 0.28 : size * 0.22}
                     className={`select-none pointer-events-none font-black ${idx === 0 && labelLines.length > 1 ? 'opacity-100' : 'opacity-70'} group-hover:opacity-100 transition-opacity`}
-                    style={{ textShadow: '0 2px 4px rgba(0,0,0,0.9)' }}
+                    style={{ 
+                        textShadow: '0 2px 4px rgba(0,0,0,0.9)'
+                    }}
                 >
                     {line}
                 </text>

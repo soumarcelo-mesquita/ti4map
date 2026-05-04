@@ -1,12 +1,13 @@
 import React from 'react';
 import { Hexagon } from './Hexagon';
-import mapaData from '@/../mapa.json';
+import mapData from '@/../map.json';
 
 interface MapGridProps {
     radius: number;
     size: number;
     playerCount?: number;
     players?: any[];
+    allSlices?: any[]; // Adicionado para ter referência de todos os tiles das fatias
     onPositionPick?: (posId: string) => void;
 }
 
@@ -15,6 +16,7 @@ export const MapGrid: React.FC<MapGridProps> = ({
     size, 
     playerCount = 6, 
     players = [],
+    allSlices = [],
     onPositionPick 
 }) => {
     const hexes = [];
@@ -28,18 +30,36 @@ export const MapGrid: React.FC<MapGridProps> = ({
     }
 
     const hexToPixel = (q: number, r: number) => {
-        const x = size * (Math.sqrt(3) * q + (Math.sqrt(3) / 2) * r);
-        const y = size * (1.5 * r);
+        const x = size * (1.5 * q);
+        const y = size * (Math.sqrt(3) / 2 * q + Math.sqrt(3) * r);
         return { x, y };
     };
 
-    const playerPositionsMap = (mapaData as any)[playerCount.toString()] || {};
+    const playerPositionsMap = (mapData as any)[playerCount.toString()] || {};
     
     const posOccupants = new Map();
+    const coordToTile = new Map();
+
     players.forEach(p => {
         if (p.position && playerPositionsMap[p.position]) {
-            const [q, r] = playerPositionsMap[p.position];
-            posOccupants.set(`${q},${r}`, p);
+            const posData = playerPositionsMap[p.position];
+            const [homeQ, homeR] = posData.home;
+            posOccupants.set(`${homeQ},${homeR}`, p);
+
+            // Transposição da Slice
+            if (p.sliceId && posData.slice) {
+                // Procuramos os tiles da slice (pode estar no player ou na lista geral)
+                const sliceData = p.slice || allSlices.find(s => s.id === p.sliceId);
+                if (sliceData && sliceData.tiles) {
+                    posData.slice.forEach((coords: number[], index: number) => {
+                        const tileId = sliceData.tiles[index];
+                        if (tileId) {
+                            const id = typeof tileId === 'object' ? tileId.id : tileId;
+                            coordToTile.set(`${coords[0]},${coords[1]}`, id);
+                        }
+                    });
+                }
+            }
         }
     });
 
@@ -52,8 +72,8 @@ export const MapGrid: React.FC<MapGridProps> = ({
     const homeSystemCoords = Object.entries(playerPositionsMap).map(([key, coords]: any) => ({
         id: key,
         label: formatPosName(key),
-        q: coords[0],
-        r: coords[1]
+        q: coords.home[0],
+        r: coords.home[1]
     }));
 
     return (
@@ -68,20 +88,24 @@ export const MapGrid: React.FC<MapGridProps> = ({
                         const isMecatol = q === 0 && r === 0;
                         const homeSystem = homeSystemCoords.find(h => h.q === q && h.r === r);
                         const occupant = posOccupants.get(`${q},${r}`);
+                        const sliceTileId = coordToTile.get(`${q},${r}`);
                         
                         let image = undefined;
                         if (isMecatol) {
                             image = "/img/tiles/ST_18.png";
                         } else if (homeSystem) {
                             image = "/img/tiles/ST_0.png";
+                        } else if (sliceTileId) {
+                            image = `/img/tiles/ST_${sliceTileId}.png`;
                         }
                         
                         let label = isMecatol ? "" : `${q},${r}`;
                         if (homeSystem) {
-                            // Se houver ocupante, mostra Nome \n Posição (Facção)
                             label = occupant 
                                 ? `${occupant.name}\n${homeSystem.label}${occupant.factionId ? ` (${occupant.factionId.toUpperCase()})` : ''}` 
                                 : homeSystem.label;
+                        } else if (sliceTileId) {
+                            label = sliceTileId;
                         }
                         
                         return (
@@ -92,8 +116,8 @@ export const MapGrid: React.FC<MapGridProps> = ({
                                 x={x}
                                 y={y}
                                 image={image}
-                                fill={occupant ? 'rgba(34, 197, 94, 0.4)' : (homeSystem ? 'rgba(34, 197, 94, 0.15)' : undefined)}
-                                stroke={occupant ? '#22c55e' : (homeSystem ? 'rgba(34, 197, 94, 0.6)' : (isMecatol ? 'rgba(168, 85, 247, 0.5)' : undefined))}
+                                fill={occupant ? 'rgba(34, 197, 94, 0.4)' : (homeSystem ? 'rgba(34, 197, 94, 0.15)' : (sliceTileId ? 'rgba(56, 189, 248, 0.1)' : undefined))}
+                                stroke={occupant ? '#22c55e' : (homeSystem ? 'rgba(34, 197, 94, 0.6)' : (isMecatol ? 'rgba(168, 85, 247, 0.5)' : (sliceTileId ? 'rgba(56, 189, 248, 0.3)' : undefined)))}
                                 label={label}
                                 onClick={() => {
                                     if (homeSystem && !occupant && onPositionPick) {
@@ -108,3 +132,4 @@ export const MapGrid: React.FC<MapGridProps> = ({
         </div>
     );
 };
+

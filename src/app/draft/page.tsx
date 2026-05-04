@@ -10,6 +10,7 @@ export default function DraftPage() {
 
     const handleGenerate = () => {
         const settings: DraftSettings = {
+            playerNames: Array(6).fill('').map((_, i) => `Player ${i + 1}`),
             playerCount: 6,
             sliceCount: 7,
             factionCount: 9,
@@ -47,12 +48,13 @@ export default function DraftPage() {
                                                     <div className="text-xs space-x-2">
                                                         <span className="text-blue-400">R: {slice.optimalValues.resources}</span>
                                                         <span className="text-amber-400">I: {slice.optimalValues.influence}</span>
+                                                        <span className="text-primary">O: {slice.optimalValues.optimal}</span>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-2 flex-wrap">
-                                                    {slice.tiles.map((tile: any) => (
-                                                        <span key={tile.id} className="text-[10px] px-2 py-1 bg-white/5 rounded border border-white/10">
-                                                            {tile.id} ({tile.type})
+                                                    {slice.tiles.map((tId: string) => (
+                                                        <span key={tId} className="text-[10px] px-2 py-1 bg-white/5 rounded border border-white/10">
+                                                            #{tId}
                                                         </span>
                                                     ))}
                                                 </div>

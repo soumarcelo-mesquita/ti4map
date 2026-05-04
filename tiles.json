@@ -1,0 +1,1388 @@
+[
+  {
+    "id": 1,
+    "filename": "ST_1.png",
+    "color": "green",
+    "home": true,
+    "faction": "sol",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Jord",
+        "resource": 4,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 2,
+    "filename": "ST_2.png",
+    "color": "green",
+    "home": true,
+    "faction": "mentak",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Moll Primus",
+        "resource": 4,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 3,
+    "filename": "ST_3.png",
+    "color": "green",
+    "home": true,
+    "faction": "yin",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Darien",
+        "resource": 4,
+        "influence": 4
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 4,
+    "filename": "ST_4.png",
+    "color": "green",
+    "home": true,
+    "faction": "muaat",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Muaat",
+        "resource": 4,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 5,
+    "filename": "ST_5.png",
+    "color": "green",
+    "home": true,
+    "faction": "arborec",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Nestphar",
+        "resource": 3,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 6,
+    "filename": "ST_6.png",
+    "color": "green",
+    "home": true,
+    "faction": "l1z1x",
+    "draft": false,
+    "planets": [
+      {
+        "name": "[0.0.0]",
+        "resource": 5,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 7,
+    "filename": "ST_7.png",
+    "color": "green",
+    "home": true,
+    "faction": "winnu",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Winnu",
+        "resource": 3,
+        "influence": 4
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 8,
+    "filename": "ST_8.png",
+    "color": "green",
+    "home": true,
+    "faction": "nekro",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Mordai II",
+        "resource": 4,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 9,
+    "filename": "ST_9.png",
+    "color": "green",
+    "home": true,
+    "faction": "naalu",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Maaluuk",
+        "resource": 0,
+        "influence": 2
+      },
+      {
+        "name": "Druaa",
+        "resource": 3,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 10,
+    "filename": "ST_10.png",
+    "color": "green",
+    "home": true,
+    "faction": "barony",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Arc Prime",
+        "resource": 4,
+        "influence": 0
+      },
+      {
+        "name": "Wren Terra",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 11,
+    "filename": "ST_11.png",
+    "color": "green",
+    "home": true,
+    "faction": "saar",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Lisis II",
+        "resource": 1,
+        "influence": 0
+      },
+      {
+        "name": "Ragh",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 12,
+    "filename": "ST_12.png",
+    "color": "green",
+    "home": true,
+    "faction": "jolnar",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Jol",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Nar",
+        "resource": 2,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 13,
+    "filename": "ST_13.png",
+    "color": "green",
+    "home": true,
+    "faction": "norr",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Tren'lak",
+        "resource": 1,
+        "influence": 0
+      },
+      {
+        "name": "Quinarra",
+        "resource": 3,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 14,
+    "filename": "ST_14.png",
+    "color": "green",
+    "home": true,
+    "faction": "xxcha",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Archon Ren",
+        "resource": 2,
+        "influence": 3
+      },
+      {
+        "name": "Archon Tau",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 15,
+    "filename": "ST_15.png",
+    "color": "green",
+    "home": true,
+    "faction": "yssaril",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Retillion",
+        "resource": 2,
+        "influence": 3
+      },
+      {
+        "name": "Shaloam",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 16,
+    "filename": "ST_16.png",
+    "color": "green",
+    "home": true,
+    "faction": "hacan",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Arretze",
+        "resource": 2,
+        "influence": 0
+      },
+      {
+        "name": "Hercant",
+        "resource": 1,
+        "influence": 1
+      },
+      {
+        "name": "Kamdorn",
+        "resource": 0,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 17,
+    "filename": "ST_17.png",
+    "color": "green",
+    "home": true,
+    "faction": "creuss",
+    "draft": false,
+    "wormhole": "delta",
+    "planets": [
+      {
+        "name": "Creuss",
+        "resource": 4,
+        "influence": 2
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "filename": "ST_18.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": false,
+    "planets": [
+      {
+        "name": "Mecatol Rex",
+        "resource": 1,
+        "influence": 6
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 19,
+    "filename": "ST_19.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Wellon",
+        "resource": 1,
+        "influence": 2,
+        "specialty": "yellow"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 20,
+    "filename": "ST_20.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Vefut II",
+        "resource": 2,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 21,
+    "filename": "ST_21.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Thibah",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "blue"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 22,
+    "filename": "ST_22.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Tar'Mann",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "green"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 23,
+    "filename": "ST_23.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Saudor",
+        "resource": 2,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 24,
+    "filename": "ST_24.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Mehar Xull",
+        "resource": 1,
+        "influence": 3,
+        "specialty": "red"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 25,
+    "filename": "ST_25.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "wormhole": "beta",
+    "planets": [
+      {
+        "name": "Quann",
+        "resource": 2,
+        "influence": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "filename": "ST_26.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "wormhole": "alpha",
+    "planets": [
+      {
+        "name": "Lodor",
+        "resource": 3,
+        "influence": 1
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "filename": "ST_27.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "New Albion",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "green"
+      },
+      {
+        "name": "Starpoint",
+        "resource": 3,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 28,
+    "filename": "ST_28.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Tequ'ran",
+        "resource": 2,
+        "influence": 0
+      },
+      {
+        "name": "Torkan",
+        "resource": 0,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 29,
+    "filename": "ST_29.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Qucen'n",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Rarron",
+        "resource": 0,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 30,
+    "filename": "ST_30.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Mellon",
+        "resource": 0,
+        "influence": 2
+      },
+      {
+        "name": "Zohne",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 31,
+    "filename": "ST_31.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Lazar",
+        "resource": 1,
+        "influence": 0,
+        "specialty": "yellow"
+      },
+      {
+        "name": "Sakulag",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 32,
+    "filename": "ST_32.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Dal Bootha",
+        "resource": 0,
+        "influence": 2
+      },
+      {
+        "name": "Xxehan",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 33,
+    "filename": "ST_33.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Corneeq",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Resculon",
+        "resource": 2,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 34,
+    "filename": "ST_34.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Arnor",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Lor",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 35,
+    "filename": "ST_35.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Bereg",
+        "resource": 3,
+        "influence": 1
+      },
+      {
+        "name": "Lirta IV",
+        "resource": 2,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 36,
+    "filename": "ST_36.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Arinam",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Meer",
+        "resource": 0,
+        "influence": 4,
+        "specialty": "red"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 37,
+    "filename": "ST_37.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Abyz",
+        "resource": 3,
+        "influence": 0
+      },
+      {
+        "name": "Fria",
+        "resource": 2,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 38,
+    "filename": "ST_38.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Centauri",
+        "resource": 1,
+        "influence": 3
+      },
+      {
+        "name": "Gral",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "blue"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 39,
+    "filename": "ST_39.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "wormhole": "alpha",
+    "planets": []
+  },
+  {
+    "id": 40,
+    "filename": "ST_40.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "wormhole": "beta",
+    "planets": []
+  },
+  {
+    "id": 41,
+    "filename": "ST_41.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 42,
+    "filename": "ST_42.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 43,
+    "filename": "ST_43.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 44,
+    "filename": "ST_44.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 45,
+    "filename": "ST_45.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 46,
+    "filename": "ST_46.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 47,
+    "filename": "ST_47.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 48,
+    "filename": "ST_48.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 49,
+    "filename": "ST_49.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 50,
+    "filename": "ST_50.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 51,
+    "filename": "ST_51.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": false,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 52,
+    "filename": "ST_52.png",
+    "color": "green",
+    "home": true,
+    "faction": "mahact",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Ixth",
+        "resource": 3,
+        "influence": 5
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 53,
+    "filename": "ST_53.png",
+    "color": "green",
+    "home": true,
+    "faction": "nomad",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Arcturus",
+        "resource": 4,
+        "influence": 4
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 54,
+    "filename": "ST_54.png",
+    "color": "green",
+    "home": true,
+    "faction": "vuilraith",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Acheron",
+        "resource": 4,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 55,
+    "filename": "ST_55.png",
+    "color": "green",
+    "home": true,
+    "faction": "ul",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Elysium",
+        "resource": 4,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 56,
+    "filename": "ST_56.png",
+    "color": "green",
+    "home": true,
+    "faction": "empyrean",
+    "draft": false,
+    "planets": [
+      {
+        "name": "The Dark",
+        "resource": 3,
+        "influence": 4
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 57,
+    "filename": "ST_57.png",
+    "color": "green",
+    "home": true,
+    "faction": "naazrokha",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Naazir",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Rokha",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 58,
+    "filename": "ST_58.png",
+    "color": "green",
+    "home": true,
+    "faction": "argent",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Valk",
+        "resource": 2,
+        "influence": 0
+      },
+      {
+        "name": "Avar",
+        "resource": 1,
+        "influence": 1
+      },
+      {
+        "name": "Ylir",
+        "resource": 0,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 59,
+    "filename": "ST_59.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Archon Vail",
+        "resource": 1,
+        "influence": 3,
+        "specialty": "blue"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 60,
+    "filename": "ST_60.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Perimeter",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 61,
+    "filename": "ST_61.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Ang",
+        "resource": 2,
+        "influence": 0,
+        "specialty": "red"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 62,
+    "filename": "ST_62.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Sem-Lore",
+        "resource": 3,
+        "influence": 2,
+        "specialty": "yellow"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 63,
+    "filename": "ST_63.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Vorhal",
+        "resource": 0,
+        "influence": 2,
+        "specialty": "green"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 64,
+    "filename": "ST_64.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Atlas",
+        "resource": 3,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 65,
+    "filename": "ST_65.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Primor",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 66,
+    "filename": "ST_66.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Hope's End",
+        "resource": 3,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 67,
+    "filename": "ST_67.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Cormund",
+        "resource": 2,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 68,
+    "filename": "ST_68.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Everra",
+        "resource": 3,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 69,
+    "filename": "ST_69.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Accoen",
+        "resource": 2,
+        "influence": 3
+      },
+      {
+        "name": "Joel Ir",
+        "resource": 2,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 70,
+    "filename": "ST_70.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Kraag",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Siig",
+        "resource": 0,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 71,
+    "filename": "ST_71.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Bakal",
+        "resource": 3,
+        "influence": 2
+      },
+      {
+        "name": "Alio Prima",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 72,
+    "filename": "ST_72.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Lisis",
+        "resource": 2,
+        "influence": 2
+      },
+      {
+        "name": "Velnor",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 73,
+    "filename": "ST_73.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Cealdri",
+        "resource": 0,
+        "influence": 2
+      },
+      {
+        "name": "Xanhact",
+        "resource": 0,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 74,
+    "filename": "ST_74.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Vega Major",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Vega Minor",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 75,
+    "filename": "ST_75.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Ashtroth",
+        "resource": 2,
+        "influence": 0
+      },
+      {
+        "name": "Abue",
+        "resource": 1,
+        "influence": 1
+      },
+      {
+        "name": "Arcturus",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 76,
+    "filename": "ST_76.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Rigel I",
+        "resource": 0,
+        "influence": 1
+      },
+      {
+        "name": "Rigel II",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Rigel III",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 77,
+    "filename": "ST_77.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 78,
+    "filename": "ST_78.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 79,
+    "filename": "ST_79.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "wormhole": "alpha",
+    "planets": []
+  },
+  {
+    "id": 80,
+    "filename": "ST_80.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "wormhole": "beta",
+    "planets": []
+  },
+  {
+    "id": 81,
+    "filename": "ST_81.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": false,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 82,
+    "filename": "ST_82.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": false,
+    "wormhole": "gamma",
+    "planets": [
+      {
+        "name": "Mallice",
+        "resource": 0,
+        "influence": 3
+      }
+    ]
+  }
+]

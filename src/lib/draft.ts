@@ -1,83 +1,169 @@
-import { Tile, Faction } from '@/types/game';
-import { getTiles, getFactions } from '@/lib/data';
-import tileSelection from '@/data/tile-selection.json';
-import { Slice, createSlice } from '@/lib/game-logic';
+import { v4 as uuidv4 } from 'uuid';
+import mapData from '@/../map.json';
+import factionData from '@/../factions.json';
+import tilesData from '@/../tiles.json';
+
+const factionHomeTiles = factionData.factions.map(f => f.tileId.toString());
+const allTiles = tilesData as any[];
+
+// Blue Tiles (Planets)
+const BASE_BLUE = Array.from({ length: 20 }, (_, i) => (i + 19).toString()); // 19-38
+const POK_BLUE = Array.from({ length: 18 }, (_, i) => (i + 59).toString()); // 59-76
+const ALL_BLUE_POOL = [...BASE_BLUE, ...POK_BLUE];
+
+// Red Tiles (Anomalies/Empty)
+const BASE_RED = Array.from({ length: 13 }, (_, i) => (i + 39).toString()); // 39-51
+const POK_RED = Array.from({ length: 4 }, (_, i) => (i + 77).toString()); // 77-80
+const ALL_RED_POOL = [...BASE_RED, ...POK_RED];
+
+const BLUE_TILES = ALL_BLUE_POOL
+    .filter(id => !factionHomeTiles.includes(id) && !factionHomeTiles.includes(id.padStart(2, '0')));
+
+const RED_TILES = ALL_RED_POOL
+    .filter(id => !factionHomeTiles.includes(id) && !factionHomeTiles.includes(id.padStart(2, '0')));
 
 export interface DraftSettings {
+    playerNames: string[];
     playerCount: number;
     sliceCount: number;
     factionCount: number;
     includePoK: boolean;
+    matchDate?: string;
+    matchTime?: string;
+    matchLocation?: string;
 }
 
-export const generateDraft = (settings: DraftSettings) => {
-    const allTiles = getTiles();
-    const allFactions = getFactions();
-    
-    // Alinhado com o set: "base" e "pok" do JSON
-    const activeSets = ['base'];
-    if (settings.includePoK) activeSets.push('pok');
-    
-    const pools = {
-        high: [] as Tile[],
-        mid: [] as Tile[],
-        low: [] as Tile[],
-        red: [] as Tile[]
-    };
-    
-    // Para os tiles, o tile-selection.json usa "BaseGame" e "PoK"
-    const tileSets = ['BaseGame'];
-    if (settings.includePoK) tileSets.push('PoK');
+export const generateDraft = (config: DraftSettings) => {
+    const { playerNames, playerCount, sliceCount, includePoK } = config;
 
-    tileSets.forEach(setName => {
-        const setTiers = (tileSelection as any)[setName];
-        if (setTiers) {
-            setTiers.high.forEach((id: any) => {
-                const tile = allTiles[id.toString()];
-                if (tile) pools.high.push(tile);
-            });
-            setTiers.mid.forEach((id: any) => {
-                const tile = allTiles[id.toString()];
-                if (tile) pools.mid.push(tile);
-            });
-            setTiers.low.forEach((id: any) => {
-                const tile = allTiles[id.toString()];
-                if (tile) pools.low.push(tile);
-            });
-        }
+    // Filter tiles based on includePoK
+    const availableBlue = BLUE_TILES.filter(id => {
+        const num = parseInt(id);
+        if (!includePoK && num > 51) return false;
+        return true;
     });
     
-    Object.values(allTiles).forEach(tile => {
-        if (tile.type === 'red' && tileSets.includes(tile.set === 'BaseGame' ? 'BaseGame' : tile.set)) {
-            pools.red.push(tile);
-        }
+    const availableRed = RED_TILES.filter(id => {
+        const num = parseInt(id);
+        if (!includePoK && num > 51) return false;
+        return true;
     });
     
-    const shuffle = <T>(array: T[]) => [...array].sort(() => Math.random() - 0.5);
-    pools.high = shuffle(pools.high);
-    pools.mid = shuffle(pools.mid);
-    pools.low = shuffle(pools.low);
-    pools.red = shuffle(pools.red);
+    // Get slice size from map.json
+    const sliceSize = (mapData as any)[playerCount.toString()]?.p1?.slice?.length || 5;
     
-    const slices: Slice[] = [];
-    for (let i = 0; i < settings.sliceCount; i++) {
-        const sliceTiles: Tile[] = [];
-        if (pools.high.length > 0) sliceTiles.push(pools.high.pop()!);
-        if (pools.mid.length > 0) sliceTiles.push(pools.mid.pop()!);
-        if (pools.low.length > 0) sliceTiles.push(pools.low.pop()!);
-        if (pools.red.length > 0) sliceTiles.push(pools.red.pop()!);
-        if (pools.red.length > 0) sliceTiles.push(pools.red.pop()!);
+    let generatedSlices: any[] = [];
+    let attempts = 0;
+    const MAX_ATTEMPTS = 100;
+
+    while (attempts < MAX_ATTEMPTS) {
+        attempts++;
+        const tempShuffledBlue = [...availableBlue].sort(() => Math.random() - 0.5);
+        const tempShuffledRed = [...availableRed].sort(() => Math.random() - 0.5);
+        const tempSlices = [];
+
+        for (let i = 0; i < (sliceCount || playerCount + 2); i++) {
+            const sliceTiles: string[] = [];
+            const blueCount = Math.ceil(sliceSize * 0.6);
+            const redCount = sliceSize - blueCount;
+
+            for (let j = 0; j < blueCount; j++) {
+                const t = tempShuffledBlue.pop();
+                if (t) sliceTiles.push(t);
+            }
+            for (let j = 0; j < redCount; j++) {
+                const t = tempShuffledRed.pop();
+                if (t) sliceTiles.push(t);
+            }
+
+            while (sliceTiles.length < sliceSize) {
+                const t = tempShuffledBlue.pop() || tempShuffledRed.pop();
+                if (t) sliceTiles.push(t);
+                else break;
+            }
+
+            // Calculate real values
+            let totalRes = 0;
+            let totalInf = 0;
+            let optimalValue = 0;
+            let techSkips: string[] = [];
+            let wormholes: string[] = [];
+            let hasLegendary = false;
+
+            sliceTiles.forEach(tId => {
+                const tile = allTiles.find(t => t.id === parseInt(tId));
+                if (tile) {
+                    if (tile.wormhole) wormholes.push(tile.wormhole);
+                    tile.planets.forEach((p: any) => {
+                        totalRes += p.resource;
+                        totalInf += p.influence;
+                        optimalValue += Math.max(p.resource, p.influence);
+                        if (p.specialty) techSkips.push(p.specialty);
+                        if (tile.id === 65 || tile.id === 66) hasLegendary = true; // Primor, Hope's End
+                    });
+                }
+            });
+
+            tempSlices.push({
+                id: `Slice ${i + 1}`,
+                tiles: sliceTiles,
+                optimalValues: {
+                    resources: totalRes,
+                    influence: totalInf,
+                    optimal: optimalValue
+                },
+                special: {
+                    techSkips,
+                    wormholes,
+                    hasLegendary
+                }
+            });
+        }
+
+        // Check balance: Diff between max and min optimal value should be small
+        const scores = tempSlices.map(s => s.optimalValues.optimal);
+        const maxScore = Math.max(...scores);
+        const minScore = Math.min(...scores);
         
-        slices.push(createSlice(`Slice ${i + 1}`, sliceTiles));
+        // Balanced if range is <= 4.0 points (standard for Milty Draft)
+        if (maxScore - minScore <= 4.0 || attempts === MAX_ATTEMPTS) {
+            generatedSlices = tempSlices;
+            break;
+        }
     }
-    
-    const factions = shuffle(Object.values(allFactions))
-        .filter(f => activeSets.includes(f.set))
-        .slice(0, settings.factionCount);
-        
+
+    const allFactions = factionData.factions
+        .filter(f => {
+            if (!config.includePoK && f.tileId >= 52) return false;
+            return true;
+        })
+        .map(f => ({
+            id: f.id,
+            name: f.name
+        }));
+
+    const factions = allFactions
+        .sort(() => Math.random() - 0.5)
+        .slice(0, config.factionCount || playerCount + 3);
+
+    const players = playerNames.map((name, index) => ({
+        id: `player-${index}`,
+        name: name || `Player ${index + 1}`,
+        factionId: null,
+        sliceId: null,
+        position: null,
+    }));
+
+    const turnOrder = players.map(p => p.id).sort(() => Math.random() - 0.5);
+
     return {
-        slices,
+        status: 'drafting',
+        players,
+        slices: generatedSlices,
         factions,
-        playerCount: settings.playerCount
+        turnOrder,
+        currentTurnIndex: 0,
+        isSnakeDraftDescending: true,
+        settings: config
     };
 };

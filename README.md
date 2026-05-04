@@ -1,35 +1,45 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Project Structure
 
-First, run the development server:
+- `map.json`: Geometric template for map generation (coordinates for slices and home systems).
+- `factions.json`: Detailed information about the 24 available factions (17 Base + 7 POK).
+- `src/lib/draft.ts`: Logic for generating balanced slices and draft setups.
+- `src/components/map/MapGrid.tsx`: Visual representation of the tactical map with slice transposition.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Factions & Home Systems
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The project includes all 17 base game factions and the 7 factions from the *Prophecy of Kings* (POK) expansion. Home system tiles are mapped as follows:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Base Game (ST_1 to ST_17)
+- **ST_1**: The Federation of Sol (Jord)
+- **ST_2**: The Mentak Coalition (Moll Primus)
+- **ST_3**: The Yin Brotherhood (Darien)
+- **ST_4**: The Embers of Muaat (Muaat)
+- **ST_5**: The Arborec (Nestphar)
+- **ST_6**: The L1Z1X Mindnet ([0.0.0])
+- **ST_7**: The Winnu (Winnu)
+- **ST_8**: The Nekro Virus (Mordai II)
+- **ST_9**: The Naalu Collective (Maaluuk / Druaa)
+- **ST_10**: The Barony of Letnev (Arc Prime / Wren Terra)
+- **ST_11**: The Clan of Saar (Lisis II / Ragh)
+- **ST_12**: The Universities of Jol-Nar (Jol / Nar)
+- **ST_13**: The Sardakk N'orr (Tren'lak / Quinarra)
+- **ST_14**: The Xxcha Kingdom (Archon Ren / Archon Tau)
+- **ST_15**: The Yssaril Tribes (Retillion / Shaloam)
+- **ST_16**: The Emirates of Hacan (Arretze / Hercant / Kamdorn)
+- **ST_17**: The Ghosts of Creuss (Creuss)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prophecy of Kings Expansion (ST_52 to ST_58)
+- **ST_52**: The Mahact Gene-Sorcerers (Ixth)
+- **ST_53**: The Nomad (Arcturus)
+- **ST_54**: The Vuil'Raith Cabal (Acheron)
+- **ST_55**: The Titans of Ul (Elysium)
+- **ST_56**: The Empyrean (The Dark)
+- **ST_57**: The Naaz-Rokha Alliance (Naazir / Rokha)
+- **ST_58**: The Argent Flight (Valk / Avar / Ylir)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
+For more information, refer to the [Twilight Imperium Wiki](https://twilight-imperium.fandom.com/wiki/Twilight_Imperium_Wiki).
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 

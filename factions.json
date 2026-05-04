@@ -1,0 +1,124 @@
+{
+  "factions": [
+    {
+      "id": "sol",
+      "tileId": 1,
+      "name": "The Federation of Sol"
+    },
+    {
+      "id": "mentak",
+      "tileId": 2,
+      "name": "The Mentak Coalition"
+    },
+    {
+      "id": "yin",
+      "tileId": 3,
+      "name": "The Yin Brotherhood"
+    },
+    {
+      "id": "muaat",
+      "tileId": 4,
+      "name": "The Embers of Muaat"
+    },
+    {
+      "id": "arborec",
+      "tileId": 5,
+      "name": "The Arborec"
+    },
+    {
+      "id": "l1z1x",
+      "tileId": 6,
+      "name": "The L1Z1X Mindnet"
+    },
+    {
+      "id": "winnu",
+      "tileId": 7,
+      "name": "The Winnu"
+    },
+    {
+      "id": "nekro",
+      "tileId": 8,
+      "name": "The Nekro Virus"
+    },
+    {
+      "id": "naalu",
+      "tileId": 9,
+      "name": "The Naalu Collective"
+    },
+    {
+      "id": "barony",
+      "tileId": 10,
+      "name": "The Barony of Letnev"
+    },
+    {
+      "id": "saar",
+      "tileId": 11,
+      "name": "The Clan of Saar"
+    },
+    {
+      "id": "jolnar",
+      "tileId": 12,
+      "name": "The Universities of Jol-Nar"
+    },
+    {
+      "id": "norr",
+      "tileId": 13,
+      "name": "The Sardakk N'orr"
+    },
+    {
+      "id": "xxcha",
+      "tileId": 14,
+      "name": "The Xxcha Kingdom"
+    },
+    {
+      "id": "yssaril",
+      "tileId": 15,
+      "name": "The Yssaril Tribes"
+    },
+    {
+      "id": "hacan",
+      "tileId": 16,
+      "name": "The Emirates of Hacan"
+    },
+    {
+      "id": "creuss",
+      "tileId": 17,
+      "name": "The Ghosts of Creuss"
+    },
+    {
+      "id": "mahact",
+      "tileId": 52,
+      "name": "The Mahact Gene-Sorcerers"
+    },
+    {
+      "id": "nomad",
+      "tileId": 53,
+      "name": "The Nomad"
+    },
+    {
+      "id": "vuilraith",
+      "tileId": 54,
+      "name": "The Vuil'Raith Cabal"
+    },
+    {
+      "id": "ul",
+      "tileId": 55,
+      "name": "The Titans of Ul"
+    },
+    {
+      "id": "empyrean",
+      "tileId": 56,
+      "name": "The Empyrean"
+    },
+    {
+      "id": "naazrokha",
+      "tileId": 57,
+      "name": "The Naaz-Rokha Alliance"
+    },
+    {
+      "id": "argent",
+      "tileId": 58,
+      "name": "The Argent Flight"
+    }
+  ]
+}
