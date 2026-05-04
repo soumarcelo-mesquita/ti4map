@@ -156,12 +156,24 @@ export const generateDraft = (config: DraftSettings) => {
 
     const turnOrder = players.map(p => p.id).sort(() => Math.random() - 0.5);
 
+    // Pick random red tiles for empty spots (important for 4/5 players)
+    const staticTiles: { q: number, r: number, tileId: string }[] = [];
+    const emptyCoords = (mapData as any)[playerCount.toString()]?.empty || [];
+    
+    emptyCoords.forEach((coords: number[]) => {
+        const tId = availableRed.pop();
+        if (tId) {
+            staticTiles.push({ q: coords[0], r: coords[1], tileId: tId });
+        }
+    });
+
     return {
         status: 'drafting',
         players,
         slices: generatedSlices,
         factions,
         turnOrder,
+        staticTiles, // New field for fixed map tiles
         currentTurnIndex: 0,
         isSnakeDraftDescending: true,
         settings: config

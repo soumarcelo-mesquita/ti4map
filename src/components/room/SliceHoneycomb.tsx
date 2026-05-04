@@ -27,6 +27,8 @@ export function SliceHoneycomb({ slice, scale = 1 }: SliceHoneycombProps) {
         { q: 1, r: -1 },  // T3: Top-Right neighbor
         { q: -1, r: -1 }, // T4: Far Top-Left
         { q: 0, r: -2 },  // T5: Directly above T1 (Equator)
+        { q: 1, r: -2 },  // T6: Far Top-Right
+        { q: -1, r: 1 },  // T7: Bottom-Left neighbor
     ];
 
     const hexToPixel = (q: number, r: number) => {
@@ -42,7 +44,7 @@ export function SliceHoneycomb({ slice, scale = 1 }: SliceHoneycombProps) {
             style={{ transform: `scale(${scale})` }}
         >
             <svg 
-                viewBox="-160 -180 320 320" 
+                viewBox="-160 -180 320 360" 
                 className="w-full h-full drop-shadow-2xl overflow-visible"
             >
                 {/* Home System Placeholder */}

@@ -7,7 +7,8 @@ interface MapGridProps {
     size: number;
     playerCount?: number;
     players?: any[];
-    allSlices?: any[]; // Adicionado para ter referência de todos os tiles das fatias
+    allSlices?: any[];
+    staticTiles?: { q: number, r: number, tileId: string }[];
     onPositionPick?: (posId: string) => void;
 }
 
@@ -17,6 +18,7 @@ export const MapGrid: React.FC<MapGridProps> = ({
     playerCount = 6, 
     players = [],
     allSlices = [],
+    staticTiles = [],
     onPositionPick 
 }) => {
     const hexes = [];
@@ -36,6 +38,7 @@ export const MapGrid: React.FC<MapGridProps> = ({
     };
 
     const playerPositionsMap = (mapData as any)[playerCount.toString()] || {};
+    const emptyCoords = (mapData as any)[playerCount.toString()]?.empty || [];
     
     const posOccupants = new Map();
     const coordToTile = new Map();
@@ -48,7 +51,6 @@ export const MapGrid: React.FC<MapGridProps> = ({
 
             // Transposição da Slice
             if (p.sliceId && posData.slice) {
-                // Procuramos os tiles da slice (pode estar no player ou na lista geral)
                 const sliceData = p.slice || allSlices.find(s => s.id === p.sliceId);
                 if (sliceData && sliceData.tiles) {
                     posData.slice.forEach((coords: number[], index: number) => {
@@ -69,12 +71,14 @@ export const MapGrid: React.FC<MapGridProps> = ({
         return `${num}º`;
     };
 
-    const homeSystemCoords = Object.entries(playerPositionsMap).map(([key, coords]: any) => ({
-        id: key,
-        label: formatPosName(key),
-        q: coords.home[0],
-        r: coords.home[1]
-    }));
+    const homeSystemCoords = Object.entries(playerPositionsMap)
+        .filter(([key]) => key !== 'empty')
+        .map(([key, coords]: any) => ({
+            id: key,
+            label: formatPosName(key),
+            q: coords.home[0],
+            r: coords.home[1]
+        }));
 
     return (
         <div className="w-full h-full flex items-center justify-center overflow-hidden bg-slate-950/20 rounded-[2rem] border border-white/5 backdrop-blur-sm">
@@ -89,7 +93,24 @@ export const MapGrid: React.FC<MapGridProps> = ({
                         const homeSystem = homeSystemCoords.find(h => h.q === q && h.r === r);
                         const occupant = posOccupants.get(`${q},${r}`);
                         const sliceTileId = coordToTile.get(`${q},${r}`);
+                        const staticTile = staticTiles.find(s => s.q === q && s.r === r);
+                        const isPlaceholderEmpty = emptyCoords.some((c: number[]) => c[0] === q && c[1] === r) && !staticTile;
                         
+                        if (isPlaceholderEmpty) {
+                            return (
+                                <Hexagon 
+                                    key={`${q},${r}`}
+                                    id={`${q}-${r}`}
+                                    size={size}
+                                    x={x}
+                                    y={y}
+                                    fill="rgba(255, 255, 255, 0.02)"
+                                    stroke="rgba(255, 255, 255, 0.05)"
+                                    label=""
+                                />
+                            );
+                        }
+
                         let image = undefined;
                         if (isMecatol) {
                             image = "/img/tiles/ST_18.png";
@@ -97,15 +118,21 @@ export const MapGrid: React.FC<MapGridProps> = ({
                             image = "/img/tiles/ST_0.png";
                         } else if (sliceTileId) {
                             image = `/img/tiles/ST_${sliceTileId}.png`;
+                        } else if (staticTile) {
+                            image = `/img/tiles/ST_${staticTile.tileId}.png`;
                         }
                         
                         let label = isMecatol ? "" : `${q},${r}`;
                         if (homeSystem) {
-                            label = occupant 
-                                ? `${occupant.name}\n${homeSystem.label}${occupant.factionId ? ` (${occupant.factionId.toUpperCase()})` : ''}` 
-                                : homeSystem.label;
+                            if (occupant) {
+                                label = `${occupant.name}\n${homeSystem.label}\n${occupant.factionId?.toUpperCase() || ''}`;
+                            } else {
+                                label = homeSystem.label;
+                            }
                         } else if (sliceTileId) {
                             label = sliceTileId;
+                        } else if (staticTile) {
+                            label = staticTile.tileId;
                         }
                         
                         return (

@@ -32,6 +32,15 @@ function RoomContent() {
     const actingPlayer = roomState?.players?.find((p: any) => p.id === simulatedPlayerId);
     const turnPlayer = roomState?.players?.find((p: any) => p.id === currentPlayerId);
 
+    // Update dynamic title based on simulated player
+    useEffect(() => {
+        if (actingPlayer) {
+            document.title = `TI4 Setup - ${actingPlayer.name}`;
+        } else {
+            document.title = `TI4 Setup`;
+        }
+    }, [actingPlayer]);
+
     const formatPosName = (posId: string) => {
         if (!posId) return null;
         if (posId.toLowerCase() === 'p1') return 'SPEAKER';
@@ -176,6 +185,7 @@ function RoomContent() {
                                 playerCount={roomState.settings?.playerCount} 
                                 players={roomState.players}
                                 allSlices={roomState.slices}
+                                staticTiles={roomState.staticTiles}
                                 onPositionPick={(posId) => handlePick('position', posId)}
                             />
                         </div>
