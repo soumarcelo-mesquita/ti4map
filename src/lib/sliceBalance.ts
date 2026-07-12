@@ -1,0 +1,165 @@
+import { Tile, TILES, getTile, optimalValues } from '@/data/tiles';
+import { SliceLayout } from '@/data/slices';
+
+export interface SliceBalanceConfig {
+  minOptimalResources: number;
+  minOptimalInfluence: number;
+  minOptimalTotal: number;
+  maxOptimalTotal: number;
+  maxWormholesPerSlice: number; // Infinity = sem limite
+  minLegendaryPlanets: number; // mínimo por fatia; 0 = sem exigência
+  maxAttempts: number; // tentativas antes de aceitar o melhor achado
+}
+
+/**
+ * Base game tiles are 19–50, PoK tiles are 59–79 (gap 51–58 is home systems).
+ * `tiles.json` has no explicit expansion field; same split factions.ts uses
+ * for faction home tiles (`tileId >= 52 ? 'pok' : 'base'`).
+ */
+export function draftableTilePool(includePoK: boolean): Tile[] {
+  return TILES.filter((t) => t.draft && (includePoK || t.id <= 50));
+}
+
+export function sliceStats(tileIds: number[]): { resources: number; influence: number; total: number } {
+  let resources = 0;
+  let influence = 0;
+  for (const id of tileIds) {
+    const tile = getTile(id);
+    if (!tile) continue;
+    const v = optimalValues(tile.planets);
+    resources += v.resources;
+    influence += v.influence;
+  }
+  return { resources, influence, total: resources + influence };
+}
+
+/** Raw (non-optimal) resource/influence sum — the "Total: R I" badge, vs. sliceStats' "Optimal: R I". */
+export function rawSliceStats(tileIds: number[]): { resources: number; influence: number; total: number } {
+  let resources = 0;
+  let influence = 0;
+  for (const id of tileIds) {
+    const tile = getTile(id);
+    if (!tile) continue;
+    for (const p of tile.planets) {
+      resources += p.resource;
+      influence += p.influence;
+    }
+  }
+  return { resources, influence, total: resources + influence };
+}
+
+function countWormholes(tileIds: number[]): number {
+  return tileIds.filter((id) => getTile(id)?.wormhole != null).length;
+}
+
+/**
+ * No tile in tiles.json currently carries a `legendary` flag, so this always
+ * returns 0. Config default (minLegendaryPlanets: 0) means this never blocks
+ * the sorteio; wiring real counting is future work once the data exists.
+ */
+function countLegendary(): number {
+  return 0;
+}
+
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function shuffleSeeded<T>(arr: T[], rng: () => number): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function passesConfig(tileIds: number[], config: SliceBalanceConfig): boolean {
+  const stats = sliceStats(tileIds);
+  return (
+    stats.resources >= config.minOptimalResources &&
+    stats.influence >= config.minOptimalInfluence &&
+    stats.total >= config.minOptimalTotal &&
+    stats.total <= config.maxOptimalTotal &&
+    countWormholes(tileIds) <= config.maxWormholesPerSlice &&
+    countLegendary() >= config.minLegendaryPlanets
+  );
+}
+
+function totalVariance(assignment: number[][]): number {
+  const totals = assignment.map((ids) => sliceStats(ids).total);
+  const mean = totals.reduce((a, b) => a + b, 0) / totals.length;
+  return totals.reduce((acc, t) => acc + (t - mean) ** 2, 0) / totals.length;
+}
+
+export interface BalancedAssignmentResult {
+  assignment: Record<string, number[]>;
+  seed: number;
+  balanced: boolean;
+}
+
+/**
+ * Draws real tile ids for each slice's 7 content slots, trying to respect
+ * `config`. Physical board positions of `slices` don't matter here — only
+ * `.id` and the count (7 tiles each) — placement onto a seat's positions
+ * happens later, via `placeSliceAtSeat`.
+ */
+export function generateBalancedAssignment(
+  slices: SliceLayout[],
+  config: SliceBalanceConfig,
+  seed?: number,
+  includePoK: boolean = true,
+): BalancedAssignmentResult {
+  const usedSeed = seed ?? Math.floor(Math.random() * 2 ** 32);
+  const pool = draftableTilePool(includePoK).map((t) => t.id);
+  const tilesPerSlice = 7;
+
+  let best: number[][] | null = null;
+  let bestVariance = Infinity;
+
+  for (let attempt = 0; attempt < config.maxAttempts; attempt++) {
+    const rng = mulberry32(usedSeed + attempt);
+    const shuffled = shuffleSeeded(pool, rng);
+    const groups: number[][] = slices.map((_, i) => shuffled.slice(i * tilesPerSlice, (i + 1) * tilesPerSlice));
+
+    if (groups.every((g) => passesConfig(g, config))) {
+      const assignment: Record<string, number[]> = {};
+      slices.forEach((s, i) => {
+        assignment[s.id] = groups[i];
+      });
+      return { assignment, seed: usedSeed, balanced: true };
+    }
+
+    const variance = totalVariance(groups);
+    if (variance < bestVariance) {
+      bestVariance = variance;
+      best = groups;
+    }
+  }
+
+  const assignment: Record<string, number[]> = {};
+  slices.forEach((s, i) => {
+    assignment[s.id] = best?.[i] ?? [];
+  });
+  return { assignment, seed: usedSeed, balanced: false };
+}
+
+/**
+ * Transposes a drafted slice's content onto a seat's physical positions:
+ * `content[i]` is placed at `seatTemplate.tiles[i]` (index-matched — the draw
+ * order carries no meaning, only the set of 7 tiles matters for balance).
+ */
+export function placeSliceAtSeat(mapString: string, seatTemplate: SliceLayout, content: number[]): string {
+  const tokens = mapString.trim().split(/\s+/);
+  seatTemplate.tiles.forEach((pos, i) => {
+    if (content[i] !== undefined) tokens[pos - 1] = String(content[i]);
+  });
+  return tokens.join(' ');
+}

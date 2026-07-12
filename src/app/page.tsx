@@ -8,6 +8,7 @@ import { createDraftState } from '@/lib/draftEngine';
 import { isValidMapString } from '@/lib/mapString';
 import { SUPPORTED_PLAYER_COUNTS } from '@/data/seats';
 import { factionPool } from '@/data/factions';
+import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
 
 const DEFAULT_NAMES = ['Marcelo', 'Wesley', 'Sam', 'Lucas', 'Estranho', 'Saulo'];
 
@@ -24,10 +25,12 @@ export default function Home() {
   const [includePoK, setIncludePoK] = useState(true);
   const [mapString, setMapString] = useState('');
   const [factionPoolSize, setFactionPoolSize] = useState(8);
+  const [useSliceDraft, setUseSliceDraft] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const maxFactions = factionPool(includePoK).length;
+  const sliceDraftAvailable = getSliceLayouts(playerCount) !== undefined;
 
   const setCount = (count: number) => {
     setPlayerCount(count);
@@ -38,11 +41,13 @@ export default function Home() {
       return next;
     });
     setFactionPoolSize(Math.min(count + 2, maxFactions));
+    if (getSliceLayouts(count) === undefined) setUseSliceDraft(false);
   };
 
   const handleCreate = async () => {
     setError(null);
-    if (!isValidMapString(mapString)) {
+    const finalMapString = useSliceDraft ? buildSliceModeMapString() : mapString.trim();
+    if (!useSliceDraft && !isValidMapString(mapString)) {
       setError('Cole uma map string válida (lista de IDs de tile separados por espaço).');
       return;
     }
@@ -51,7 +56,7 @@ export default function Home() {
       const state = createDraftState({
         playerNames: names.slice(0, playerCount),
         playerCount,
-        mapString: mapString.trim(),
+        mapString: finalMapString,
         includePoK,
         factionPoolSize,
       });
@@ -115,25 +120,64 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Slice draft toggle (only for player counts with a defined slice layout) */}
+          {sliceDraftAvailable && (
+            <section className="space-y-2">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                Modo de mapa
+              </label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setUseSliceDraft(false)}
+                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
+                    !useSliceDraft
+                      ? 'bg-emerald-500 text-slate-950 border-emerald-500'
+                      : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  Mapa personalizado
+                </button>
+                <button
+                  onClick={() => setUseSliceDraft(true)}
+                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
+                    useSliceDraft
+                      ? 'bg-emerald-500 text-slate-950 border-emerald-500'
+                      : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  Draft com fatias balanceadas
+                </button>
+              </div>
+              {useSliceDraft && (
+                <p className="text-[11px] text-slate-400 font-bold rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2.5">
+                  4 fatias com sistemas sorteados e balanceados (recursos/influência). Fatia e
+                  assento são escolhas independentes — escolha as duas, em qualquer ordem.
+                </p>
+              )}
+            </section>
+          )}
+
           {/* Map string */}
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Map string</label>
-              <button
-                onClick={() => setMapString(EXAMPLE_6P)}
-                className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
-              >
-                Usar exemplo (6p)
-              </button>
-            </div>
-            <textarea
-              value={mapString}
-              onChange={(e) => setMapString(e.target.value)}
-              rows={4}
-              placeholder="Ex: 62 63 64 ... (Mecatol é implícito no centro)"
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm font-mono text-white focus:outline-none focus:border-primary/50 resize-none"
-            />
-          </section>
+          {!useSliceDraft && (
+            <section className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Map string</label>
+                <button
+                  onClick={() => setMapString(EXAMPLE_6P)}
+                  className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
+                >
+                  Usar exemplo (6p)
+                </button>
+              </div>
+              <textarea
+                value={mapString}
+                onChange={(e) => setMapString(e.target.value)}
+                rows={4}
+                placeholder="Ex: 62 63 64 ... (Mecatol é implícito no centro)"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm font-mono text-white focus:outline-none focus:border-primary/50 resize-none"
+              />
+            </section>
+          )}
 
           {/* Expansion + faction pool */}
           <section className="grid grid-cols-2 gap-4">

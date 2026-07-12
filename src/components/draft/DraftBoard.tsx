@@ -3,7 +3,9 @@
 import Image from 'next/image';
 import type { DraftCategory, DraftPlayer, DraftState } from '@/types/draft';
 import { getFaction, factionImage } from '@/data/factions';
+import { getLayout } from '@/data/seats';
 import { hasPicked } from '@/lib/draftEngine';
+import { sliceStats, rawSliceStats } from '@/lib/sliceBalance';
 
 interface DraftBoardProps {
   state: DraftState;
@@ -39,6 +41,23 @@ function PoolButton({
 export function DraftBoard({ state, me, isMyTurn, onPick }: DraftBoardProps) {
   const lock = (cat: DraftCategory) => !isMyTurn || hasPicked(me, cat);
   const speaker = state.players.find((p) => p.isSpeaker);
+
+  const usesSlices = state.pools.slices.length > 0 || me.sliceId !== null;
+  const seatLabel = (seatId: string | null) =>
+    getLayout(state.settings.playerCount)?.seats.find((s) => s.id === seatId)?.label ?? '—';
+  const sliceNumber = (sliceId: string | null) => sliceId?.replace('slice-', '') ?? '—';
+  const fmt = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+  const sliceBadges = (sliceId: string | null) => {
+    const tileIds = sliceId ? state.settings.sliceAssignment?.[sliceId] : undefined;
+    if (!tileIds) return null;
+    const raw = rawSliceStats(tileIds);
+    const optimal = sliceStats(tileIds);
+    return (
+      <span className="text-[8px] font-bold opacity-70 normal-case">
+        Total: {fmt(raw.resources)} {fmt(raw.influence)} · Optimal: {fmt(optimal.resources)} {fmt(optimal.influence)}
+      </span>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -78,6 +97,32 @@ export function DraftBoard({ state, me, isMyTurn, onPick }: DraftBoardProps) {
         </div>
       </section>
 
+      {usesSlices && (
+        /* Fatias — conteúdo sorteado (7 sistemas balanceados), independente do
+           assento. O assento é escolhido separadamente na seção "Posição". */
+        <section className="space-y-2">
+          <h3 className="text-[10px] font-black text-emerald-300 uppercase tracking-widest">
+            Fatia {hasPicked(me, 'slice') && '✓'}
+          </h3>
+          {hasPicked(me, 'slice') ? (
+            <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-2.5 text-xs font-black text-emerald-300 space-y-0.5">
+              <div>Fatia {sliceNumber(me.sliceId)}</div>
+              {sliceBadges(me.sliceId)}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-2">
+              {state.pools.slices.map((sliceId) => (
+                <PoolButton key={sliceId} disabled={lock('slice')} onClick={() => onPick('slice', sliceId)}>
+                  <span className="text-base">◈</span>
+                  <span className="text-[9px] opacity-80 text-center leading-tight">Fatia {sliceNumber(sliceId)}</span>
+                  {sliceBadges(sliceId)}
+                </PoolButton>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+
       {/* Positions — chosen by clicking a home on the map */}
       <section className="space-y-2">
         <h3 className="text-[10px] font-black text-emerald-300 uppercase tracking-widest">
@@ -85,7 +130,7 @@ export function DraftBoard({ state, me, isMyTurn, onPick }: DraftBoardProps) {
         </h3>
         <p className="text-[11px] text-slate-400 font-bold rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2.5">
           {hasPicked(me, 'position')
-            ? 'Você já escolheu sua posição.'
+            ? `Você escolheu o assento ${seatLabel(me.seatId)}.`
             : 'Clique em um assento livre no mapa para escolher sua posição.'}
         </p>
       </section>

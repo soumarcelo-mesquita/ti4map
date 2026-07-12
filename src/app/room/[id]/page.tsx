@@ -141,6 +141,10 @@ function RoomContent() {
   const describePick = (category: DraftCategory, value: string | number): string => {
     if (category === 'faction') return getFaction(String(value))?.name ?? String(value);
     if (category === 'speaker') return 'ser o Speaker (1º a jogar)';
+    if (category === 'slice') {
+      const n = String(value).replace('slice-', '');
+      return `a Fatia ${n}`;
+    }
     return seatDescription(String(value));
   };
 
@@ -185,7 +189,7 @@ function RoomContent() {
                   {isMyTurn ? 'Sua vez de escolher' : `Vez de ${turnPlayer?.name ?? '...'}`}
                 </h2>
                 <p className="text-xs text-slate-400">
-                  Escolha <b>um</b>: speaker, facção ou posição.
+                  Escolha <b>um</b>: speaker, facção{state.pools.slices.length > 0 ? ', fatia' : ''} ou posição.
                   {nextPlayer && (
                     <>
                       {' '}

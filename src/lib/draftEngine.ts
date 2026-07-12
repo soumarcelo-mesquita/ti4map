@@ -1,6 +1,19 @@
 import { DraftCategory, DraftPlayer, DraftState, DraftSettings } from '@/types/draft';
 import { factionPool } from '@/data/factions';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
+import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
+import { generateBalancedAssignment, placeSliceAtSeat, SliceBalanceConfig } from '@/lib/sliceBalance';
+
+/** Starting point for 7-tile slices; calibrate by playtest (see docs/slice-balance-draft.md). */
+const DEFAULT_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
+  minOptimalResources: 3.5,
+  minOptimalInfluence: 5.5,
+  minOptimalTotal: 12.5,
+  maxOptimalTotal: 18,
+  maxWormholesPerSlice: Infinity,
+  minLegendaryPlanets: 0,
+  maxAttempts: 1000,
+};
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -34,20 +47,29 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     name: playerNames[i]?.trim() || `Player ${i + 1}`,
     faction: null,
     seatId: null,
+    sliceId: null,
     isSpeaker: false,
   }));
 
   const factions = shuffle(factionPool(includePoK).map((f) => f.id)).slice(0, factionPoolSize);
+  const sliceLayouts = getSliceLayouts(playerCount);
+  const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
   const seats = layout.seats.map((s) => s.id);
+  const slices = isSliceDraft && sliceLayouts ? sliceLayouts.map((s) => s.id) : [];
 
   const settings: DraftSettings = { playerCount, includePoK, factionPoolSize, mapString };
+  if (isSliceDraft && sliceLayouts) {
+    const { assignment, seed } = generateBalancedAssignment(sliceLayouts, DEFAULT_SLICE_BALANCE_CONFIG, undefined, includePoK);
+    settings.sliceSeed = seed;
+    settings.sliceAssignment = assignment;
+  }
 
   return {
     status: 'drafting',
     mapString,
     settings,
     players,
-    pools: { factions, seats, speakerAvailable: true },
+    pools: { factions, seats, slices, speakerAvailable: true },
     turnOrder: shuffle(players.map((p) => p.id)),
     currentTurnIndex: 0,
     isSnakeDescending: true,
@@ -74,6 +96,7 @@ export function nextPlayerId(state: DraftState): string | null {
 export function hasPicked(player: DraftPlayer, category: DraftCategory): boolean {
   if (category === 'faction') return player.faction !== null;
   if (category === 'position') return player.seatId !== null;
+  if (category === 'slice') return player.sliceId !== null;
   return player.isSpeaker;
 }
 
@@ -87,6 +110,7 @@ function canPick(player: DraftPlayer, state: DraftState): boolean {
   return (
     (state.pools.factions.length > 0 && player.faction === null) ||
     (state.pools.seats.length > 0 && player.seatId === null) ||
+    (state.pools.slices.length > 0 && player.sliceId === null) ||
     (speakerOpen(state) && !player.isSpeaker)
   );
 }
@@ -183,13 +207,30 @@ export function makePick(
     if (!pools.seats.includes(v)) return { ok: false, state, error: 'Position unavailable.' };
     pools.seats = pools.seats.filter((s) => s !== v);
     target.seatId = v;
+  } else if (category === 'slice') {
+    const v = String(value);
+    if (!pools.slices.includes(v)) return { ok: false, state, error: 'Fatia indisponível.' };
+    if (!getSliceLayouts(state.settings.playerCount)?.some((s) => s.id === v)) {
+      return { ok: false, state, error: 'Fatia inválida.' };
+    }
+    pools.slices = pools.slices.filter((s) => s !== v);
+    target.sliceId = v;
   } else {
     if (players.some((p) => p.isSpeaker)) return { ok: false, state, error: 'O speaker já foi escolhido.' };
     pools.speakerAvailable = false;
     target.isSpeaker = true;
   }
 
-  let next: DraftState = { ...state, players, pools };
+  let mapString = state.mapString;
+  if (target.sliceId && target.seatId && state.settings.sliceAssignment) {
+    const seatTemplate = getSliceLayouts(state.settings.playerCount)?.find((s) => s.seatId === target.seatId);
+    const content = state.settings.sliceAssignment[target.sliceId];
+    if (seatTemplate && content) {
+      mapString = placeSliceAtSeat(mapString, seatTemplate, content);
+    }
+  }
+
+  let next: DraftState = { ...state, players, pools, mapString };
 
   if (isComplete(next)) {
     next = { ...next, status: 'complete', gameOrder: computeGameOrder(players, state.settings.playerCount) };
