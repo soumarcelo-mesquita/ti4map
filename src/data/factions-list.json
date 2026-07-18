@@ -119,6 +119,31 @@
       "id": "argent",
       "tileId": 58,
       "name": "The Argent Flight"
+    },
+    {
+      "id": "bastion",
+      "tileId": 92,
+      "name": "The Last Bastion"
+    },
+    {
+      "id": "ralnel",
+      "tileId": 93,
+      "name": "The Ral Nel Consortium"
+    },
+    {
+      "id": "deepwrought",
+      "tileId": 95,
+      "name": "The Deepwrought Scholarate"
+    },
+    {
+      "id": "firmament",
+      "tileId": 96,
+      "name": "The Firmament"
+    },
+    {
+      "id": "crimson",
+      "tileId": 118,
+      "name": "The Crimson Rebellion"
     }
   ]
 }

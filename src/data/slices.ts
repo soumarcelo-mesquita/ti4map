@@ -17,6 +17,10 @@
  * the same player count never overlap or touch a wormhole/other home tile.
  */
 
+import { MAP_POSITIONS } from '@/lib/mapString';
+import { getLayout } from '@/data/seats';
+import type { Axial } from '@/lib/hex';
+
 export interface SliceLayout {
   id: string; // 'slice-1'..'slice-N'
   seatId: string; // SeatLayout.id in seats.ts — the seat this tile template belongs to
@@ -34,6 +38,23 @@ export const SLICE_LAYOUTS: Record<number, SliceLayout[]> = {
 
 export function getSliceLayouts(playerCount: number): SliceLayout[] | undefined {
   return SLICE_LAYOUTS[playerCount];
+}
+
+/**
+ * Canonical mini-map shape of a fatia: axial offsets of the 7 content
+ * positions relative to the seat's home, taken from the first template.
+ * Templates are congruent across seats, so every fatia card renders with the
+ * same shape/orientation regardless of which seat it ends up on. Offsets are
+ * index-matched to `sliceAssignment` content order.
+ */
+export function sliceShapeOffsets(playerCount: number): Axial[] | undefined {
+  const template = SLICE_LAYOUTS[playerCount]?.[0];
+  const home = template && getLayout(playerCount)?.seats.find((s) => s.id === template.seatId)?.home;
+  if (!template || !home) return undefined;
+  return template.tiles.map((pos) => {
+    const p = MAP_POSITIONS[pos - 1];
+    return { q: p.q - home[0], r: p.r - home[1] };
+  });
 }
 
 /**

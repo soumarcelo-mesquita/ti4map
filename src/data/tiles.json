@@ -1088,7 +1088,8 @@
       {
         "name": "Primor",
         "resource": 2,
-        "influence": 1
+        "influence": 1,
+        "legendary": true
       }
     ],
     "wormhole": null
@@ -1104,7 +1105,8 @@
       {
         "name": "Hope's End",
         "resource": 3,
-        "influence": 0
+        "influence": 0,
+        "legendary": true
       }
     ],
     "wormhole": null
@@ -1381,8 +1383,493 @@
       {
         "name": "Mallice",
         "resource": 0,
-        "influence": 3
+        "influence": 3,
+        "legendary": true
       }
     ]
+  },
+  {
+    "id": 92,
+    "filename": "ST_92.png",
+    "color": "green",
+    "home": true,
+    "faction": "bastion",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Ordinian",
+        "resource": 0,
+        "influence": 0,
+        "legendary": true
+      },
+      {
+        "name": "Revelation",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 93,
+    "filename": "ST_93.png",
+    "color": "green",
+    "home": true,
+    "faction": "ralnel",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Mez Lo Orz Fei Zsha",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Rep Lo Orz Qet",
+        "resource": 1,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 94,
+    "filename": "ST_94.png",
+    "color": "green",
+    "home": false,
+    "faction": null,
+    "draft": false,
+    "planets": [],
+    "wormhole": "epsilon"
+  },
+  {
+    "id": 95,
+    "filename": "ST_95.png",
+    "color": "green",
+    "home": true,
+    "faction": "deepwrought",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Ikatena",
+        "resource": 4,
+        "influence": 4
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 96,
+    "filename": "ST_96.png",
+    "color": "green",
+    "home": true,
+    "faction": "firmament",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Cronos",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Tallin",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 97,
+    "filename": "ST_97.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Faunus",
+        "resource": 1,
+        "influence": 3,
+        "specialty": "green",
+        "legendary": true
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 98,
+    "filename": "ST_98.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Garbozia",
+        "resource": 2,
+        "influence": 1,
+        "legendary": true
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 99,
+    "filename": "ST_99.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Emelpar",
+        "resource": 0,
+        "influence": 2,
+        "legendary": true
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 100,
+    "filename": "ST_100.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Tempesta",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "blue",
+        "legendary": true
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 101,
+    "filename": "ST_101.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Olergodt",
+        "resource": 2,
+        "influence": 1,
+        "specialty": "red"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 102,
+    "filename": "ST_102.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Andeara",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "blue"
+      }
+    ],
+    "wormhole": "alpha"
+  },
+  {
+    "id": 103,
+    "filename": "ST_103.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Vira Pics III",
+        "resource": 2,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 104,
+    "filename": "ST_104.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Lesab",
+        "resource": 2,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 105,
+    "filename": "ST_105.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "New Terra",
+        "resource": 1,
+        "influence": 1,
+        "specialty": "green"
+      },
+      {
+        "name": "Tinnes",
+        "resource": 2,
+        "influence": 1,
+        "specialty": "green"
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 106,
+    "filename": "ST_106.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Cresius",
+        "resource": 0,
+        "influence": 1
+      },
+      {
+        "name": "Lazul Rex",
+        "resource": 2,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 107,
+    "filename": "ST_107.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Tiamat",
+        "resource": 1,
+        "influence": 2,
+        "specialty": "yellow"
+      },
+      {
+        "name": "Hercalor",
+        "resource": 1,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 108,
+    "filename": "ST_108.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Kostboth",
+        "resource": 0,
+        "influence": 1
+      },
+      {
+        "name": "Capha",
+        "resource": 3,
+        "influence": 0
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 109,
+    "filename": "ST_109.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Bellatrix",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Tsion Station",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 110,
+    "filename": "ST_110.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Horizon",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "El'Nath",
+        "resource": 2,
+        "influence": 0
+      },
+      {
+        "name": "Luthien VI",
+        "resource": 3,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 111,
+    "filename": "ST_111.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Tarana",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Oluz Station",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 112,
+    "filename": "ST_112.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": false,
+    "planets": [
+      {
+        "name": "Mecatol Rex",
+        "resource": 1,
+        "influence": 6,
+        "legendary": true
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 113,
+    "filename": "ST_113.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": "beta"
+  },
+  {
+    "id": 114,
+    "filename": "ST_114.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [],
+    "wormhole": null
+  },
+  {
+    "id": 115,
+    "filename": "ST_115.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Industrex",
+        "resource": 2,
+        "influence": 0,
+        "specialty": "red",
+        "legendary": true
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 116,
+    "filename": "ST_116.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "Lemox",
+        "resource": 0,
+        "influence": 3
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 117,
+    "filename": "ST_117.png",
+    "color": "red",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
+        "name": "The Watchtower",
+        "resource": 1,
+        "influence": 1
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 118,
+    "filename": "ST_118.png",
+    "color": "green",
+    "home": true,
+    "faction": "crimson",
+    "draft": false,
+    "planets": [
+      {
+        "name": "Ahk Creuxx",
+        "resource": 4,
+        "influence": 2
+      }
+    ],
+    "wormhole": "epsilon"
   }
 ]

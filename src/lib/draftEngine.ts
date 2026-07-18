@@ -29,12 +29,14 @@ export interface CreateDraftConfig {
   playerCount: number;
   mapString: string;
   includePoK: boolean;
+  includeTE?: boolean;
   /** number of factions in the draft pool (defaults to playerCount + 2) */
   factionPoolSize?: number;
 }
 
 export function createDraftState(config: CreateDraftConfig): DraftState {
   const { playerNames, playerCount, mapString, includePoK } = config;
+  const includeTE = config.includeTE ?? false;
   const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
 
   const layout = getLayout(playerCount);
@@ -51,15 +53,15 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     isSpeaker: false,
   }));
 
-  const factions = shuffle(factionPool(includePoK).map((f) => f.id)).slice(0, factionPoolSize);
+  const factions = shuffle(factionPool(includePoK, includeTE).map((f) => f.id)).slice(0, factionPoolSize);
   const sliceLayouts = getSliceLayouts(playerCount);
   const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
   const seats = layout.seats.map((s) => s.id);
   const slices = isSliceDraft && sliceLayouts ? sliceLayouts.map((s) => s.id) : [];
 
-  const settings: DraftSettings = { playerCount, includePoK, factionPoolSize, mapString };
+  const settings: DraftSettings = { playerCount, includePoK, includeTE, factionPoolSize, mapString };
   if (isSliceDraft && sliceLayouts) {
-    const { assignment, seed } = generateBalancedAssignment(sliceLayouts, DEFAULT_SLICE_BALANCE_CONFIG, undefined, includePoK);
+    const { assignment, seed } = generateBalancedAssignment(sliceLayouts, DEFAULT_SLICE_BALANCE_CONFIG, undefined, includePoK, includeTE);
     settings.sliceSeed = seed;
     settings.sliceAssignment = assignment;
   }

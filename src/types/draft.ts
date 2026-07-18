@@ -20,6 +20,8 @@ export interface DraftPools {
 export interface DraftSettings {
   playerCount: number;
   includePoK: boolean;
+  /** Thunder's Edge; absent in rooms created before the expansion was supported */
+  includeTE?: boolean;
   factionPoolSize: number;
   mapString: string;
   /** seed used by the slice-balance sorteio, for reproducing/debugging a room */

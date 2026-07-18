@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { GalaxyMap, type SeatOccupant } from '@/components/map/GalaxyMap';
-import { DraftBoard } from '@/components/draft/DraftBoard';
+import { SpeakerSection, FactionSection, SliceSection, PositionSection } from '@/components/draft/DraftBoard';
 import { Roster } from '@/components/draft/Roster';
 import { useRoomStore } from '@/store/roomStore';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
@@ -207,15 +207,19 @@ function RoomContent() {
           </div>
         </div>
 
-        {/* Two columns. DOM order is [map, board] so mobile shows map (2nd) then
-            board (3rd); on desktop the board moves to the left (order-1). */}
-        <div
-          className={`flex-1 grid gap-6 ${
-            state.status === 'drafting' ? 'lg:grid-cols-[400px_1fr]' : ''
-          }`}
-        >
-          {/* Map — right on desktop, second on mobile */}
-          <div className="glass rounded-3xl p-1.5 sm:p-2 border border-white/10 flex items-center justify-center lg:order-2">
+        {/* Full-width stacked areas: jogadores (acima) → facções → mapa → fatias */}
+        {state.status === 'drafting' && (
+          <div className="glass rounded-2xl p-4 border border-white/10 space-y-6">
+            <SpeakerSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
+            <FactionSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
+          </div>
+        )}
+
+        <div className="glass rounded-3xl p-3 sm:p-4 border border-white/10 space-y-3">
+          {state.status === 'drafting' && (
+            <PositionSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
+          )}
+          <div className="flex items-center justify-center">
             <GalaxyMap
               mapString={state.mapString}
               seats={layout?.seats ?? []}
@@ -225,14 +229,11 @@ function RoomContent() {
               onSeatClick={(seatId) => requestPick('position', seatId)}
             />
           </div>
-
-          {/* Remaining choices — left on desktop, third on mobile */}
-          {state.status === 'drafting' && (
-            <div className="glass rounded-2xl p-4 border border-white/10 lg:order-1">
-              <DraftBoard state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
-            </div>
-          )}
         </div>
+
+        {state.status === 'drafting' && (
+          <SliceSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
+        )}
       </div>
 
       {/* Confirmation dialog */}

@@ -23,13 +23,14 @@ export default function Home() {
   const [playerCount, setPlayerCount] = useState(6);
   const [names, setNames] = useState<string[]>(DEFAULT_NAMES);
   const [includePoK, setIncludePoK] = useState(true);
+  const [includeTE, setIncludeTE] = useState(false);
   const [mapString, setMapString] = useState('');
   const [factionPoolSize, setFactionPoolSize] = useState(8);
   const [useSliceDraft, setUseSliceDraft] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const maxFactions = factionPool(includePoK).length;
+  const maxFactions = factionPool(includePoK, includeTE).length;
   const sliceDraftAvailable = getSliceLayouts(playerCount) !== undefined;
 
   const setCount = (count: number) => {
@@ -58,6 +59,7 @@ export default function Home() {
         playerCount,
         mapString: finalMapString,
         includePoK,
+        includeTE,
         factionPoolSize,
       });
       const id = await createRoom(`Draft TI4 — ${playerCount}p`, state);
@@ -182,17 +184,29 @@ export default function Home() {
           {/* Expansion + faction pool */}
           <section className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expansão</label>
-              <button
-                onClick={() => setIncludePoK((v) => !v)}
-                className={`w-full py-3 rounded-xl text-[11px] font-black border transition-all ${
-                  includePoK
-                    ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
-                    : 'bg-white/5 text-slate-400 border-white/10'
-                }`}
-              >
-                {includePoK ? 'COM PoK' : 'BASE GAME'}
-              </button>
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expansões</label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setIncludePoK((v) => !v)}
+                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
+                    includePoK
+                      ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+                      : 'bg-white/5 text-slate-400 border-white/10'
+                  }`}
+                >
+                  PoK
+                </button>
+                <button
+                  onClick={() => setIncludeTE((v) => !v)}
+                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
+                    includeTE
+                      ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+                      : 'bg-white/5 text-slate-400 border-white/10'
+                  }`}
+                >
+                  TE
+                </button>
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">

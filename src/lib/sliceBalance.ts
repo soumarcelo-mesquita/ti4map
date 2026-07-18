@@ -12,12 +12,17 @@ export interface SliceBalanceConfig {
 }
 
 /**
- * Base game tiles are 19–50, PoK tiles are 59–79 (gap 51–58 is home systems).
- * `tiles.json` has no explicit expansion field; same split factions.ts uses
- * for faction home tiles (`tileId >= 52 ? 'pok' : 'base'`).
+ * Base game tiles are 19–50, PoK tiles are 59–79 (gap 51–58 is home systems),
+ * Thunder's Edge tiles are 92–118. `tiles.json` has no explicit expansion
+ * field; same id split factions.ts uses for faction home tiles.
  */
-export function draftableTilePool(includePoK: boolean): Tile[] {
-  return TILES.filter((t) => t.draft && (includePoK || t.id <= 50));
+export function draftableTilePool(includePoK: boolean, includeTE: boolean = false): Tile[] {
+  return TILES.filter((t) => {
+    if (!t.draft) return false;
+    if (t.id <= 50) return true;
+    if (t.id < 92) return includePoK;
+    return includeTE;
+  });
 }
 
 export function sliceStats(tileIds: number[]): { resources: number; influence: number; total: number } {
@@ -52,13 +57,14 @@ function countWormholes(tileIds: number[]): number {
   return tileIds.filter((id) => getTile(id)?.wormhole != null).length;
 }
 
-/**
- * No tile in tiles.json currently carries a `legendary` flag, so this always
- * returns 0. Config default (minLegendaryPlanets: 0) means this never blocks
- * the sorteio; wiring real counting is future work once the data exists.
- */
-function countLegendary(): number {
-  return 0;
+function countLegendary(tileIds: number[]): number {
+  let count = 0;
+  for (const id of tileIds) {
+    const tile = getTile(id);
+    if (!tile) continue;
+    count += tile.planets.filter((p) => p.legendary).length;
+  }
+  return count;
 }
 
 function mulberry32(seed: number): () => number {
@@ -89,7 +95,7 @@ function passesConfig(tileIds: number[], config: SliceBalanceConfig): boolean {
     stats.total >= config.minOptimalTotal &&
     stats.total <= config.maxOptimalTotal &&
     countWormholes(tileIds) <= config.maxWormholesPerSlice &&
-    countLegendary() >= config.minLegendaryPlanets
+    countLegendary(tileIds) >= config.minLegendaryPlanets
   );
 }
 
@@ -116,9 +122,10 @@ export function generateBalancedAssignment(
   config: SliceBalanceConfig,
   seed?: number,
   includePoK: boolean = true,
+  includeTE: boolean = false,
 ): BalancedAssignmentResult {
   const usedSeed = seed ?? Math.floor(Math.random() * 2 ** 32);
-  const pool = draftableTilePool(includePoK).map((t) => t.id);
+  const pool = draftableTilePool(includePoK, includeTE).map((t) => t.id);
   const tilesPerSlice = 7;
 
   let best: number[][] | null = null;

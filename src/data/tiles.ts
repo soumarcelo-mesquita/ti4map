@@ -1,13 +1,14 @@
 import tilesJson from './tiles.json';
 
 export type TileColor = 'green' | 'blue' | 'red';
-export type Wormhole = 'alpha' | 'beta' | 'delta';
+export type Wormhole = 'alpha' | 'beta' | 'gamma' | 'delta' | 'epsilon';
 
 export interface TilePlanet {
   name: string;
   resource: number;
   influence: number;
   specialty?: string | null;
+  legendary?: boolean;
 }
 
 export interface Tile {
