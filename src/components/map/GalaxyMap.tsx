@@ -5,7 +5,6 @@ import { Hexagon } from './Hexagon';
 import { hexToPixel, key } from '@/lib/hex';
 import { parseMapString } from '@/lib/mapString';
 import { tileImage, MECATOL_TILE_ID } from '@/data/tiles';
-import { factionImage } from '@/data/factions';
 import { seatsClockwiseFrom, type SeatLayout } from '@/data/seats';
 
 export interface SeatOccupant {
@@ -188,8 +187,7 @@ export const GalaxyMap: React.FC<GalaxyMapProps> = ({
             const ord = orderLabel(seat.id); // '', 'Speaker', '2º'...
 
             // Occupied: name + order. Empty: its order once the speaker is known.
-            let label = occ ? (ord ? `${occ.playerName}\n${ord}` : occ.playerName) : ord;
-            if (occ?.factionId) label = isSpeaker ? '★' : ord; // keep faction art readable
+            const label = occ ? (ord ? `${occ.playerName}\n${ord}` : occ.playerName) : ord;
 
             return (
               <g key={id}>
@@ -198,7 +196,6 @@ export const GalaxyMap: React.FC<GalaxyMapProps> = ({
                   size={size}
                   x={x}
                   y={y}
-                  image={occ?.factionId ? factionImage(occ.factionId) : undefined}
                   fill={occ ? 'rgba(16,185,129,0.35)' : canPick ? 'rgba(56,189,248,0.18)' : 'rgba(16,185,129,0.08)'}
                   stroke={isSpeaker ? '#fbbf24' : occ ? '#10b981' : canPick ? '#38bdf8' : 'rgba(16,185,129,0.5)'}
                   strokeWidth={canPick || isSpeaker ? size * 0.07 : size * 0.04}
