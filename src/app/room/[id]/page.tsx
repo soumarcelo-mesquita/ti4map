@@ -78,6 +78,13 @@ function RoomContent() {
     return speaker?.seatId ?? null;
   }, [state]);
 
+  // Browser-tab title carries the player identity (rooms are often opened in
+  // several tabs/devices — one per player).
+  const meName = state ? resolvePlayer(state.players, playerParam)?.name : undefined;
+  useEffect(() => {
+    document.title = meName ? `TI4 Setup — ${meName}` : 'TI4 Setup';
+  }, [meName]);
+
   if (isLoading || !state) {
     return (
       <main className="min-h-screen flex flex-col">
