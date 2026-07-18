@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Hexagon } from './Hexagon';
 import { hexToPixel, key } from '@/lib/hex';
 import { parseMapString } from '@/lib/mapString';
+import { exportMapImage, type MapExportFormat } from '@/lib/exportMap';
 import { tileImage, MECATOL_TILE_ID } from '@/data/tiles';
 import { seatsClockwiseFrom, type SeatLayout } from '@/data/seats';
 
@@ -76,6 +77,20 @@ export const GalaxyMap: React.FC<GalaxyMapProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
   const [view, setView] = useState<ViewState>(DEFAULT_VIEW);
   const [panning, setPanning] = useState(false);
+  const [exporting, setExporting] = useState<MapExportFormat | null>(null);
+
+  const exportAs = async (format: MapExportFormat) => {
+    const svg = svgRef.current;
+    if (!svg || exporting) return;
+    setExporting(format);
+    try {
+      await exportMapImage(svg, format);
+    } catch (err) {
+      console.error('Falha ao exportar o mapa:', err);
+    } finally {
+      setExporting(null);
+    }
+  };
   // Pan gesture in progress (null when idle). Captures the viewBox span at the
   // start of the drag so the math stays stable mid-gesture.
   const drag = useRef<{ x: number; y: number; cx: number; cy: number; vb: number; rw: number; rh: number; moved: boolean } | null>(null);
@@ -154,6 +169,17 @@ export const GalaxyMap: React.FC<GalaxyMapProps> = ({
             className="w-10 h-10 rounded-lg glass border border-white/10 text-white font-black text-lg flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 active:bg-primary/20 transition-all"
           >
             {b.label}
+          </button>
+        ))}
+        {(['png', 'pdf'] as const).map((format) => (
+          <button
+            key={format}
+            title={`Baixar mapa em ${format.toUpperCase()}`}
+            onClick={() => exportAs(format)}
+            disabled={exporting !== null}
+            className="w-10 h-10 rounded-lg glass border border-white/10 text-white font-black text-[10px] flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 active:bg-primary/20 transition-all disabled:opacity-50 disabled:cursor-wait"
+          >
+            {exporting === format ? '…' : format.toUpperCase()}
           </button>
         ))}
       </div>
