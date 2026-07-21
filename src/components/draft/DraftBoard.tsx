@@ -148,7 +148,9 @@ export function PositionSection({ state, me }: DraftSectionProps) {
       <p className="text-[11px] text-slate-400 font-bold rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2.5">
         {hasPicked(me, 'position')
           ? `Você escolheu o assento ${seatLabel(me.seatId)}.`
-          : 'Clique em um assento livre no mapa para escolher sua posição.'}
+          : state.pools.speakerAvailable
+            ? 'O speaker precisa ser escolhido antes de qualquer posição no mapa.'
+            : 'Clique em um assento livre no mapa para escolher sua posição.'}
       </p>
     </section>
   );

@@ -103,7 +103,7 @@ export function hasPicked(player: DraftPlayer, category: DraftCategory): boolean
 }
 
 /** The single Speaker token is still up for grabs (single source of truth = isSpeaker). */
-function speakerOpen(state: DraftState): boolean {
+export function speakerOpen(state: DraftState): boolean {
   return !state.players.some((p) => p.isSpeaker);
 }
 
@@ -111,7 +111,7 @@ function speakerOpen(state: DraftState): boolean {
 function canPick(player: DraftPlayer, state: DraftState): boolean {
   return (
     (state.pools.factions.length > 0 && player.faction === null) ||
-    (state.pools.seats.length > 0 && player.seatId === null) ||
+    (!speakerOpen(state) && state.pools.seats.length > 0 && player.seatId === null) ||
     (state.pools.slices.length > 0 && player.sliceId === null) ||
     (speakerOpen(state) && !player.isSpeaker)
   );
@@ -205,6 +205,9 @@ export function makePick(
     pools.factions = pools.factions.filter((f) => f !== v);
     target.faction = v;
   } else if (category === 'position') {
+    if (speakerOpen(state)) {
+      return { ok: false, state, error: 'Escolha o speaker antes de escolher uma posição.' };
+    }
     const v = String(value);
     if (!pools.seats.includes(v)) return { ok: false, state, error: 'Position unavailable.' };
     pools.seats = pools.seats.filter((s) => s !== v);
@@ -221,6 +224,12 @@ export function makePick(
     if (players.some((p) => p.isSpeaker)) return { ok: false, state, error: 'O speaker já foi escolhido.' };
     pools.speakerAvailable = false;
     target.isSpeaker = true;
+    // Speaker is always seated first (position 1 on the map).
+    const speakerSeatId = getLayout(state.settings.playerCount)?.seats.find((s) => s.label === 'Speaker')?.id;
+    if (speakerSeatId && pools.seats.includes(speakerSeatId)) {
+      pools.seats = pools.seats.filter((s) => s !== speakerSeatId);
+      target.seatId = speakerSeatId;
+    }
   }
 
   let mapString = state.mapString;

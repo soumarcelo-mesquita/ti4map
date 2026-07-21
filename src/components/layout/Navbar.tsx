@@ -17,12 +17,20 @@ export const Navbar = () => {
         </div>
       </Link>
 
-      <Link
-        href="/"
-        className="shrink-0 text-[11px] font-black uppercase tracking-widest text-white hover:text-primary transition-colors"
-      >
-        New Draft
-      </Link>
+      <div className="flex items-center gap-4 sm:gap-6 shrink-0">
+        <Link
+          href="/historico"
+          className="text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors"
+        >
+          Histórico
+        </Link>
+        <Link
+          href="/"
+          className="text-[11px] font-black uppercase tracking-widest text-white hover:text-primary transition-colors"
+        >
+          New Draft
+        </Link>
+      </div>
     </nav>
   );
 };

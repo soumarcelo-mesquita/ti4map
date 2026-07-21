@@ -133,7 +133,7 @@ function RoomContent() {
   const nextId = nextPlayerId(state);
   const nextPlayer = nextId && nextId !== turnId ? state.players.find((p) => p.id === nextId) : null;
 
-  const canPickPosition = isMyTurn && !hasPicked(me, 'position');
+  const canPickPosition = isMyTurn && !hasPicked(me, 'position') && !state.pools.speakerAvailable;
   const pickableSeatIds = canPickPosition ? state.pools.seats : [];
 
   // Clockwise order label for a seat (relative to the speaker), for nicer prompts.
@@ -196,7 +196,11 @@ function RoomContent() {
                   {isMyTurn ? 'Sua vez de escolher' : `Vez de ${turnPlayer?.name ?? '...'}`}
                 </h2>
                 <p className="text-xs text-slate-400">
-                  Escolha <b>um</b>: speaker, facção{state.pools.slices.length > 0 ? ', fatia' : ''} ou posição.
+                  Escolha <b>um</b>: speaker, facção{state.pools.slices.length > 0 ? ', fatia' : ''}
+                  {state.pools.speakerAvailable ? '' : ' ou posição'}.
+                  {state.pools.speakerAvailable && (
+                    <> <span className="text-amber-400/80">Posições liberam após o speaker ser escolhido.</span></>
+                  )}
                   {nextPlayer && (
                     <>
                       {' '}
