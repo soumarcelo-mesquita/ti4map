@@ -1,5 +1,16 @@
 import { Tile, TILES, getTile, optimalValues } from '@/data/tiles';
 import { SliceLayout } from '@/data/slices';
+import { getLayout } from '@/data/seats';
+import { MAP_POSITIONS } from '@/lib/mapString';
+
+/**
+ * Base+PoK anomaly "filler" wormhole tiles (no real planets) — 2 alpha (39,
+ * 79), 2 beta (40, 80). Kept out of the slice draft pool (`draftableTilePool`)
+ * so they can't land inside a player's slice; instead they're scattered into
+ * the map's reserved anomaly slots (`PlayerLayout.empty`) once the draft is
+ * complete, via `placeWormholeAnomalies`.
+ */
+const WORMHOLE_FILLER_IDS = [39, 40, 79, 80];
 
 export interface SliceBalanceConfig {
   minOptimalResources: number;
@@ -19,6 +30,7 @@ export interface SliceBalanceConfig {
 export function draftableTilePool(includePoK: boolean, includeTE: boolean = false): Tile[] {
   return TILES.filter((t) => {
     if (!t.draft) return false;
+    if (WORMHOLE_FILLER_IDS.includes(t.id)) return false;
     if (t.id <= 50) return true;
     if (t.id < 92) return includePoK;
     return includeTE;
@@ -167,6 +179,33 @@ export function placeSliceAtSeat(mapString: string, seatTemplate: SliceLayout, c
   const tokens = mapString.trim().split(/\s+/);
   seatTemplate.tiles.forEach((pos, i) => {
     if (content[i] !== undefined) tokens[pos - 1] = String(content[i]);
+  });
+  return tokens.join(' ');
+}
+
+/**
+ * Scatters the reserved wormhole filler tiles (2 alpha, 2 beta when PoK is
+ * included; 1 of each otherwise) across the map's anomaly slots
+ * (`PlayerLayout.empty`), in random order and random slots — the two alpha
+ * tiles and the two beta tiles are shuffled independently of each other, so
+ * a pair never lands together by design. No-op for player counts without
+ * reserved anomaly slots.
+ */
+export function placeWormholeAnomalies(mapString: string, playerCount: number, includePoK: boolean): string {
+  const layout = getLayout(playerCount);
+  if (!layout || layout.empty.length === 0) return mapString;
+
+  const tileIds = shuffleSeeded(
+    WORMHOLE_FILLER_IDS.filter((id) => id <= 50 || includePoK),
+    Math.random,
+  );
+  const slots = shuffleSeeded(layout.empty, Math.random);
+
+  const tokens = mapString.trim().split(/\s+/);
+  tileIds.slice(0, slots.length).forEach((tileId, i) => {
+    const [q, r] = slots[i];
+    const pos = MAP_POSITIONS.findIndex((p) => p.q === q && p.r === r);
+    if (pos >= 0) tokens[pos] = String(tileId);
   });
   return tokens.join(' ');
 }

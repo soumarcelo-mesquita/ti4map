@@ -2,7 +2,7 @@ import { DraftCategory, DraftPlayer, DraftState, DraftSettings } from '@/types/d
 import { factionPool } from '@/data/factions';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
-import { generateBalancedAssignment, placeSliceAtSeat, SliceBalanceConfig } from '@/lib/sliceBalance';
+import { generateBalancedAssignment, placeSliceAtSeat, placeWormholeAnomalies, SliceBalanceConfig } from '@/lib/sliceBalance';
 
 /** Starting point for 7-tile slices; calibrate by playtest (see docs/slice-balance-draft.md). */
 const DEFAULT_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
@@ -244,7 +244,18 @@ export function makePick(
   let next: DraftState = { ...state, players, pools, mapString };
 
   if (isComplete(next)) {
-    next = { ...next, status: 'complete', gameOrder: computeGameOrder(players, state.settings.playerCount) };
+    // Slice-draft rooms reserve the map's anomaly slots (empty during the
+    // draft) for the wormhole filler tiles; scatter them only once the draft
+    // is done, so seat/slice picks can't be made based on where they land.
+    const finalMapString = state.settings.sliceAssignment
+      ? placeWormholeAnomalies(next.mapString, state.settings.playerCount, state.settings.includePoK)
+      : next.mapString;
+    next = {
+      ...next,
+      mapString: finalMapString,
+      status: 'complete',
+      gameOrder: computeGameOrder(players, state.settings.playerCount),
+    };
   } else {
     const { currentTurnIndex, isSnakeDescending } = advanceTurn(next);
     next = { ...next, currentTurnIndex, isSnakeDescending };

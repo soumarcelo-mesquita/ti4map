@@ -125,8 +125,14 @@ como valor definitivo:
 - Aceitar "melhor esforço" após `maxAttempts` ou travar até achar uma
   combinação perfeita (Milty aparentemente aceita o que sair dentro das
   regras — não fica claro se ele também tem um teto de tentativas).
-- Wormhole/home (3,6,20,29 / 23,27,32,36) entram no sorteio no futuro ou
-  ficam fora para sempre?
+- ~~Wormhole/home (3,6,20,29 / 23,27,32,36) entram no sorteio no futuro ou
+  ficam fora para sempre?~~ Resolvido: home nunca entra; wormhole (as 2 fatias
+  filler sem planeta, 39/79 alpha e 40/80 beta) ficam fora de
+  `draftableTilePool` e são sorteadas separadamente nas posições vazias
+  (`PlayerLayout.empty`) só quando o draft termina (`placeWormholeAnomalies`
+  em `sliceBalance.ts`, chamada em `draftEngine.ts` no momento em que
+  `status` vira `'complete'`) — assim a posição delas não influencia a
+  escolha de assento/fatia durante o draft.
 - Config fixa no código vs. exposta na tela de criação de sala (como a aba
   CONFIG do Milty).
 - Vale a pena guardar o `seed` visível pro usuário (tipo "Session" do Milty),
