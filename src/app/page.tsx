@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { useRoomStore } from '@/store/roomStore';
-import { createDraftState } from '@/lib/draftEngine';
+import { createDraftState, createVetoState } from '@/lib/draftEngine';
 import { isValidMapString } from '@/lib/mapString';
 import { SUPPORTED_PLAYER_COUNTS } from '@/data/seats';
 import { factionPool, factionImage } from '@/data/factions';
@@ -28,6 +28,8 @@ export default function Home() {
   const [mapString, setMapString] = useState('');
   const [factionPoolSize, setFactionPoolSize] = useState(8);
   const [excludedFactionIds, setExcludedFactionIds] = useState<Set<string>>(new Set());
+  const [enableFactionVetoes, setEnableFactionVetoes] = useState(false);
+  const [vetoCount, setVetoCount] = useState(1);
   const [useSliceDraft, setUseSliceDraft] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +46,7 @@ export default function Home() {
     setExcludedFactionIds(next);
     const newMax = availableFactions.filter((f) => !next.has(f.id)).length;
     setFactionPoolSize((prev) => Math.min(prev, newMax));
+    setVetoCount((prev) => Math.max(0, Math.min(prev, newMax - playerCount)));
   };
 
   const toggleExpansion = (expansion: 'pok' | 'te') => {
@@ -54,6 +57,7 @@ export default function Home() {
     const newAvailable = factionPool(nextPoK, nextTE);
     const newMax = newAvailable.filter((f) => !excludedFactionIds.has(f.id)).length;
     setFactionPoolSize((prev) => Math.min(prev, newMax));
+    setVetoCount((prev) => Math.max(0, Math.min(prev, newMax - playerCount)));
   };
 
   const setCount = (count: number) => {
@@ -65,6 +69,7 @@ export default function Home() {
       return next;
     });
     setFactionPoolSize(Math.min(count + 2, maxFactions));
+    setVetoCount((prev) => Math.max(0, Math.min(prev, maxFactions - count)));
     if (getSliceLayouts(count) === undefined) setUseSliceDraft(false);
   };
 
@@ -81,7 +86,7 @@ export default function Home() {
     }
     setLoading(true);
     try {
-      const state = createDraftState({
+      const baseConfig = {
         playerNames: names.slice(0, playerCount),
         playerCount,
         mapString: finalMapString,
@@ -89,7 +94,11 @@ export default function Home() {
         includeTE,
         factionPoolSize,
         excludedFactionIds: Array.from(excludedFactionIds),
-      });
+      };
+      const state =
+        enableFactionVetoes && vetoCount > 0
+          ? createVetoState({ ...baseConfig, vetoCount })
+          : createDraftState(baseConfig);
       const id = await createRoom(`Draft TI4 — ${playerCount}p`, state);
       if (!id) throw new Error('Falha ao criar a sala no Supabase.');
       router.push(`/room/${id}?player=${encodeURIComponent(state.players[0].name)}`);
@@ -178,12 +187,6 @@ export default function Home() {
                   Draft com fatias balanceadas
                 </button>
               </div>
-              {useSliceDraft && (
-                <p className="text-[11px] text-slate-400 font-bold rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2.5">
-                  4 fatias com sistemas sorteados e balanceados (recursos/influência). Fatia e
-                  assento são escolhas independentes — escolha as duas, em qualquer ordem.
-                </p>
-              )}
             </section>
           )}
 
@@ -255,50 +258,91 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Faction selection */}
+          {/* Vetos / exclusão de facções */}
           <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                Facções no draft ({eligibleFactionCount}/{availableFactions.length})
-              </label>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setExcludedFactionIds(new Set())}
-                  className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
-                >
-                  Selecionar todas
-                </button>
-                <button
-                  onClick={() => setExcludedFactionIds(new Set(availableFactions.map((f) => f.id)))}
-                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:underline"
-                >
-                  Limpar
-                </button>
+            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={enableFactionVetoes}
+                onChange={(e) => setEnableFactionVetoes(e.target.checked)}
+                className="w-4 h-4 rounded accent-primary"
+              />
+              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                Vetar facções antes do draft
+              </span>
+            </label>
+
+            {enableFactionVetoes && (
+              <div className="space-y-5 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                    Vetos secretos por jogador
+                  </label>
+                  <p className="text-[11px] text-slate-400 font-bold">
+                    Antes do draft, cada jogador vai vetar facções em segredo; quando todos confirmarem, o draft
+                    começa sem elas. Mais de um jogador pode vetar a mesma facção.
+                  </p>
+                  <input
+                    type="number"
+                    min={0}
+                    max={Math.max(0, eligibleFactionCount - playerCount)}
+                    value={vetoCount}
+                    onChange={(e) =>
+                      setVetoCount(
+                        Math.max(0, Math.min(eligibleFactionCount - playerCount, parseInt(e.target.value) || 0)),
+                      )
+                    }
+                    className="w-24 bg-white/5 border border-white/10 rounded-xl py-2.5 px-4 text-center text-sm font-bold text-white focus:outline-none"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                      Remover facções do draft ({eligibleFactionCount}/{availableFactions.length})
+                    </label>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setExcludedFactionIds(new Set())}
+                        className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
+                      >
+                        Selecionar todas
+                      </button>
+                      <button
+                        onClick={() => setExcludedFactionIds(new Set(availableFactions.map((f) => f.id)))}
+                        className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:underline"
+                      >
+                        Limpar
+                      </button>
+                    </div>
+                  </div>
+                  <ul className="max-h-72 overflow-y-auto pr-1 space-y-1.5">
+                    {availableFactions.map((f) => {
+                      const isExcluded = excludedFactionIds.has(f.id);
+                      return (
+                        <li key={f.id}>
+                          <button
+                            onClick={() => toggleFaction(f.id)}
+                            className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-xs font-black transition-all ${
+                              isExcluded
+                                ? 'border-white/5 bg-white/5 text-slate-600 opacity-40'
+                                : 'border-primary/40 bg-primary/10 text-white hover:bg-primary/20 hover:border-primary'
+                            }`}
+                          >
+                            <Image src={factionImage(f.id)} alt={f.name} width={24} height={24} />
+                            <span>{f.name}</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  {eligibleFactionCount < playerCount && (
+                    <p className="text-[11px] text-red-400 font-bold">
+                      Restam poucas facções para {playerCount} jogadores — reative algumas.
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-2 max-h-72 overflow-y-auto pr-1">
-              {availableFactions.map((f) => {
-                const isExcluded = excludedFactionIds.has(f.id);
-                return (
-                  <button
-                    key={f.id}
-                    onClick={() => toggleFaction(f.id)}
-                    className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
-                      isExcluded
-                        ? 'border-white/5 bg-white/5 text-slate-600 opacity-40'
-                        : 'border-primary/40 bg-primary/10 text-white hover:bg-primary/20 hover:border-primary'
-                    }`}
-                  >
-                    <Image src={factionImage(f.id)} alt={f.name} width={28} height={28} />
-                    <span className="text-[9px] opacity-80 text-center leading-tight">{f.name}</span>
-                  </button>
-                );
-              })}
-            </div>
-            {eligibleFactionCount < playerCount && (
-              <p className="text-[11px] text-red-400 font-bold">
-                Restam poucas facções para {playerCount} jogadores — reative algumas.
-              </p>
             )}
           </section>
 

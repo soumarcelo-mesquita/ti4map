@@ -28,10 +28,14 @@ export interface DraftSettings {
   sliceSeed?: number;
   /** sliceId -> 7 drafted tileIds (slice-draft mode only) */
   sliceAssignment?: Record<string, number[]>;
+  /** host-chosen factions that never enter the pool, kept around so the veto phase can finalize on top of them */
+  excludedFactionIds?: string[];
+  /** how many factions each player secretly vetoes before the draft starts; 0/absent skips the veto phase */
+  vetoCount?: number;
 }
 
 export interface DraftState {
-  status: 'drafting' | 'complete';
+  status: 'veto' | 'drafting' | 'complete';
   mapString: string;
   settings: DraftSettings;
   players: DraftPlayer[];
@@ -41,4 +45,10 @@ export interface DraftState {
   isSnakeDescending: boolean;
   /** final game order (player ids by speaker slot), set when complete */
   gameOrder: string[] | null;
+}
+
+/** One player's secret faction vetoes, as stored in the `room_vetoes` table. */
+export interface VetoSubmission {
+  playerId: string;
+  factionIds: string[];
 }

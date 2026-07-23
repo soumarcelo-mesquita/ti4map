@@ -5,11 +5,12 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { GalaxyMap, type SeatOccupant } from '@/components/map/GalaxyMap';
 import { SpeakerSection, FactionSection, SliceSection, PositionSection } from '@/components/draft/DraftBoard';
+import { VetoBoard } from '@/components/draft/VetoBoard';
 import { Roster } from '@/components/draft/Roster';
 import { useRoomStore } from '@/store/roomStore';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { getFaction } from '@/data/factions';
-import { currentPlayerId, nextPlayerId, hasPicked, makePick } from '@/lib/draftEngine';
+import { currentPlayerId, nextPlayerId, hasPicked, makePick, finalizeVetoPhase } from '@/lib/draftEngine';
 import type { DraftCategory, DraftPlayer } from '@/types/draft';
 
 interface PendingPick {
@@ -54,7 +55,7 @@ function RoomContent() {
   const search = useSearchParams();
   const playerParam = search.get('player');
 
-  const { state, isLoading, error, loadRoom, saveState, leaveRoom } = useRoomStore();
+  const { state, vetoes, isLoading, error, loadRoom, saveState, submitVeto, leaveRoom } = useRoomStore();
   const [pickError, setPickError] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingPick | null>(null);
 
@@ -172,6 +173,27 @@ function RoomContent() {
     }
     await saveState(result.state);
   };
+
+  const confirmVeto = async (factionIds: string[]) => {
+    const allVetoes = await submitVeto(params.id, myPlayerId, factionIds);
+    if (allVetoes.length >= state.players.length) {
+      const unionIds = Array.from(new Set(allVetoes.flatMap((v) => v.factionIds)));
+      await saveState(finalizeVetoPhase(state, unionIds));
+    }
+  };
+
+  if (state.status === 'veto') {
+    return (
+      <main className="min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-start justify-center p-4 sm:p-6 lg:p-12">
+          <div className="w-full max-w-3xl">
+            <VetoBoard state={state} me={me} vetoes={vetoes} onConfirm={confirmVeto} />
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen flex flex-col">

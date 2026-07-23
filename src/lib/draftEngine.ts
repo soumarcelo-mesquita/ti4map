@@ -36,6 +36,17 @@ export interface CreateDraftConfig {
   excludedFactionIds?: string[];
 }
 
+function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[] {
+  return Array.from({ length: playerCount }, (_, i) => ({
+    id: `player-${i}`,
+    name: playerNames[i]?.trim() || `Player ${i + 1}`,
+    faction: null,
+    seatId: null,
+    sliceId: null,
+    isSpeaker: false,
+  }));
+}
+
 export function createDraftState(config: CreateDraftConfig): DraftState {
   const { playerNames, playerCount, mapString, includePoK } = config;
   const includeTE = config.includeTE ?? false;
@@ -47,14 +58,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     throw new Error(`Unsupported player count: ${playerCount}`);
   }
 
-  const players: DraftPlayer[] = Array.from({ length: playerCount }, (_, i) => ({
-    id: `player-${i}`,
-    name: playerNames[i]?.trim() || `Player ${i + 1}`,
-    faction: null,
-    seatId: null,
-    sliceId: null,
-    isSpeaker: false,
-  }));
+  const players: DraftPlayer[] = buildPlayers(playerNames, playerCount);
 
   const eligibleFactions = factionPool(includePoK, includeTE).filter((f) => !excludedFactionIds.includes(f.id));
   const factions = shuffle(eligibleFactions.map((f) => f.id)).slice(0, factionPoolSize);
@@ -63,7 +67,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
   const seats = layout.seats.map((s) => s.id);
   const slices = isSliceDraft && sliceLayouts ? sliceLayouts.map((s) => s.id) : [];
 
-  const settings: DraftSettings = { playerCount, includePoK, includeTE, factionPoolSize, mapString };
+  const settings: DraftSettings = { playerCount, includePoK, includeTE, factionPoolSize, mapString, excludedFactionIds };
   if (isSliceDraft && sliceLayouts) {
     const { assignment, seed } = generateBalancedAssignment(sliceLayouts, DEFAULT_SLICE_BALANCE_CONFIG, undefined, includePoK, includeTE);
     settings.sliceSeed = seed;
@@ -81,6 +85,80 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     isSnakeDescending: true,
     gameOrder: null,
   };
+}
+
+export interface CreateVetoPhaseConfig extends CreateDraftConfig {
+  /** how many factions each player must secretly veto before the draft starts */
+  vetoCount: number;
+}
+
+/**
+ * A pre-draft room: players are seated but nothing is shuffled yet — the
+ * faction pool is resolved by `finalizeVetoPhase` once every player has
+ * submitted their secret vetoes.
+ */
+export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
+  const { playerNames, playerCount, mapString, includePoK } = config;
+  const includeTE = config.includeTE ?? false;
+  const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
+  const excludedFactionIds = config.excludedFactionIds ?? [];
+
+  if (!getLayout(playerCount)) {
+    throw new Error(`Unsupported player count: ${playerCount}`);
+  }
+
+  const settings: DraftSettings = {
+    playerCount,
+    includePoK,
+    includeTE,
+    factionPoolSize,
+    mapString,
+    excludedFactionIds,
+    vetoCount: config.vetoCount,
+  };
+
+  return {
+    status: 'veto',
+    mapString,
+    settings,
+    players: buildPlayers(playerNames, playerCount),
+    pools: { factions: [], seats: [], slices: [], speakerAvailable: true },
+    turnOrder: [],
+    currentTurnIndex: 0,
+    isSnakeDescending: true,
+    gameOrder: null,
+  };
+}
+
+/**
+ * Resolves the veto phase into the real drafting state. `vetoedFactionIds` is
+ * the union of every player's secret picks (duplicates collapse — a faction
+ * vetoed by more than one player is only removed once). Caps how many are
+ * actually excluded so at least `playerCount` factions remain, protecting
+ * against a degenerate case where combined vetoes would empty the pool.
+ */
+export function finalizeVetoPhase(state: DraftState, vetoedFactionIds: string[]): DraftState {
+  if (state.status !== 'veto') {
+    throw new Error('Draft is not in the veto phase.');
+  }
+  const { settings } = state;
+  const hostExcluded = settings.excludedFactionIds ?? [];
+  const eligibleAfterHostExclusion = factionPool(settings.includePoK, settings.includeTE ?? false).filter(
+    (f) => !hostExcluded.includes(f.id),
+  );
+  const uniqueVetoes = Array.from(new Set(vetoedFactionIds));
+  const maxVetoable = Math.max(0, eligibleAfterHostExclusion.length - settings.playerCount);
+  const cappedVetoes = uniqueVetoes.slice(0, maxVetoable);
+
+  return createDraftState({
+    playerNames: state.players.map((p) => p.name),
+    playerCount: settings.playerCount,
+    mapString: state.mapString,
+    includePoK: settings.includePoK,
+    includeTE: settings.includeTE,
+    factionPoolSize: settings.factionPoolSize,
+    excludedFactionIds: [...hostExcluded, ...cappedVetoes],
+  });
 }
 
 export function currentPlayerId(state: DraftState): string | null {
