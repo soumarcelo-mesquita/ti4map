@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { useRoomStore } from '@/store/roomStore';
 import { createDraftState } from '@/lib/draftEngine';
 import { isValidMapString } from '@/lib/mapString';
 import { SUPPORTED_PLAYER_COUNTS } from '@/data/seats';
-import { factionPool } from '@/data/factions';
+import { factionPool, factionImage } from '@/data/factions';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
 
 const DEFAULT_NAMES = ['Marcelo', 'Wesley', 'Sam', 'Lucas', 'Estranho', 'Saulo'];
@@ -26,12 +27,34 @@ export default function Home() {
   const [includeTE, setIncludeTE] = useState(false);
   const [mapString, setMapString] = useState('');
   const [factionPoolSize, setFactionPoolSize] = useState(8);
+  const [excludedFactionIds, setExcludedFactionIds] = useState<Set<string>>(new Set());
   const [useSliceDraft, setUseSliceDraft] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const maxFactions = factionPool(includePoK, includeTE).length;
+  const availableFactions = factionPool(includePoK, includeTE);
+  const eligibleFactionCount = availableFactions.filter((f) => !excludedFactionIds.has(f.id)).length;
+  const maxFactions = eligibleFactionCount;
   const sliceDraftAvailable = getSliceLayouts(playerCount) !== undefined;
+
+  const toggleFaction = (id: string) => {
+    const next = new Set(excludedFactionIds);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setExcludedFactionIds(next);
+    const newMax = availableFactions.filter((f) => !next.has(f.id)).length;
+    setFactionPoolSize((prev) => Math.min(prev, newMax));
+  };
+
+  const toggleExpansion = (expansion: 'pok' | 'te') => {
+    const nextPoK = expansion === 'pok' ? !includePoK : includePoK;
+    const nextTE = expansion === 'te' ? !includeTE : includeTE;
+    if (expansion === 'pok') setIncludePoK(nextPoK);
+    else setIncludeTE(nextTE);
+    const newAvailable = factionPool(nextPoK, nextTE);
+    const newMax = newAvailable.filter((f) => !excludedFactionIds.has(f.id)).length;
+    setFactionPoolSize((prev) => Math.min(prev, newMax));
+  };
 
   const setCount = (count: number) => {
     setPlayerCount(count);
@@ -52,6 +75,10 @@ export default function Home() {
       setError('Cole uma map string válida (lista de IDs de tile separados por espaço).');
       return;
     }
+    if (eligibleFactionCount < playerCount) {
+      setError('Facções demais foram excluídas — restam menos opções do que jogadores.');
+      return;
+    }
     setLoading(true);
     try {
       const state = createDraftState({
@@ -61,6 +88,7 @@ export default function Home() {
         includePoK,
         includeTE,
         factionPoolSize,
+        excludedFactionIds: Array.from(excludedFactionIds),
       });
       const id = await createRoom(`Draft TI4 — ${playerCount}p`, state);
       if (!id) throw new Error('Falha ao criar a sala no Supabase.');
@@ -187,7 +215,7 @@ export default function Home() {
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expansões</label>
               <div className="flex gap-2">
                 <button
-                  onClick={() => setIncludePoK((v) => !v)}
+                  onClick={() => toggleExpansion('pok')}
                   className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
                     includePoK
                       ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
@@ -197,7 +225,7 @@ export default function Home() {
                   PoK
                 </button>
                 <button
-                  onClick={() => setIncludeTE((v) => !v)}
+                  onClick={() => toggleExpansion('te')}
                   className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
                     includeTE
                       ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
@@ -227,6 +255,53 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Faction selection */}
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                Facções no draft ({eligibleFactionCount}/{availableFactions.length})
+              </label>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setExcludedFactionIds(new Set())}
+                  className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
+                >
+                  Selecionar todas
+                </button>
+                <button
+                  onClick={() => setExcludedFactionIds(new Set(availableFactions.map((f) => f.id)))}
+                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:underline"
+                >
+                  Limpar
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-2 max-h-72 overflow-y-auto pr-1">
+              {availableFactions.map((f) => {
+                const isExcluded = excludedFactionIds.has(f.id);
+                return (
+                  <button
+                    key={f.id}
+                    onClick={() => toggleFaction(f.id)}
+                    className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
+                      isExcluded
+                        ? 'border-white/5 bg-white/5 text-slate-600 opacity-40'
+                        : 'border-primary/40 bg-primary/10 text-white hover:bg-primary/20 hover:border-primary'
+                    }`}
+                  >
+                    <Image src={factionImage(f.id)} alt={f.name} width={28} height={28} />
+                    <span className="text-[9px] opacity-80 text-center leading-tight">{f.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {eligibleFactionCount < playerCount && (
+              <p className="text-[11px] text-red-400 font-bold">
+                Restam poucas facções para {playerCount} jogadores — reative algumas.
+              </p>
+            )}
+          </section>
+
           {error && (
             <p className="text-sm font-bold text-red-400 bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3">
               {error}
@@ -235,7 +310,7 @@ export default function Home() {
 
           <button
             onClick={handleCreate}
-            disabled={loading}
+            disabled={loading || eligibleFactionCount < playerCount}
             className="w-full py-4 rounded-2xl bg-white text-slate-950 font-black text-lg hover:bg-primary transition-all disabled:opacity-50"
           >
             {loading ? 'Criando...' : 'Iniciar draft'}

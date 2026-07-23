@@ -32,12 +32,15 @@ export interface CreateDraftConfig {
   includeTE?: boolean;
   /** number of factions in the draft pool (defaults to playerCount + 2) */
   factionPoolSize?: number;
+  /** faction ids to keep out of the draft pool entirely */
+  excludedFactionIds?: string[];
 }
 
 export function createDraftState(config: CreateDraftConfig): DraftState {
   const { playerNames, playerCount, mapString, includePoK } = config;
   const includeTE = config.includeTE ?? false;
   const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
+  const excludedFactionIds = config.excludedFactionIds ?? [];
 
   const layout = getLayout(playerCount);
   if (!layout) {
@@ -53,7 +56,8 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     isSpeaker: false,
   }));
 
-  const factions = shuffle(factionPool(includePoK, includeTE).map((f) => f.id)).slice(0, factionPoolSize);
+  const eligibleFactions = factionPool(includePoK, includeTE).filter((f) => !excludedFactionIds.includes(f.id));
+  const factions = shuffle(eligibleFactions.map((f) => f.id)).slice(0, factionPoolSize);
   const sliceLayouts = getSliceLayouts(playerCount);
   const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
   const seats = layout.seats.map((s) => s.id);
