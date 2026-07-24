@@ -4,13 +4,26 @@ import { getLayout } from '@/data/seats';
 import { MAP_POSITIONS } from '@/lib/mapString';
 
 /**
- * Base+PoK anomaly "filler" wormhole tiles (no real planets) — 2 alpha (39,
- * 79), 2 beta (40, 80). Kept out of the slice draft pool (`draftableTilePool`)
- * so they can't land inside a player's slice; instead they're scattered into
- * the map's reserved anomaly slots (`PlayerLayout.empty`) once the draft is
- * complete, via `placeWormholeAnomalies`.
+ * Anomaly "filler" wormhole tiles (no real planets). Kept out of the slice
+ * draft pool (`draftableTilePool`) so they can't land inside a player's
+ * slice; instead they're scattered into the map's reserved anomaly slots
+ * (`PlayerLayout.empty`) once the draft is complete, via
+ * `placeWormholeAnomalies`.
+ *
+ * Base game supplies one pair (39 alpha, 40 beta). PoK adds a second alpha
+ * (79) but no matching no-planet beta — tile 80 looks like it should be one
+ * but its art is a supernova, not a wormhole, so it's excluded here. Thunder's
+ * Edge supplies the missing second beta (113).
  */
-const WORMHOLE_FILLER_IDS = [39, 40, 79, 80];
+const WORMHOLE_FILLER_IDS = [39, 40, 79, 113];
+
+function activeWormholeFillerIds(includePoK: boolean, includeTE: boolean): number[] {
+  return WORMHOLE_FILLER_IDS.filter((id) => {
+    if (id === 79) return includePoK;
+    if (id === 113) return includeTE;
+    return true;
+  });
+}
 
 export interface SliceBalanceConfig {
   minOptimalResources: number;
@@ -184,21 +197,21 @@ export function placeSliceAtSeat(mapString: string, seatTemplate: SliceLayout, c
 }
 
 /**
- * Scatters the reserved wormhole filler tiles (2 alpha, 2 beta when PoK is
- * included; 1 of each otherwise) across the map's anomaly slots
- * (`PlayerLayout.empty`), in random order and random slots — the two alpha
- * tiles and the two beta tiles are shuffled independently of each other, so
- * a pair never lands together by design. No-op for player counts without
- * reserved anomaly slots.
+ * Scatters the reserved wormhole filler tiles across the map's anomaly slots
+ * (`PlayerLayout.empty`), in random order and random slots. Base games get 1
+ * alpha + 1 beta; PoK adds a second alpha; Thunder's Edge adds the second
+ * beta. No-op for player counts without reserved anomaly slots.
  */
-export function placeWormholeAnomalies(mapString: string, playerCount: number, includePoK: boolean): string {
+export function placeWormholeAnomalies(
+  mapString: string,
+  playerCount: number,
+  includePoK: boolean,
+  includeTE: boolean = false,
+): string {
   const layout = getLayout(playerCount);
   if (!layout || layout.empty.length === 0) return mapString;
 
-  const tileIds = shuffleSeeded(
-    WORMHOLE_FILLER_IDS.filter((id) => id <= 50 || includePoK),
-    Math.random,
-  );
+  const tileIds = shuffleSeeded(activeWormholeFillerIds(includePoK, includeTE), Math.random);
   const slots = shuffleSeeded(layout.empty, Math.random);
 
   const tokens = mapString.trim().split(/\s+/);

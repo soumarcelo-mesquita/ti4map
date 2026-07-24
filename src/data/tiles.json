@@ -1358,7 +1358,7 @@
     "home": false,
     "faction": null,
     "draft": true,
-    "wormhole": "beta",
+    "wormhole": null,
     "planets": []
   },
   {

@@ -330,7 +330,12 @@ export function makePick(
     // draft) for the wormhole filler tiles; scatter them only once the draft
     // is done, so seat/slice picks can't be made based on where they land.
     const finalMapString = state.settings.sliceAssignment
-      ? placeWormholeAnomalies(next.mapString, state.settings.playerCount, state.settings.includePoK)
+      ? placeWormholeAnomalies(
+          next.mapString,
+          state.settings.playerCount,
+          state.settings.includePoK,
+          state.settings.includeTE ?? false,
+        )
       : next.mapString;
     next = {
       ...next,
