@@ -4,7 +4,7 @@ import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
 import { generateBalancedAssignment, placeSliceAtSeat, placeWormholeAnomalies, SliceBalanceConfig } from '@/lib/sliceBalance';
 
-/** Starting point for 7-tile slices; calibrate by playtest (see docs/slice-balance-draft.md). */
+/** Starting point for 7-tile slices (4p); calibrate by playtest (see docs/slice-balance-draft.md). */
 const DEFAULT_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
   minOptimalResources: 3.5,
   minOptimalInfluence: 5.5,
@@ -13,6 +13,28 @@ const DEFAULT_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
   maxWormholesPerSlice: Infinity,
   minLegendaryPlanets: 0,
   maxAttempts: 1000,
+};
+
+/**
+ * Starting point for 5-tile slices (6p, and 5p once it gets a layout) — a
+ * 7-tile config's thresholds are unreachable with 2 fewer tiles. These reuse
+ * Milty Draft's own 5-tile reference numbers (docs/slice-balance-draft.md)
+ * rather than a proportional guess; still calibrate by playtest.
+ *
+ * maxAttempts is higher than the 4p config's: with PoK/TE on, the draftable
+ * pool (70 tiles) is much bigger than what 6 slices need (30), so a passing
+ * split takes ~1600 shuffles on average (measured), occasionally a few
+ * thousand more — 1000 attempts left it unbalanced almost every room. 20000
+ * attempts costs ~15ms (measured) and hits 100% in testing.
+ */
+const FIVE_TILE_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
+  minOptimalResources: 2.5,
+  minOptimalInfluence: 4,
+  minOptimalTotal: 9,
+  maxOptimalTotal: 13,
+  maxWormholesPerSlice: Infinity,
+  minLegendaryPlanets: 0,
+  maxAttempts: 20000,
 };
 
 function shuffle<T>(arr: T[]): T[] {
@@ -69,7 +91,8 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
 
   const settings: DraftSettings = { playerCount, includePoK, includeTE, factionPoolSize, mapString, excludedFactionIds };
   if (isSliceDraft && sliceLayouts) {
-    const { assignment, seed } = generateBalancedAssignment(sliceLayouts, DEFAULT_SLICE_BALANCE_CONFIG, undefined, includePoK, includeTE);
+    const balanceConfig = sliceLayouts[0].tiles.length <= 5 ? FIVE_TILE_SLICE_BALANCE_CONFIG : DEFAULT_SLICE_BALANCE_CONFIG;
+    const { assignment, seed } = generateBalancedAssignment(sliceLayouts, balanceConfig, undefined, includePoK, includeTE);
     settings.sliceSeed = seed;
     settings.sliceAssignment = assignment;
   }

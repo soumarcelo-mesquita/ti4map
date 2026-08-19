@@ -137,10 +137,11 @@ export interface BalancedAssignmentResult {
 }
 
 /**
- * Draws real tile ids for each slice's 7 content slots, trying to respect
+ * Draws real tile ids for each slice's content slots, trying to respect
  * `config`. Physical board positions of `slices` don't matter here — only
- * `.id` and the count (7 tiles each) — placement onto a seat's positions
- * happens later, via `placeSliceAtSeat`.
+ * `.id` and the tile count (read off `tiles.length`, e.g. 7 for 4p, 5 for
+ * 6p) — placement onto a seat's positions happens later, via
+ * `placeSliceAtSeat`.
  */
 export function generateBalancedAssignment(
   slices: SliceLayout[],
@@ -151,7 +152,7 @@ export function generateBalancedAssignment(
 ): BalancedAssignmentResult {
   const usedSeed = seed ?? Math.floor(Math.random() * 2 ** 32);
   const pool = draftableTilePool(includePoK, includeTE).map((t) => t.id);
-  const tilesPerSlice = 7;
+  const tilesPerSlice = slices[0]?.tiles.length ?? 7;
 
   let best: number[][] | null = null;
   let bestVariance = Infinity;
