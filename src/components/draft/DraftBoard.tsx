@@ -95,8 +95,9 @@ export function FactionSection(props: DraftSectionProps) {
 }
 
 /**
- * Fatias — conteúdo sorteado (7 sistemas balanceados), independente do
- * assento. O assento é escolhido separadamente na seção "Posição".
+ * Fatias — conteúdo sorteado (sistemas balanceados; 7 em 4p, 5 em 6p),
+ * independente do assento. O assento é escolhido separadamente na seção
+ * "Posição".
  * Renders nothing for rooms without slice draft.
  */
 export function SliceSection(props: DraftSectionProps) {

@@ -1,5 +1,13 @@
 # Handout: sorteio balanceado de fatias (4 jogadores, sem hyperlanes)
 
+> **Atualização:** 6 jogadores também tem `SLICE_LAYOUTS[6]` implementado
+> (`src/data/slices.ts`), com fatias de 5 tiles (não 7 — o tabuleiro de 36
+> posições dá 6 homes + 30 de fatia = 5 por assento). Usa a config de 5 tiles
+> da tabela abaixo (números do próprio Milty), com `maxAttempts: 20000` em vez
+> de 1000 — o pool draftável com PoK/TE fica bem maior que os 30 tiles
+> necessários, e o "melhor achado" raramente bate as regras antes disso. 5p
+> segue sem layout de fatia (mesma lacuna, ainda não implementada).
+
 Documento de partida para implementar o próximo passo do draft de fatias:
 hoje as 4 fatias do 4p já têm posição/formato fixos e validados
 (`src/data/slices.ts`), mas as 6 posições não-home de cada uma são apenas

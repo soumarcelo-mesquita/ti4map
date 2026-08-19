@@ -8,6 +8,11 @@
  *
  * Ported from the legacy map.json (4/5/6). 7/8-player layouts are not yet
  * supported — see SUPPORTED_PLAYER_COUNTS.
+ *
+ * The 6-player layout is a single shape rotated 60° per seat (verified against
+ * `p1`'s offsets); `p3`'s last slice tile was `[3, 1]` in the legacy data,
+ * which falls outside the 3-ring board (ring distance 4) and left `[2, 1]`
+ * unused — corrected here to `[2, 1]` per that rotation.
  */
 
 export type Coord = [number, number];
@@ -53,7 +58,7 @@ const LAYOUTS: Record<number, PlayerLayout> = {
     seats: [
       { id: 'p1', label: 'Speaker', home: [0, -3], slice: [[0, -1], [0, -2], [-1, -1], [-1, -2], [1, -3]] },
       { id: 'p2', label: '2º', home: [3, -3], slice: [[1, -1], [2, -2], [1, -2], [2, -3], [3, -2]] },
-      { id: 'p3', label: '3º', home: [3, 0], slice: [[1, 0], [2, 0], [2, -1], [3, -1], [3, 1]] },
+      { id: 'p3', label: '3º', home: [3, 0], slice: [[1, 0], [2, 0], [2, -1], [3, -1], [2, 1]] },
       { id: 'p4', label: '4º', home: [0, 3], slice: [[0, 1], [0, 2], [1, 1], [1, 2], [-1, 3]] },
       { id: 'p5', label: '5º', home: [-3, 3], slice: [[-1, 1], [-2, 2], [-1, 2], [-2, 3], [-3, 2]] },
       { id: 'p6', label: '6º', home: [-3, 0], slice: [[-1, 0], [-2, 0], [-2, 1], [-3, 1], [-2, -1]] },
