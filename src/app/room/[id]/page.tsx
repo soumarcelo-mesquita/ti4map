@@ -86,6 +86,19 @@ function RoomContent() {
     document.title = meName ? `TI4 Setup — ${meName}` : 'TI4 Setup';
   }, [meName]);
 
+  // Advance the veto phase as soon as every player's veto is in. This runs on
+  // every connected client (and on page load) rather than only inside the
+  // handler of whoever happens to submit last — a submit-only check races
+  // against realtime propagation of the other players' rows and can leave
+  // the room stuck in 'veto' forever if the last submitter's local state
+  // hadn't caught up to everyone else's vetoes yet.
+  useEffect(() => {
+    if (!state || state.status !== 'veto') return;
+    if (vetoes.length < state.players.length) return;
+    const unionIds = Array.from(new Set(vetoes.flatMap((v) => v.factionIds)));
+    saveState(finalizeVetoPhase(state, unionIds));
+  }, [state, vetoes, saveState]);
+
   if (isLoading || !state) {
     return (
       <main className="min-h-screen flex flex-col">
@@ -174,12 +187,10 @@ function RoomContent() {
     await saveState(result.state);
   };
 
+  // Just records this player's own veto; the effect above (which every
+  // connected client runs) is what finalizes the phase once all are in.
   const confirmVeto = async (factionIds: string[]) => {
-    const allVetoes = await submitVeto(params.id, myPlayerId, factionIds);
-    if (allVetoes.length >= state.players.length) {
-      const unionIds = Array.from(new Set(allVetoes.flatMap((v) => v.factionIds)));
-      await saveState(finalizeVetoPhase(state, unionIds));
-    }
+    await submitVeto(params.id, myPlayerId, factionIds);
   };
 
   if (state.status === 'veto') {
