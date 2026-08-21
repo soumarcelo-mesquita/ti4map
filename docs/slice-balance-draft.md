@@ -8,6 +8,30 @@
 > necessários, e o "melhor achado" raramente bate as regras antes disso. 5p
 > segue sem layout de fatia (mesma lacuna, ainda não implementada).
 
+> **Atualização (2026-08-21) — três ajustes de balanceamento:**
+> 1. `sliceStats` (`src/lib/sliceBalance.ts`) agora soma +1 recurso e +1
+>    influência por planeta com especialidade tecnológica, só para fins de
+>    balanceamento (uma especialidade vale estratégia além do recurso/influência
+>    bruto). Isso deslocou a média de `total` de cada fatia para cima
+>    (~+2.5 em fatias de 5 tiles, ~+3.5 em fatias de 7), então
+>    `minOptimalTotal`/`maxOptimalTotal` das duas configs em `draftEngine.ts`
+>    foram recalibrados (9→11 / 13→19 em 5 tiles; 12.5→16 / 18→22 em 7 tiles) —
+>    sem isso o sorteio quase nunca passava e sempre caía no "melhor esforço".
+> 2. Nova regra `minRelativeToMax` em `SliceBalanceConfig`: nenhuma fatia pode
+>    valer menos que metade (0.5) do `total` ótimo da fatia mais forte do mesmo
+>    sorteio — checada entre todas as fatias de uma tentativa
+>    (`passesRelativeBalance`), não por fatia isolada.
+> 3. `getSliceLayouts(playerCount, extraSlices)` aceita fatias extras além de
+>    uma por jogador (estilo "N+1" do Milty) — os templates extras clonam
+>    `seatId`/`tiles` de um template real só como placeholder (nunca resolvidos
+>    de fato, já que a colocação no tabuleiro usa o assento escolhido, não o id
+>    da fatia). Exposto na tela de criação de sala (`src/app/page.tsx`) como
+>    "Fatias extras", limitado pelo tamanho do pool draftável.
+>
+> Todos os números foram validados por simulação (milhares de sorteios contra
+> `tiles.json`) para garantir taxa de sucesso alta dentro de `maxAttempts`,
+> inclusive no pior caso (4p + 2 fatias extras, só PoK).
+
 Documento de partida para implementar o próximo passo do draft de fatias:
 hoje as 4 fatias do 4p já têm posição/formato fixos e validados
 (`src/data/slices.ts`), mas as 6 posições não-home de cada uma são apenas

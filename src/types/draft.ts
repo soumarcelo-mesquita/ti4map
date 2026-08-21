@@ -32,6 +32,8 @@ export interface DraftSettings {
   excludedFactionIds?: string[];
   /** how many factions each player secretly vetoes before the draft starts; 0/absent skips the veto phase */
   vetoCount?: number;
+  /** surplus fatias beyond playerCount in slice-draft mode (0/absent = exactly one per player) */
+  extraSlices?: number;
 }
 
 export interface DraftState {

@@ -10,6 +10,7 @@ import { isValidMapString } from '@/lib/mapString';
 import { SUPPORTED_PLAYER_COUNTS } from '@/data/seats';
 import { factionPool, factionImage } from '@/data/factions';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
+import { draftableTilePool } from '@/lib/sliceBalance';
 
 const DEFAULT_NAMES = ['Marcelo', 'Wesley', 'Sam', 'Lucas', 'Estranho', 'Saulo'];
 
@@ -31,6 +32,7 @@ export default function Home() {
   const [enableFactionVetoes, setEnableFactionVetoes] = useState(false);
   const [vetoCount, setVetoCount] = useState(1);
   const [useSliceDraft, setUseSliceDraft] = useState(false);
+  const [extraSlices, setExtraSlices] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,6 +40,14 @@ export default function Home() {
   const eligibleFactionCount = availableFactions.filter((f) => !excludedFactionIds.has(f.id)).length;
   const maxFactions = eligibleFactionCount;
   const sliceDraftAvailable = getSliceLayouts(playerCount) !== undefined;
+
+  // How many surplus fatias the current tile pool can actually support, on
+  // top of the one-per-player base — caps the "fatias extras" input so a
+  // balanced draw stays possible.
+  const tilesPerSlice = getSliceLayouts(playerCount)?.[0]?.tiles.length ?? 0;
+  const maxTotalSlices =
+    tilesPerSlice > 0 ? Math.floor(draftableTilePool(includePoK, includeTE).length / tilesPerSlice) : playerCount;
+  const maxExtraSlices = Math.max(0, maxTotalSlices - playerCount);
 
   const toggleFaction = (id: string) => {
     const next = new Set(excludedFactionIds);
@@ -58,6 +68,10 @@ export default function Home() {
     const newMax = newAvailable.filter((f) => !excludedFactionIds.has(f.id)).length;
     setFactionPoolSize((prev) => Math.min(prev, newMax));
     setVetoCount((prev) => Math.max(0, Math.min(prev, newMax - playerCount)));
+    const newTilesPerSlice = getSliceLayouts(playerCount)?.[0]?.tiles.length ?? 0;
+    const newMaxTotalSlices =
+      newTilesPerSlice > 0 ? Math.floor(draftableTilePool(nextPoK, nextTE).length / newTilesPerSlice) : playerCount;
+    setExtraSlices((prev) => Math.max(0, Math.min(prev, newMaxTotalSlices - playerCount)));
   };
 
   const setCount = (count: number) => {
@@ -71,6 +85,10 @@ export default function Home() {
     setFactionPoolSize(Math.min(count + 2, maxFactions));
     setVetoCount((prev) => Math.max(0, Math.min(prev, maxFactions - count)));
     if (getSliceLayouts(count) === undefined) setUseSliceDraft(false);
+    const newTilesPerSlice = getSliceLayouts(count)?.[0]?.tiles.length ?? 0;
+    const newMaxTotalSlices =
+      newTilesPerSlice > 0 ? Math.floor(draftableTilePool(includePoK, includeTE).length / newTilesPerSlice) : count;
+    setExtraSlices((prev) => Math.max(0, Math.min(prev, newMaxTotalSlices - count)));
   };
 
   const handleCreate = async () => {
@@ -94,6 +112,7 @@ export default function Home() {
         includeTE,
         factionPoolSize,
         excludedFactionIds: Array.from(excludedFactionIds),
+        extraSlices: useSliceDraft ? extraSlices : 0,
       };
       const state =
         enableFactionVetoes && vetoCount > 0
@@ -187,6 +206,29 @@ export default function Home() {
                   Draft com fatias balanceadas
                 </button>
               </div>
+
+              {useSliceDraft && maxExtraSlices > 0 && (
+                <div className="flex items-center justify-between gap-4 pt-1">
+                  <div>
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                      Fatias extras
+                    </label>
+                    <p className="text-[11px] text-slate-400 font-bold">
+                      Gera {playerCount + extraSlices} fatias para {playerCount} jogadores escolherem.
+                    </p>
+                  </div>
+                  <input
+                    type="number"
+                    min={0}
+                    max={maxExtraSlices}
+                    value={extraSlices}
+                    onChange={(e) =>
+                      setExtraSlices(Math.max(0, Math.min(maxExtraSlices, parseInt(e.target.value) || 0)))
+                    }
+                    className="w-20 bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-center text-sm font-bold text-white focus:outline-none"
+                  />
+                </div>
+              )}
             </section>
           )}
 

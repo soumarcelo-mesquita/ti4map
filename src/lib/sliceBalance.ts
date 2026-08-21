@@ -32,6 +32,13 @@ export interface SliceBalanceConfig {
   maxOptimalTotal: number;
   maxWormholesPerSlice: number; // Infinity = sem limite
   minLegendaryPlanets: number; // mínimo por fatia; 0 = sem exigência
+  /**
+   * Nenhuma fatia pode valer menos que esta fração do valor ótimo total da
+   * fatia mais forte do sorteio (ex.: 0.5 = nenhuma fatia abaixo da metade da
+   * melhor). Checado entre todas as fatias de uma tentativa, não por fatia
+   * isolada — ver `passesRelativeBalance`.
+   */
+  minRelativeToMax: number;
   maxAttempts: number; // tentativas antes de aceitar o melhor achado
 }
 
@@ -50,6 +57,12 @@ export function draftableTilePool(includePoK: boolean, includeTE: boolean = fals
   });
 }
 
+/**
+ * Optimal resource/influence per slice, plus a +1/+1 balancing bonus for each
+ * planet with a technology specialty — a tech skip is worth real strategic
+ * value beyond its raw resource/influence, so it's weighted in here for
+ * balancing purposes even though it isn't itself a resource or influence.
+ */
 export function sliceStats(tileIds: number[]): { resources: number; influence: number; total: number } {
   let resources = 0;
   let influence = 0;
@@ -59,6 +72,12 @@ export function sliceStats(tileIds: number[]): { resources: number; influence: n
     const v = optimalValues(tile.planets);
     resources += v.resources;
     influence += v.influence;
+    for (const p of tile.planets) {
+      if (p.specialty) {
+        resources += 1;
+        influence += 1;
+      }
+    }
   }
   return { resources, influence, total: resources + influence };
 }
@@ -124,6 +143,19 @@ function passesConfig(tileIds: number[], config: SliceBalanceConfig): boolean {
   );
 }
 
+/**
+ * Cross-slice check (not per-slice): every slice's optimal total must be at
+ * least `minRelativeToMax` of the strongest slice in this same draw. Unlike
+ * `passesConfig`'s absolute thresholds, this needs the whole assignment at
+ * once since "the max" is only known after every slice is drawn.
+ */
+function passesRelativeBalance(groups: number[][], config: SliceBalanceConfig): boolean {
+  const totals = groups.map((g) => sliceStats(g).total);
+  const max = Math.max(...totals);
+  if (max <= 0) return true;
+  return totals.every((t) => t >= max * config.minRelativeToMax);
+}
+
 function totalVariance(assignment: number[][]): number {
   const totals = assignment.map((ids) => sliceStats(ids).total);
   const mean = totals.reduce((a, b) => a + b, 0) / totals.length;
@@ -162,7 +194,7 @@ export function generateBalancedAssignment(
     const shuffled = shuffleSeeded(pool, rng);
     const groups: number[][] = slices.map((_, i) => shuffled.slice(i * tilesPerSlice, (i + 1) * tilesPerSlice));
 
-    if (groups.every((g) => passesConfig(g, config))) {
+    if (groups.every((g) => passesConfig(g, config)) && passesRelativeBalance(groups, config)) {
       const assignment: Record<string, number[]> = {};
       slices.forEach((s, i) => {
         assignment[s.id] = groups[i];

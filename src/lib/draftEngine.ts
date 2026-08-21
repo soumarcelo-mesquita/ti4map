@@ -4,15 +4,29 @@ import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
 import { generateBalancedAssignment, placeSliceAtSeat, placeWormholeAnomalies, SliceBalanceConfig } from '@/lib/sliceBalance';
 
-/** Starting point for 7-tile slices (4p); calibrate by playtest (see docs/slice-balance-draft.md). */
+/**
+ * Starting point for 7-tile slices (4p); calibrate by playtest (see
+ * docs/slice-balance-draft.md). `minOptimalTotal`/`maxOptimalTotal` are
+ * shifted up from the original 12.5/18 to make room for `sliceStats`'
+ * tech-specialty bonus (+1/+1 per specialty planet, ~+3.3 total on an
+ * average 7-tile slice) — otherwise most draws would blow past the old
+ * ceiling before the bonus existed. `maxAttempts` is raised from 1000 to
+ * 5000 for the same reason, plus `minRelativeToMax` (a whole-draw check, not
+ * per slice) tightens the pool further when `extraSlices` pushes close to
+ * the draftable pool's size; empirically (measured against tiles.json) the
+ * tightest case — 4p + 2 extra slices, PoK only, 42 of 51 tiles used — still
+ * finds a passing draw in ~1/250 attempts, so 5000 gives an overwhelming
+ * safety margin at negligible cost (sub-millisecond per 1000 attempts).
+ */
 const DEFAULT_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
   minOptimalResources: 3.5,
   minOptimalInfluence: 5.5,
-  minOptimalTotal: 12.5,
-  maxOptimalTotal: 18,
+  minOptimalTotal: 16,
+  maxOptimalTotal: 22,
   maxWormholesPerSlice: Infinity,
   minLegendaryPlanets: 0,
-  maxAttempts: 1000,
+  minRelativeToMax: 0.5,
+  maxAttempts: 5000,
 };
 
 /**
@@ -26,14 +40,20 @@ const DEFAULT_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
  * split takes ~1600 shuffles on average (measured), occasionally a few
  * thousand more — 1000 attempts left it unbalanced almost every room. 20000
  * attempts costs ~15ms (measured) and hits 100% in testing.
+ *
+ * `minOptimalTotal`/`maxOptimalTotal` are shifted up from Milty's original
+ * 9/13 to make room for `sliceStats`' tech-specialty bonus (+1/+1 per
+ * specialty planet, ~+2.5 total on an average 5-tile slice) — same reasoning
+ * as `DEFAULT_SLICE_BALANCE_CONFIG` above.
  */
 const FIVE_TILE_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
   minOptimalResources: 2.5,
   minOptimalInfluence: 4,
-  minOptimalTotal: 9,
-  maxOptimalTotal: 13,
+  minOptimalTotal: 11,
+  maxOptimalTotal: 19,
   maxWormholesPerSlice: Infinity,
   minLegendaryPlanets: 0,
+  minRelativeToMax: 0.5,
   maxAttempts: 20000,
 };
 
@@ -56,6 +76,8 @@ export interface CreateDraftConfig {
   factionPoolSize?: number;
   /** faction ids to keep out of the draft pool entirely */
   excludedFactionIds?: string[];
+  /** surplus fatias beyond playerCount in slice-draft mode (0/absent = exactly one per player) */
+  extraSlices?: number;
 }
 
 function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[] {
@@ -84,12 +106,21 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
 
   const eligibleFactions = factionPool(includePoK, includeTE).filter((f) => !excludedFactionIds.includes(f.id));
   const factions = shuffle(eligibleFactions.map((f) => f.id)).slice(0, factionPoolSize);
-  const sliceLayouts = getSliceLayouts(playerCount);
+  const extraSlices = config.extraSlices ?? 0;
+  const sliceLayouts = getSliceLayouts(playerCount, extraSlices);
   const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
   const seats = layout.seats.map((s) => s.id);
   const slices = isSliceDraft && sliceLayouts ? sliceLayouts.map((s) => s.id) : [];
 
-  const settings: DraftSettings = { playerCount, includePoK, includeTE, factionPoolSize, mapString, excludedFactionIds };
+  const settings: DraftSettings = {
+    playerCount,
+    includePoK,
+    includeTE,
+    factionPoolSize,
+    mapString,
+    excludedFactionIds,
+    extraSlices,
+  };
   if (isSliceDraft && sliceLayouts) {
     const balanceConfig = sliceLayouts[0].tiles.length <= 5 ? FIVE_TILE_SLICE_BALANCE_CONFIG : DEFAULT_SLICE_BALANCE_CONFIG;
     const { assignment, seed } = generateBalancedAssignment(sliceLayouts, balanceConfig, undefined, includePoK, includeTE);
@@ -138,6 +169,7 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
     mapString,
     excludedFactionIds,
     vetoCount: config.vetoCount,
+    extraSlices: config.extraSlices ?? 0,
   };
 
   return {
@@ -181,6 +213,7 @@ export function finalizeVetoPhase(state: DraftState, vetoedFactionIds: string[])
     includeTE: settings.includeTE,
     factionPoolSize: settings.factionPoolSize,
     excludedFactionIds: [...hostExcluded, ...cappedVetoes],
+    extraSlices: settings.extraSlices,
   });
 }
 

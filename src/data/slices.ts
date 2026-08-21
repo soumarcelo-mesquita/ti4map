@@ -53,8 +53,31 @@ export const SLICE_LAYOUTS: Record<number, SliceLayout[]> = {
   ],
 };
 
-export function getSliceLayouts(playerCount: number): SliceLayout[] | undefined {
-  return SLICE_LAYOUTS[playerCount];
+/**
+ * Slice-draft templates for a player count, optionally padded with `extraSlices`
+ * surplus content buckets (Milty-style "N+1" pools) so the draft offers more
+ * fatias than seats.
+ *
+ * The base entries are 1:1 with real seats (`seatId` matches a board seat,
+ * `tiles` its physical positions). Extras have no seat of their own — they
+ * exist purely as extra content buckets for `generateBalancedAssignment` to
+ * fill and for players to draft — so they clone a base entry's `seatId`/`tiles`
+ * (round-robin) as a placeholder. This is safe: at pick time
+ * (`draftEngine.ts`'s `makePick`) a drafted fatia's content is transposed onto
+ * whichever seat the player actually chose, looked up by `seatId` — and since
+ * `Array.find` returns the first match, that lookup always resolves to the
+ * real base entry, never an extra sharing its `seatId`.
+ */
+export function getSliceLayouts(playerCount: number, extraSlices: number = 0): SliceLayout[] | undefined {
+  const base = SLICE_LAYOUTS[playerCount];
+  if (!base) return undefined;
+  if (extraSlices <= 0) return base;
+
+  const extras: SliceLayout[] = Array.from({ length: extraSlices }, (_, i) => {
+    const template = base[i % base.length];
+    return { id: `slice-${base.length + i + 1}`, seatId: template.seatId, tiles: template.tiles };
+  });
+  return [...base, ...extras];
 }
 
 /**

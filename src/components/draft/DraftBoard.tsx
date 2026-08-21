@@ -102,7 +102,7 @@ export function FactionSection(props: DraftSectionProps) {
  */
 export function SliceSection(props: DraftSectionProps) {
   const { state, me, onPick } = props;
-  const sliceLayouts = getSliceLayouts(state.settings.playerCount);
+  const sliceLayouts = getSliceLayouts(state.settings.playerCount, state.settings.extraSlices ?? 0);
   const usesSlices =
     (state.pools.slices.length > 0 || state.players.some((p) => p.sliceId !== null)) &&
     sliceLayouts !== undefined &&
