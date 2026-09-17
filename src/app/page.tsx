@@ -7,12 +7,17 @@ import { Navbar } from '@/components/layout/Navbar';
 import { useRoomStore } from '@/store/roomStore';
 import { createDraftState, createVetoState } from '@/lib/draftEngine';
 import { isValidMapString } from '@/lib/mapString';
-import { SUPPORTED_PLAYER_COUNTS } from '@/data/seats';
+import { SELECTABLE_PLAYER_COUNTS } from '@/data/seats';
 import { factionPool, factionImage } from '@/data/factions';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
 import { draftableTilePool } from '@/lib/sliceBalance';
 
 const DEFAULT_NAMES = ['Marcelo', 'Wesley', 'Sam', 'Lucas', 'Estranho', 'Saulo'];
+
+/** Padrões derivados do número de jogadores. */
+const defaultFactionPoolSize = (playerCount: number) => playerCount * 2;
+/** Fatias extras padrão: o draft gera `jogadores + 2` fatias. */
+const DEFAULT_EXTRA_SLICES = 2;
 
 // Demo 6-player map string (homes at positions 19/22/25/28/31/34 = "0").
 const EXAMPLE_6P =
@@ -27,12 +32,12 @@ export default function Home() {
   const [includePoK, setIncludePoK] = useState(true);
   const [includeTE, setIncludeTE] = useState(false);
   const [mapString, setMapString] = useState('');
-  const [factionPoolSize, setFactionPoolSize] = useState(8);
+  const [factionPoolSize, setFactionPoolSize] = useState(() => defaultFactionPoolSize(6));
   const [excludedFactionIds, setExcludedFactionIds] = useState<Set<string>>(new Set());
   const [enableFactionVetoes, setEnableFactionVetoes] = useState(false);
   const [vetoCount, setVetoCount] = useState(1);
   const [useSliceDraft, setUseSliceDraft] = useState(false);
-  const [extraSlices, setExtraSlices] = useState(0);
+  const [extraSlices, setExtraSlices] = useState(DEFAULT_EXTRA_SLICES);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -82,13 +87,13 @@ export default function Home() {
       next.length = count;
       return next;
     });
-    setFactionPoolSize(Math.min(count + 2, maxFactions));
+    setFactionPoolSize(Math.max(count, Math.min(defaultFactionPoolSize(count), maxFactions)));
     setVetoCount((prev) => Math.max(0, Math.min(prev, maxFactions - count)));
     if (getSliceLayouts(count) === undefined) setUseSliceDraft(false);
     const newTilesPerSlice = getSliceLayouts(count)?.[0]?.tiles.length ?? 0;
     const newMaxTotalSlices =
       newTilesPerSlice > 0 ? Math.floor(draftableTilePool(includePoK, includeTE).length / newTilesPerSlice) : count;
-    setExtraSlices((prev) => Math.max(0, Math.min(prev, newMaxTotalSlices - count)));
+    setExtraSlices(Math.max(0, Math.min(DEFAULT_EXTRA_SLICES, newMaxTotalSlices - count)));
   };
 
   const handleCreate = async () => {
@@ -144,7 +149,7 @@ export default function Home() {
           <section className="space-y-3">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Jogadores</label>
             <div className="flex gap-2">
-              {SUPPORTED_PLAYER_COUNTS.map((c) => (
+              {SELECTABLE_PLAYER_COUNTS.map((c) => (
                 <button
                   key={c}
                   onClick={() => setCount(c)}
@@ -175,6 +180,52 @@ export default function Home() {
                   className="bg-white/5 border border-white/10 rounded-xl py-2.5 px-3 text-sm text-white focus:outline-none focus:border-primary/50"
                 />
               ))}
+            </div>
+          </section>
+
+          {/* Expansion + faction pool */}
+          <section className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expansões</label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => toggleExpansion('pok')}
+                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
+                    includePoK
+                      ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+                      : 'bg-white/5 text-slate-400 border-white/10'
+                  }`}
+                >
+                  PoK
+                </button>
+                <button
+                  onClick={() => toggleExpansion('te')}
+                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
+                    includeTE
+                      ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+                      : 'bg-white/5 text-slate-400 border-white/10'
+                  }`}
+                >
+                  TE
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                Pool de facções
+              </label>
+              <input
+                type="number"
+                min={playerCount}
+                max={maxFactions}
+                value={factionPoolSize}
+                onChange={(e) =>
+                  setFactionPoolSize(
+                    Math.max(playerCount, Math.min(maxFactions, parseInt(e.target.value) || playerCount)),
+                  )
+                }
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-center text-sm font-bold text-white focus:outline-none"
+              />
             </div>
           </section>
 
@@ -254,65 +305,43 @@ export default function Home() {
             </section>
           )}
 
-          {/* Expansion + faction pool */}
-          <section className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expansões</label>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => toggleExpansion('pok')}
-                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
-                    includePoK
-                      ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
-                      : 'bg-white/5 text-slate-400 border-white/10'
-                  }`}
-                >
-                  PoK
-                </button>
-                <button
-                  onClick={() => toggleExpansion('te')}
-                  className={`flex-1 py-3 rounded-xl text-[11px] font-black border transition-all ${
-                    includeTE
-                      ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
-                      : 'bg-white/5 text-slate-400 border-white/10'
-                  }`}
-                >
-                  TE
-                </button>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                Pool de facções
-              </label>
-              <input
-                type="number"
-                min={playerCount}
-                max={maxFactions}
-                value={factionPoolSize}
-                onChange={(e) =>
-                  setFactionPoolSize(
-                    Math.max(playerCount, Math.min(maxFactions, parseInt(e.target.value) || playerCount)),
-                  )
-                }
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-center text-sm font-bold text-white focus:outline-none"
-              />
-            </div>
-          </section>
-
           {/* Vetos / exclusão de facções */}
           <section className="space-y-3">
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={enableFactionVetoes}
-                onChange={(e) => setEnableFactionVetoes(e.target.checked)}
-                className="w-4 h-4 rounded accent-primary"
-              />
-              <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                Vetar facções antes do draft
+            <button
+              type="button"
+              role="switch"
+              aria-checked={enableFactionVetoes}
+              onClick={() => setEnableFactionVetoes((v) => !v)}
+              className={`flex w-full items-center justify-between gap-4 rounded-2xl border px-4 py-3.5 text-left transition-all ${
+                enableFactionVetoes
+                  ? 'border-emerald-500/40 bg-emerald-500/10'
+                  : 'border-white/10 bg-white/5 hover:border-white/20'
+              }`}
+            >
+              <span>
+                <span
+                  className={`block text-[10px] font-black uppercase tracking-widest transition-colors ${
+                    enableFactionVetoes ? 'text-emerald-300' : 'text-slate-400'
+                  }`}
+                >
+                  Vetar facções antes do draft
+                </span>
+                <span className="mt-1 block text-[11px] font-bold text-slate-500">
+                  Cada jogador remove facções em segredo antes do draft começar.
+                </span>
               </span>
-            </label>
+              <span
+                className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+                  enableFactionVetoes ? 'bg-emerald-500' : 'bg-white/15'
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-transform ${
+                    enableFactionVetoes ? 'translate-x-5' : 'translate-x-0'
+                  }`}
+                />
+              </span>
+            </button>
 
             {enableFactionVetoes && (
               <div className="space-y-5 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
@@ -321,8 +350,8 @@ export default function Home() {
                     Vetos secretos por jogador
                   </label>
                   <p className="text-[11px] text-slate-400 font-bold">
-                    Antes do draft, cada jogador vai vetar facções em segredo; quando todos confirmarem, o draft
-                    começa sem elas. Mais de um jogador pode vetar a mesma facção.
+                    Quando todos confirmarem, o draft começa sem as facções vetadas. Mais de um jogador pode vetar
+                    a mesma facção.
                   </p>
                   <input
                     type="number"

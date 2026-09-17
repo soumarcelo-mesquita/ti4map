@@ -33,6 +33,12 @@ export interface PlayerLayout {
 
 export const SUPPORTED_PLAYER_COUNTS = [4, 5, 6] as const;
 
+/**
+ * Counts offered when creating a room. 5-player is hidden from the UI for now;
+ * its layout stays supported so rooms already created with it keep working.
+ */
+export const SELECTABLE_PLAYER_COUNTS = [4, 6] as const;
+
 const LAYOUTS: Record<number, PlayerLayout> = {
   4: {
     empty: [[-1, 0], [1, 0], [1, -3], [-1, 3]],
