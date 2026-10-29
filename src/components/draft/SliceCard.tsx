@@ -104,7 +104,7 @@ function SliceCardBody({
   const maxY = Math.max(...cells.map((c) => c.y)) + pad;
 
   const tiles = tileIds.map(getTile);
-  const specialties = tiles.flatMap((t) => t?.planets.map((p) => p.specialty).filter(Boolean) ?? []) as string[];
+  const specialties = tiles.flatMap((t) => t?.planets.flatMap((p) => p.specialty ?? []) ?? []);
   const legendaryCount = tiles.reduce((acc, t) => acc + (t?.planets.filter((p) => p.legendary).length ?? 0), 0);
   const wormholes = tiles.map((t) => t?.wormhole).filter(Boolean) as string[];
   const raw = rawSliceStats(tileIds);

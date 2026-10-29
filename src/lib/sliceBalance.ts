@@ -73,6 +73,7 @@ export function sliceStats(tileIds: number[]): { resources: number; influence: n
     resources += v.resources;
     influence += v.influence;
     for (const p of tile.planets) {
+      // Per planet, not per skip: a double-skip planet still counts +1/+1.
       if (p.specialty) {
         resources += 1;
         influence += 1;

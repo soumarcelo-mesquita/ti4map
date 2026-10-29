@@ -353,7 +353,7 @@ export function makePick(
   } else if (category === 'slice') {
     const v = String(value);
     if (!pools.slices.includes(v)) return { ok: false, state, error: 'Fatia indisponível.' };
-    if (!getSliceLayouts(state.settings.playerCount)?.some((s) => s.id === v)) {
+    if (!getSliceLayouts(state.settings.playerCount, state.settings.extraSlices ?? 0)?.some((s) => s.id === v)) {
       return { ok: false, state, error: 'Fatia inválida.' };
     }
     pools.slices = pools.slices.filter((s) => s !== v);

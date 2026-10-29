@@ -542,8 +542,8 @@
         "influence": 2
       },
       {
-        "name": "Zohne",
-        "resource": 1,
+        "name": "Zohbat",
+        "resource": 3,
         "influence": 1
       }
     ],
@@ -622,14 +622,15 @@
     "draft": true,
     "planets": [
       {
-        "name": "Arnor",
-        "resource": 2,
-        "influence": 1
+        "name": "Centauri",
+        "resource": 1,
+        "influence": 3
       },
       {
-        "name": "Lor",
+        "name": "Gral",
         "resource": 1,
-        "influence": 2
+        "influence": 1,
+        "specialty": "blue"
       }
     ],
     "wormhole": null
@@ -664,6 +665,27 @@
     "draft": true,
     "planets": [
       {
+        "name": "Arnor",
+        "resource": 2,
+        "influence": 1
+      },
+      {
+        "name": "Lor",
+        "resource": 1,
+        "influence": 2
+      }
+    ],
+    "wormhole": null
+  },
+  {
+    "id": 37,
+    "filename": "ST_37.png",
+    "color": "blue",
+    "home": false,
+    "faction": null,
+    "draft": true,
+    "planets": [
+      {
         "name": "Arinam",
         "resource": 1,
         "influence": 2
@@ -678,8 +700,8 @@
     "wormhole": null
   },
   {
-    "id": 37,
-    "filename": "ST_37.png",
+    "id": 38,
+    "filename": "ST_38.png",
     "color": "blue",
     "home": false,
     "faction": null,
@@ -694,28 +716,6 @@
         "name": "Fria",
         "resource": 2,
         "influence": 0
-      }
-    ],
-    "wormhole": null
-  },
-  {
-    "id": 38,
-    "filename": "ST_38.png",
-    "color": "blue",
-    "home": false,
-    "faction": null,
-    "draft": true,
-    "planets": [
-      {
-        "name": "Centauri",
-        "resource": 1,
-        "influence": 3
-      },
-      {
-        "name": "Gral",
-        "resource": 1,
-        "influence": 1,
-        "specialty": "blue"
       }
     ],
     "wormhole": null
@@ -1075,7 +1075,7 @@
         "influence": 1
       }
     ],
-    "wormhole": null
+    "wormhole": "beta"
   },
   {
     "id": 65,
@@ -1157,7 +1157,7 @@
         "influence": 3
       },
       {
-        "name": "Joel Ir",
+        "name": "Jeol Ir",
         "resource": 2,
         "influence": 3
       }
@@ -1194,7 +1194,7 @@
     "draft": true,
     "planets": [
       {
-        "name": "Bakal",
+        "name": "Ba'kal",
         "resource": 3,
         "influence": 2
       },
@@ -1222,7 +1222,8 @@
       {
         "name": "Velnor",
         "resource": 2,
-        "influence": 1
+        "influence": 1,
+        "specialty": "red"
       }
     ],
     "wormhole": null
@@ -1238,7 +1239,8 @@
       {
         "name": "Cealdri",
         "resource": 0,
-        "influence": 2
+        "influence": 2,
+        "specialty": "yellow"
       },
       {
         "name": "Xanhact",
@@ -1264,7 +1266,8 @@
       {
         "name": "Vega Minor",
         "resource": 1,
-        "influence": 2
+        "influence": 2,
+        "specialty": "blue"
       }
     ],
     "wormhole": null
@@ -1278,19 +1281,19 @@
     "draft": true,
     "planets": [
       {
-        "name": "Ashtroth",
-        "resource": 2,
+        "name": "Loki",
+        "resource": 1,
+        "influence": 2
+      },
+      {
+        "name": "Abaddon",
+        "resource": 1,
         "influence": 0
       },
       {
-        "name": "Abue",
-        "resource": 1,
-        "influence": 1
-      },
-      {
-        "name": "Arcturus",
-        "resource": 1,
-        "influence": 1
+        "name": "Ashtroth",
+        "resource": 2,
+        "influence": 0
       }
     ],
     "wormhole": null
@@ -1316,7 +1319,8 @@
       {
         "name": "Rigel III",
         "resource": 1,
-        "influence": 1
+        "influence": 1,
+        "specialty": "green"
       }
     ],
     "wormhole": null
@@ -1560,7 +1564,10 @@
         "name": "Olergodt",
         "resource": 2,
         "influence": 1,
-        "specialty": "red"
+        "specialty": [
+          "yellow",
+          "red"
+        ]
       }
     ],
     "wormhole": null
@@ -1670,7 +1677,10 @@
         "name": "Tiamat",
         "resource": 1,
         "influence": 2,
-        "specialty": "yellow"
+        "specialty": [
+          "yellow",
+          "yellow"
+        ]
       },
       {
         "name": "Hercalor",

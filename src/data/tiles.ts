@@ -7,7 +7,8 @@ export interface TilePlanet {
   name: string;
   resource: number;
   influence: number;
-  specialty?: string | null;
+  /** tech color; an array for planets with more than one skip (e.g. Olergodt, Tiamat) */
+  specialty?: string | string[] | null;
   legendary?: boolean;
 }
 
