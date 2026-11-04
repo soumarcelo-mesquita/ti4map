@@ -34,6 +34,8 @@ export interface DraftSettings {
   vetoCount?: number;
   /** surplus fatias beyond playerCount in slice-draft mode (0/absent = exactly one per player) */
   extraSlices?: number;
+  /** factions forced into the pool (cheat) unless excluded/vetoed */
+  pinnedFactionIds?: string[];
 }
 
 export interface DraftState {

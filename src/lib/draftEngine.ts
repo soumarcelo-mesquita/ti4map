@@ -78,6 +78,8 @@ export interface CreateDraftConfig {
   excludedFactionIds?: string[];
   /** surplus fatias beyond playerCount in slice-draft mode (0/absent = exactly one per player) */
   extraSlices?: number;
+  /** factions forced into the pool (cheat) unless excluded/vetoed */
+  pinnedFactionIds?: string[];
 }
 
 function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[] {
@@ -105,7 +107,13 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
   const players: DraftPlayer[] = buildPlayers(playerNames, playerCount);
 
   const eligibleFactions = factionPool(includePoK, includeTE).filter((f) => !excludedFactionIds.includes(f.id));
-  const factions = shuffle(eligibleFactions.map((f) => f.id)).slice(0, factionPoolSize);
+  const eligibleIds = eligibleFactions.map((f) => f.id);
+  const pinnedFactionIds = config.pinnedFactionIds ?? [];
+  // Pinned factions always make the pool unless the host excluded them or a
+  // player vetoed them (both end up in `excludedFactionIds`).
+  const pinned = pinnedFactionIds.filter((id) => eligibleIds.includes(id)).slice(0, factionPoolSize);
+  const rest = shuffle(eligibleIds.filter((id) => !pinned.includes(id))).slice(0, factionPoolSize - pinned.length);
+  const factions = shuffle([...pinned, ...rest]);
   const extraSlices = config.extraSlices ?? 0;
   const sliceLayouts = getSliceLayouts(playerCount, extraSlices);
   const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
@@ -171,6 +179,7 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
     vetoCount: config.vetoCount,
     extraSlices: config.extraSlices ?? 0,
   };
+  if (config.pinnedFactionIds?.length) settings.pinnedFactionIds = config.pinnedFactionIds;
 
   return {
     status: 'veto',
@@ -214,6 +223,7 @@ export function finalizeVetoPhase(state: DraftState, vetoedFactionIds: string[])
     factionPoolSize: settings.factionPoolSize,
     excludedFactionIds: [...hostExcluded, ...cappedVetoes],
     extraSlices: settings.extraSlices,
+    pinnedFactionIds: settings.pinnedFactionIds,
   });
 }
 

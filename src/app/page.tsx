@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
@@ -18,6 +18,8 @@ const DEFAULT_NAMES = ['Marcelo', 'Wesley', 'Sam', 'Lucas', 'Estranho', 'Saulo']
 const defaultFactionPoolSize = (playerCount: number) => playerCount * 2;
 /** Fatias extras padrão: o draft gera `jogadores + 2` fatias. */
 const DEFAULT_EXTRA_SLICES = 2;
+/** Palavra secreta que revela o seletor de facções garantidas. */
+const CHEAT_CODE = 'mecatol';
 
 // Demo 6-player map string (homes at positions 19/22/25/28/31/34 = "0").
 const EXAMPLE_6P =
@@ -39,6 +41,27 @@ export default function Home() {
   const [useSliceDraft, setUseSliceDraft] = useState(false);
   const [extraSlices, setExtraSlices] = useState(DEFAULT_EXTRA_SLICES);
   const [loading, setLoading] = useState(false);
+  const [cheatUnlocked, setCheatUnlocked] = useState(false);
+  const [pinnedFactionIds, setPinnedFactionIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    let buffer = '';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key.length !== 1) return;
+      buffer = (buffer + e.key.toLowerCase()).slice(-CHEAT_CODE.length);
+      if (buffer === CHEAT_CODE) setCheatUnlocked((v) => !v);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const togglePinned = (id: string) =>
+    setPinnedFactionIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   const [error, setError] = useState<string | null>(null);
 
   const availableFactions = factionPool(includePoK, includeTE);
@@ -118,6 +141,9 @@ export default function Home() {
         factionPoolSize,
         excludedFactionIds: Array.from(excludedFactionIds),
         extraSlices: useSliceDraft ? extraSlices : 0,
+        pinnedFactionIds: cheatUnlocked
+          ? Array.from(pinnedFactionIds).filter((id) => availableFactions.some((f) => f.id === id))
+          : [],
       };
       const state =
         enableFactionVetoes && vetoCount > 0
@@ -416,6 +442,38 @@ export default function Home() {
               </div>
             )}
           </section>
+
+          {cheatUnlocked && (
+            <section className="space-y-3 rounded-2xl border border-dashed border-amber-500/40 bg-amber-500/5 p-4">
+              <label className="text-[10px] font-black text-amber-300 uppercase tracking-widest">
+                Facções garantidas ({pinnedFactionIds.size})
+              </label>
+              <p className="text-[11px] text-slate-400 font-bold">
+                Sempre entram no pool, a menos que sejam vetadas ou removidas. Digite &quot;{CHEAT_CODE}&quot; de
+                novo para esconder.
+              </p>
+              <ul className="max-h-72 overflow-y-auto pr-1 grid grid-cols-2 gap-1.5">
+                {availableFactions.map((f) => {
+                  const isPinned = pinnedFactionIds.has(f.id);
+                  return (
+                    <li key={f.id}>
+                      <button
+                        onClick={() => togglePinned(f.id)}
+                        className={`flex w-full items-center gap-2 rounded-xl border px-2.5 py-1.5 text-[11px] font-black transition-all ${
+                          isPinned
+                            ? 'border-amber-500/60 bg-amber-500/20 text-amber-100'
+                            : 'border-white/10 bg-white/5 text-slate-400 hover:border-white/20'
+                        }`}
+                      >
+                        <Image src={factionImage(f.id)} alt={f.name} width={20} height={20} />
+                        <span className="truncate">{f.name}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
 
           {error && (
             <p className="text-sm font-bold text-red-400 bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3">
