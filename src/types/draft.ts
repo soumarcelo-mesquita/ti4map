@@ -1,3 +1,5 @@
+import type { MapVariant } from '@/data/seats';
+
 export type DraftCategory = 'faction' | 'position' | 'slice' | 'speaker';
 
 export interface DraftPlayer {
@@ -36,6 +38,8 @@ export interface DraftSettings {
   extraSlices?: number;
   /** factions forced into the pool (cheat) unless excluded/vetoed */
   pinnedFactionIds?: string[];
+  /** alternative board (e.g. 5p hyperlanes); absent = standard layout for playerCount */
+  mapVariant?: MapVariant;
 }
 
 export interface DraftState {

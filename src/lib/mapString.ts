@@ -34,17 +34,27 @@ export interface PlacedTile {
   r: number;
   /** parsed tile id; 0 means an empty / home-placeholder slot */
   tileId: number;
+  /** printed side of a double-sided tile (hyperlanes: "83A" -> "A") */
+  side?: string;
+  /** clockwise rotation in 60° steps (0-5), from tokens like "85A2" */
+  rotation?: number;
 }
 
 /**
- * Tokens in a map string can carry orientation/hyperlane suffixes (e.g. "85A2").
- * We only need the leading numeric system id for rendering; strip the rest.
+ * Tokens in a map string can carry side/rotation suffixes (e.g. "85A2" =
+ * hyperlane 85, side A, rotated 2×60° clockwise). Plain numbers have neither.
  */
+function parseTokenParts(token: string): { tileId: number; side?: string; rotation?: number } {
+  const m = token.match(/^(-?\d+)(?:([A-Za-z])(\d)?)?/);
+  if (!m) return { tileId: 0 };
+  const n = parseInt(m[1], 10);
+  const tileId = Number.isFinite(n) && n > 0 ? n : 0;
+  if (!tileId || !m[2]) return { tileId };
+  return { tileId, side: m[2].toUpperCase(), rotation: m[3] ? parseInt(m[3], 10) % 6 : 0 };
+}
+
 function parseToken(token: string): number {
-  const m = token.match(/^-?\d+/);
-  if (!m) return 0;
-  const n = parseInt(m[0], 10);
-  return Number.isFinite(n) && n > 0 ? n : 0;
+  return parseTokenParts(token).tileId;
 }
 
 /** Parse a map string into placed tiles. Mecatol (id 18) is added at the center. */
@@ -55,8 +65,7 @@ export function parseMapString(mapString: string): PlacedTile[] {
   tokens.forEach((token, i) => {
     const pos = MAP_POSITIONS[i];
     if (!pos) return; // ignore positions beyond the supported rings
-    const tileId = parseToken(token);
-    placed.push({ q: pos.q, r: pos.r, tileId });
+    placed.push({ q: pos.q, r: pos.r, ...parseTokenParts(token) });
   });
 
   return placed;

@@ -1,7 +1,9 @@
 import { DraftCategory, DraftPlayer, DraftState, DraftSettings } from '@/types/draft';
 import { factionPool } from '@/data/factions';
-import { getLayout, seatsClockwiseFrom } from '@/data/seats';
-import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
+import { getLayout, seatsClockwiseFrom, type MapVariant } from '@/data/seats';
+import { getSliceLayouts, buildSliceModeMapString, type SliceLayout } from '@/data/slices';
+import { HYPERLANE_TILES } from '@/data/hyperlanes';
+import { MAP_POSITIONS } from '@/lib/mapString';
 import { generateBalancedAssignment, placeSliceAtSeat, placeWormholeAnomalies, SliceBalanceConfig } from '@/lib/sliceBalance';
 
 /**
@@ -57,6 +59,46 @@ const FIVE_TILE_SLICE_BALANCE_CONFIG: SliceBalanceConfig = {
   maxAttempts: 20000,
 };
 
+/** Map-string position (1-36) of an axial coordinate. */
+function positionOf([q, r]: [number, number]): number {
+  return MAP_POSITIONS.findIndex((p) => p.q === q && p.r === r) + 1;
+}
+
+/**
+ * Pre-rolled board for hyperlane rooms (5p): hyperlane tiles go in their
+ * fixed wedge, then each seat gets a balanced 5-system set straight onto its
+ * own positions — players only draft faction, seat and speaker, not slices.
+ * Homes stay "0" like every other room (the seat pick fills them).
+ */
+export function generateHyperlaneMap(
+  playerCount: number,
+  includePoK: boolean,
+  includeTE: boolean = false,
+): { mapString: string; seed: number } {
+  const layout = getLayout(playerCount, 'hyperlanes');
+  const hyperlanes = HYPERLANE_TILES[playerCount];
+  if (!layout || !hyperlanes) throw new Error(`No hyperlane board for ${playerCount} players`);
+
+  const tokens = buildSliceModeMapString().split(' ');
+  for (const h of hyperlanes) tokens[positionOf(h.coord) - 1] = h.token;
+
+  const seatSlices: SliceLayout[] = layout.seats.map((seat) => ({
+    id: seat.id,
+    seatId: seat.id,
+    tiles: seat.slice.map(positionOf),
+  }));
+  const { assignment, seed } = generateBalancedAssignment(
+    seatSlices,
+    FIVE_TILE_SLICE_BALANCE_CONFIG,
+    undefined,
+    includePoK,
+    includeTE,
+  );
+  let mapString = tokens.join(' ');
+  for (const slice of seatSlices) mapString = placeSliceAtSeat(mapString, slice, assignment[slice.id]);
+  return { mapString, seed };
+}
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -80,6 +122,8 @@ export interface CreateDraftConfig {
   extraSlices?: number;
   /** factions forced into the pool (cheat) unless excluded/vetoed */
   pinnedFactionIds?: string[];
+  /** alternative board; its map string comes pre-rolled (see `generateHyperlaneMap`) */
+  mapVariant?: MapVariant;
 }
 
 function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[] {
@@ -98,8 +142,9 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
   const includeTE = config.includeTE ?? false;
   const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
   const excludedFactionIds = config.excludedFactionIds ?? [];
+  const mapVariant = config.mapVariant;
 
-  const layout = getLayout(playerCount);
+  const layout = getLayout(playerCount, mapVariant);
   if (!layout) {
     throw new Error(`Unsupported player count: ${playerCount}`);
   }
@@ -115,7 +160,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
   const rest = shuffle(eligibleIds.filter((id) => !pinned.includes(id))).slice(0, factionPoolSize - pinned.length);
   const factions = shuffle([...pinned, ...rest]);
   const extraSlices = config.extraSlices ?? 0;
-  const sliceLayouts = getSliceLayouts(playerCount, extraSlices);
+  const sliceLayouts = mapVariant ? undefined : getSliceLayouts(playerCount, extraSlices);
   const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
   const seats = layout.seats.map((s) => s.id);
   const slices = isSliceDraft && sliceLayouts ? sliceLayouts.map((s) => s.id) : [];
@@ -129,6 +174,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     excludedFactionIds,
     extraSlices,
   };
+  if (mapVariant) settings.mapVariant = mapVariant;
   if (isSliceDraft && sliceLayouts) {
     const balanceConfig = sliceLayouts[0].tiles.length <= 5 ? FIVE_TILE_SLICE_BALANCE_CONFIG : DEFAULT_SLICE_BALANCE_CONFIG;
     const { assignment, seed } = generateBalancedAssignment(sliceLayouts, balanceConfig, undefined, includePoK, includeTE);
@@ -165,7 +211,7 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
   const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
   const excludedFactionIds = config.excludedFactionIds ?? [];
 
-  if (!getLayout(playerCount)) {
+  if (!getLayout(playerCount, config.mapVariant)) {
     throw new Error(`Unsupported player count: ${playerCount}`);
   }
 
@@ -180,6 +226,7 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
     extraSlices: config.extraSlices ?? 0,
   };
   if (config.pinnedFactionIds?.length) settings.pinnedFactionIds = config.pinnedFactionIds;
+  if (config.mapVariant) settings.mapVariant = config.mapVariant;
 
   return {
     status: 'veto',
@@ -224,6 +271,7 @@ export function finalizeVetoPhase(state: DraftState, vetoedFactionIds: string[])
     excludedFactionIds: [...hostExcluded, ...cappedVetoes],
     extraSlices: settings.extraSlices,
     pinnedFactionIds: settings.pinnedFactionIds,
+    mapVariant: settings.mapVariant,
   });
 }
 
@@ -304,9 +352,9 @@ export function isComplete(state: DraftState): boolean {
 }
 
 /** Game order: clockwise around the galaxy starting at the Speaker's seat. */
-function computeGameOrder(players: DraftPlayer[], playerCount: number): string[] | null {
+function computeGameOrder(players: DraftPlayer[], playerCount: number, mapVariant?: MapVariant): string[] | null {
   const speaker = players.find((p) => p.isSpeaker);
-  const layout = getLayout(playerCount);
+  const layout = getLayout(playerCount, mapVariant);
   if (!speaker?.seatId || !layout) return null;
   const bySeat = new Map(players.filter((p) => p.seatId).map((p) => [p.seatId!, p.id]));
   return seatsClockwiseFrom(layout.seats, speaker.seatId)
@@ -373,7 +421,7 @@ export function makePick(
     pools.speakerAvailable = false;
     target.isSpeaker = true;
     // Speaker is always seated first (position 1 on the map).
-    const speakerSeatId = getLayout(state.settings.playerCount)?.seats.find((s) => s.label === 'Speaker')?.id;
+    const speakerSeatId = getLayout(state.settings.playerCount, state.settings.mapVariant)?.seats.find((s) => s.label === 'Speaker')?.id;
     if (speakerSeatId && pools.seats.includes(speakerSeatId)) {
       pools.seats = pools.seats.filter((s) => s !== speakerSeatId);
       target.seatId = speakerSeatId;
@@ -407,7 +455,7 @@ export function makePick(
       ...next,
       mapString: finalMapString,
       status: 'complete',
-      gameOrder: computeGameOrder(players, state.settings.playerCount),
+      gameOrder: computeGameOrder(players, state.settings.playerCount, state.settings.mapVariant),
     };
   } else {
     const { currentTurnIndex, isSnakeDescending } = advanceTurn(next);

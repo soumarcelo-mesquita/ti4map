@@ -199,7 +199,7 @@ export const GalaxyMap: React.FC<GalaxyMapProps> = ({
         style={{ touchAction: 'none', cursor: panning ? 'grabbing' : 'grab' }}
         className="w-full aspect-square max-w-[1100px] drop-shadow-2xl"
       >
-        {placed.map(({ q, r, tileId }) => {
+        {placed.map(({ q, r, tileId, side, rotation }) => {
           const { x, y } = hexToPixel(q, r, size);
           const id = key(q, r);
           const isMecatol = tileId === MECATOL_TILE_ID && q === 0 && r === 0;
@@ -257,7 +257,8 @@ export const GalaxyMap: React.FC<GalaxyMapProps> = ({
               size={size}
               x={x}
               y={y}
-              image={tileImage(tileId)}
+              image={tileImage(tileId, side)}
+              imageRotation={rotation ? rotation * 60 : undefined}
               stroke={isMecatol ? 'rgba(168,85,247,0.6)' : 'rgba(255,255,255,0.08)'}
             />
           );

@@ -9,6 +9,8 @@ interface HexagonProps {
   stroke?: string;
   strokeWidth?: number;
   image?: string;
+  /** clockwise image rotation in degrees (multiples of 60 keep the hex shape) */
+  imageRotation?: number;
   label?: string;
   labelColor?: string;
   id: string;
@@ -24,6 +26,7 @@ export const Hexagon: React.FC<HexagonProps> = ({
   stroke = 'rgba(56, 189, 248, 0.2)',
   strokeWidth,
   image,
+  imageRotation,
   label,
   labelColor,
   id,
@@ -57,6 +60,7 @@ export const Hexagon: React.FC<HexagonProps> = ({
               width={size * 2}
               height={size * 1.732}
               preserveAspectRatio="xMidYMid slice"
+              transform={imageRotation ? `rotate(${imageRotation} ${size} ${size})` : undefined}
             />
           </pattern>
         </defs>

@@ -34,10 +34,14 @@ export interface PlayerLayout {
 export const SUPPORTED_PLAYER_COUNTS = [4, 5, 6] as const;
 
 /**
- * Counts offered when creating a room. 5-player is hidden from the UI for now;
- * its layout stays supported so rooms already created with it keep working.
+ * Counts offered when creating a room. 5-player rooms are always created with
+ * the hyperlane layout (`HYPERLANE_LAYOUTS`); the plain 5p layout in `LAYOUTS`
+ * stays only so rooms created with it before keep working.
  */
-export const SELECTABLE_PLAYER_COUNTS = [4, 6] as const;
+export const SELECTABLE_PLAYER_COUNTS = [4, 5, 6] as const;
+
+/** Alternative board for a player count; absent = the standard `LAYOUTS` entry. */
+export type MapVariant = 'hyperlanes';
 
 const LAYOUTS: Record<number, PlayerLayout> = {
   4: {
@@ -72,7 +76,27 @@ const LAYOUTS: Record<number, PlayerLayout> = {
   },
 };
 
-export function getLayout(playerCount: number): PlayerLayout | undefined {
+/**
+ * PoK 5-player hyperlane board (same geometry as Milty Draft's 5p map): the
+ * 6p homes minus the South one, whose wedge is filled by hyperlane tiles
+ * (see `data/hyperlanes.ts`). Each seat owns 5 systems; p3's 4th system sits
+ * at (0, 2), inside the wedge, reached through the hyperlanes.
+ */
+const HYPERLANE_LAYOUTS: Record<number, PlayerLayout> = {
+  5: {
+    empty: [],
+    seats: [
+      { id: 'p1', label: 'Speaker', home: [0, -3], slice: [[1, -3], [0, -2], [-1, -2], [1, -2], [0, -1]] },
+      { id: 'p2', label: '2º', home: [3, -3], slice: [[3, -2], [2, -2], [2, -3], [2, -1], [1, -1]] },
+      { id: 'p3', label: '3º', home: [3, 0], slice: [[2, 1], [2, 0], [3, -1], [0, 2], [1, 0]] },
+      { id: 'p4', label: '4º', home: [-3, 3], slice: [[-3, 2], [-2, 2], [-2, 3], [-2, 1], [-1, 1]] },
+      { id: 'p5', label: '5º', home: [-3, 0], slice: [[-2, -1], [-2, 0], [-3, 1], [-1, -1], [-1, 0]] },
+    ],
+  },
+};
+
+export function getLayout(playerCount: number, variant?: MapVariant): PlayerLayout | undefined {
+  if (variant === 'hyperlanes') return HYPERLANE_LAYOUTS[playerCount];
   return LAYOUTS[playerCount];
 }
 

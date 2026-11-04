@@ -10,20 +10,20 @@ import { currentPlayerId, nextPlayerId } from '@/lib/draftEngine';
 export function Roster({ state, myPlayerId }: { state: DraftState; myPlayerId: string }) {
   const turnId = currentPlayerId(state);
   const upNextId = nextPlayerId(state);
-  const layout = getLayout(state.settings.playerCount);
+  const layout = getLayout(state.settings.playerCount, state.settings.mapVariant);
   const seatLabel = (seatId: string | null) =>
     layout?.seats.find((s) => s.id === seatId)?.label ?? '—';
 
   // Clockwise turn-order index per seat, once the Speaker has a seat.
   const orderBySeat = useMemo(() => {
     const m = new Map<string, number>();
-    const seats = getLayout(state.settings.playerCount)?.seats;
+    const seats = getLayout(state.settings.playerCount, state.settings.mapVariant)?.seats;
     const speaker = state.players.find((p) => p.isSpeaker && p.seatId);
     if (speaker?.seatId && seats) {
       seatsClockwiseFrom(seats, speaker.seatId).forEach((id, i) => m.set(id, i));
     }
     return m;
-  }, [state.players, state.settings.playerCount]);
+  }, [state.players, state.settings.playerCount, state.settings.mapVariant]);
 
   const roleLabel = (p: DraftState['players'][number]) => {
     if (p.isSpeaker) return 'Speaker';

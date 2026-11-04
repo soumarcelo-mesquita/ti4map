@@ -139,7 +139,7 @@ export function SliceSection(props: DraftSectionProps) {
 /** Position hint — the pick itself happens by clicking a home on the map. */
 export function PositionSection({ state, me }: DraftSectionProps) {
   const seatLabel = (seatId: string | null) =>
-    getLayout(state.settings.playerCount)?.seats.find((s) => s.id === seatId)?.label ?? '—';
+    getLayout(state.settings.playerCount, state.settings.mapVariant)?.seats.find((s) => s.id === seatId)?.label ?? '—';
 
   return (
     <section className="space-y-2">

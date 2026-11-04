@@ -64,7 +64,7 @@ function RoomContent() {
     return () => leaveRoom();
   }, [params.id, loadRoom, leaveRoom]);
 
-  const layout = state ? getLayout(state.settings.playerCount) : undefined;
+  const layout = state ? getLayout(state.settings.playerCount, state.settings.mapVariant) : undefined;
 
   const occupants = useMemo<Record<string, SeatOccupant>>(() => {
     const m: Record<string, SeatOccupant> = {};

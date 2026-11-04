@@ -36,9 +36,12 @@ export function getTile(id: number): Tile | undefined {
   return TILE_BY_ID.get(id);
 }
 
-/** Public path to a system tile image. Falls back to ST_0 (empty) for id 0. */
-export function tileImage(id: number): string {
-  return `/img/tiles/ST_${id}.png`;
+/**
+ * Public path to a system tile image. Falls back to ST_0 (empty) for id 0.
+ * `side` picks the face of a double-sided tile (hyperlanes: ST_83A.png).
+ */
+export function tileImage(id: number, side?: string): string {
+  return `/img/tiles/ST_${id}${side ?? ''}.png`;
 }
 
 /** Optimal resource/influence value of a planet group (max(res, inf) per planet, split on ties). */

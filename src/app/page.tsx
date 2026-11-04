@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { useRoomStore } from '@/store/roomStore';
-import { createDraftState, createVetoState } from '@/lib/draftEngine';
+import { createDraftState, createVetoState, generateHyperlaneMap } from '@/lib/draftEngine';
 import { isValidMapString } from '@/lib/mapString';
 import { SELECTABLE_PLAYER_COUNTS } from '@/data/seats';
 import { factionPool, factionImage } from '@/data/factions';
@@ -68,6 +68,8 @@ export default function Home() {
   const eligibleFactionCount = availableFactions.filter((f) => !excludedFactionIds.has(f.id)).length;
   const maxFactions = eligibleFactionCount;
   const sliceDraftAvailable = getSliceLayouts(playerCount) !== undefined;
+  /** 5p is always played on the PoK hyperlane board, rolled automatically. */
+  const usesHyperlanes = playerCount === 5;
 
   // How many surplus fatias the current tile pool can actually support, on
   // top of the one-per-player base — caps the "fatias extras" input so a
@@ -121,8 +123,12 @@ export default function Home() {
 
   const handleCreate = async () => {
     setError(null);
-    const finalMapString = useSliceDraft ? buildSliceModeMapString() : mapString.trim();
-    if (!useSliceDraft && !isValidMapString(mapString)) {
+    const finalMapString = usesHyperlanes
+      ? generateHyperlaneMap(playerCount, includePoK, includeTE).mapString
+      : useSliceDraft
+        ? buildSliceModeMapString()
+        : mapString.trim();
+    if (!usesHyperlanes && !useSliceDraft && !isValidMapString(mapString)) {
       setError('Cole uma map string válida (lista de IDs de tile separados por espaço).');
       return;
     }
@@ -140,7 +146,8 @@ export default function Home() {
         includeTE,
         factionPoolSize,
         excludedFactionIds: Array.from(excludedFactionIds),
-        extraSlices: useSliceDraft ? extraSlices : 0,
+        extraSlices: useSliceDraft && !usesHyperlanes ? extraSlices : 0,
+        mapVariant: usesHyperlanes ? ('hyperlanes' as const) : undefined,
         pinnedFactionIds: cheatUnlocked
           ? Array.from(pinnedFactionIds).filter((id) => availableFactions.some((f) => f.id === id))
           : [],
@@ -309,8 +316,20 @@ export default function Home() {
             </section>
           )}
 
+          {usesHyperlanes && (
+            <section className="rounded-2xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3.5">
+              <span className="block text-[10px] font-black uppercase tracking-widest text-indigo-300">
+                Mapa com hyperlanes
+              </span>
+              <span className="mt-1 block text-[11px] font-bold text-slate-400">
+                Com 5 jogadores o mapa já vem sorteado e balanceado. O draft é só de facção, posição na mesa e
+                speaker.
+              </span>
+            </section>
+          )}
+
           {/* Map string */}
-          {!useSliceDraft && (
+          {!useSliceDraft && !usesHyperlanes && (
             <section className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Map string</label>
