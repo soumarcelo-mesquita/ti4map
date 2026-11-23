@@ -15,6 +15,10 @@ interface BlindPickBoardProps {
 
 const factionName = (id: string) => getFaction(id)?.name ?? id;
 
+/** "A", "A e B", "A, B e C" */
+const joinNames = (names: string[]) =>
+  names.length <= 1 ? (names[0] ?? '') : `${names.slice(0, -1).join(', ')} e ${names[names.length - 1]}`;
+
 /**
  * Blind faction pick: every pending player secretly picks one faction at the
  * same time. Unique picks are locked; players who collided pick again among
@@ -32,9 +36,18 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
   const [selected, setSelected] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // Every eligible faction is offered, so list them by name to make them easy to find.
-  const options = blindOptions(state, me.id).sort((a, b) => factionName(a).localeCompare(factionName(b)));
+  // Every faction of the room is listed (by name, to make them easy to find);
+  // the ones another player already locked, and the ones I already tried and
+  // lost to a collision, stay visible but disabled.
+  const options = new Set(blindOptions(state, me.id));
   const myTried = blind.tried[me.id] ?? [];
+  const takenByOthers = new Set(
+    state.players.filter((p) => p.id !== me.id && p.faction).map((p) => p.faction as string),
+  );
+  const allFactions = Array.from(new Set([...state.pools.factions, ...takenByOthers])).sort((a, b) =>
+    factionName(a).localeCompare(factionName(b)),
+  );
+  const myAutoAssigned = blind.log.some((l) => l.autoAssigned?.includes(me.id));
   const nameOf = (id: string) => state.players.find((p) => p.id === id)?.name ?? id;
 
   // Collision that sent me to this round (if any), for the prompt.
@@ -50,34 +63,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
     setSubmitting(false);
     setSelected(null);
   };
-
-  const roundLog =
-    blind.log.length > 0 ? (
-      <div className="space-y-1.5">
-        <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Conflitos</h3>
-        <ul className="space-y-1">
-          {blind.log.map((entry) => {
-            const contested = Object.entries(entry.collisions);
-            return (
-              <li key={entry.round} className="text-[11px] font-bold text-slate-400">
-                <span className="text-slate-500">Rodada {entry.round}:</span>{' '}
-                {contested.length === 0
-                  ? 'sem conflitos.'
-                  : contested
-                      .map(([fid, ids]) => `${factionName(fid)} (${ids.map(nameOf).join(', ')})`)
-                      .join(' · ')}
-                {entry.autoAssigned?.length ? (
-                  <span className="text-amber-400/80">
-                    {' '}
-                    — sem opções restantes, sorteado para {entry.autoAssigned.map(nameOf).join(', ')}.
-                  </span>
-                ) : null}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    ) : null;
 
   const header = (
     <header className="space-y-1">
@@ -103,11 +88,14 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
               Sua facção: {me.faction ? factionName(me.faction) : '—'}
             </h2>
             <p className="text-xs text-slate-400">
-              Aguardando os jogadores que empataram escolherem de novo.
+              {myAutoAssigned
+                ? 'Você já tinha tentado todas as facções restantes, então esta foi sorteada para você. '
+                : ''}
+              Aguardando os jogadores que empataram escolherem de novo. As facções dos outros aparecem quando todos
+              tiverem a sua.
             </p>
           </div>
         </div>
-        {roundLog}
       </div>
     );
   }
@@ -126,7 +114,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
             </p>
           </div>
         </div>
-        {roundLog}
       </div>
     );
   }
@@ -134,43 +121,66 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
   return (
     <div className="glass rounded-3xl p-6 border border-white/10 space-y-5">
       {header}
-      <div className="space-y-1">
-        <h2 className="text-lg font-black text-white">
-          {round === 1 ? 'Escolha sua facção em segredo' : 'Conflito! Escolha outra facção'}
-        </h2>
-        {myCollision ? (
-          <p className="text-xs text-amber-300/90 font-bold">
-            {myCollision[1].map(nameOf).join(' e ')} escolheram {factionName(myCollision[0])}. Ninguém ficou com
-            ela — escolham de novo (as facções que você já tentou não aparecem mais).
-          </p>
-        ) : (
+      {myCollision ? (
+        <div
+          role="alert"
+          className="flex items-center gap-4 rounded-2xl border-2 border-amber-400 bg-amber-400/15 p-5 sm:p-6"
+        >
+          <Image src={factionImage(myCollision[0])} alt="" width={64} height={64} className="shrink-0 opacity-60" />
+          <div className="space-y-1.5">
+            <h2 className="text-2xl sm:text-3xl font-black text-amber-300">Conflito! Escolha uma nova facção</h2>
+            <p className="text-sm sm:text-base font-bold text-amber-100">
+              {joinNames(myCollision[1].map(nameOf))} escolheram <b>{factionName(myCollision[0])}</b>. Ninguém
+              ficou com ela — escolham de novo.
+            </p>
+            <p className="text-xs font-bold text-amber-200/70">
+              Facções já escolhidas por outros jogadores e as que você já tentou estão desabilitadas.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-1">
+          <h2 className="text-lg font-black text-white">Escolha sua facção em segredo</h2>
           <p className="text-xs text-slate-400">
             Todos escolhem ao mesmo tempo e ninguém vê a escolha dos outros. Se duas ou mais pessoas escolherem a
             mesma facção, só elas escolhem de novo.
           </p>
-        )}
-        {myTried.length > 0 && (
-          <p className="text-[11px] text-slate-500 font-bold">
-            Já tentou: {myTried.map(factionName).join(', ')}.
-          </p>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 gap-2">
-        {options.map((fid) => {
+        {allFactions.map((fid) => {
           const isSelected = selected === fid;
+          const tried = myTried.includes(fid);
+          const disabled = !options.has(fid);
           return (
             <button
               key={fid}
+              disabled={disabled}
               onClick={() => setSelected(fid)}
               className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
-                isSelected
-                  ? 'border-emerald-400 bg-emerald-400/20 text-emerald-200'
-                  : 'border-primary/40 bg-primary/10 text-white hover:bg-primary/20 hover:border-primary'
+                disabled
+                  ? tried
+                    ? 'border-red-500/30 bg-red-500/5 text-slate-500 cursor-not-allowed opacity-50'
+                    : 'border-white/5 bg-white/5 text-slate-600 cursor-not-allowed opacity-35'
+                  : isSelected
+                    ? 'border-emerald-400 bg-emerald-400/20 text-emerald-200'
+                    : 'border-primary/40 bg-primary/10 text-white hover:bg-primary/20 hover:border-primary'
               }`}
             >
-              <Image src={factionImage(fid)} alt={factionName(fid)} width={28} height={28} />
+              <Image
+                src={factionImage(fid)}
+                alt={factionName(fid)}
+                width={28}
+                height={28}
+                className={disabled ? 'grayscale' : undefined}
+              />
               <span className="text-[9px] opacity-80 text-center leading-tight">{factionName(fid)}</span>
+              {disabled && (
+                <span className={`text-[8px] uppercase tracking-wide ${tried ? 'text-red-400' : 'text-slate-500'}`}>
+                  {tried ? 'Você já tentou' : 'Indisponível'}
+                </span>
+              )}
             </button>
           );
         })}
@@ -184,7 +194,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
         {submitting ? 'Enviando...' : selected ? `Confirmar ${factionName(selected)}` : 'Selecione uma facção'}
       </button>
 
-      {roundLog}
     </div>
   );
 }

@@ -56,8 +56,10 @@ export function Roster({
         const isTurn = p.id === turnId;
         const isNext = !isTurn && p.id === upNextId;
         const isMe = p.id === myPlayerId;
-        const faction = p.faction ? getFaction(p.faction) : null;
         const bStatus = blindStatus(p.id);
+        // Other players' factions stay secret until the blind pick is over for everyone.
+        const shownFactionId = blind && !isMe ? null : p.faction;
+        const faction = shownFactionId ? getFaction(shownFactionId) : null;
         return (
           <div
             key={p.id}
@@ -70,8 +72,8 @@ export function Roster({
             }`}
           >
             <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
-              {p.faction ? (
-                <Image src={factionImage(p.faction)} alt={faction?.name ?? p.faction} width={52} height={52} />
+              {shownFactionId ? (
+                <Image src={factionImage(shownFactionId)} alt={faction?.name ?? shownFactionId} width={52} height={52} />
               ) : (
                 <span className="text-slate-600 font-black text-2xl">?</span>
               )}
