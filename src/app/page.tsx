@@ -38,6 +38,7 @@ export default function Home() {
   const [excludedFactionIds, setExcludedFactionIds] = useState<Set<string>>(new Set());
   const [enableFactionVetoes, setEnableFactionVetoes] = useState(false);
   const [vetoCount, setVetoCount] = useState(1);
+  const [blindFactionPick, setBlindFactionPick] = useState(false);
   const [useSliceDraft, setUseSliceDraft] = useState(false);
   const [extraSlices, setExtraSlices] = useState(DEFAULT_EXTRA_SLICES);
   const [loading, setLoading] = useState(false);
@@ -148,6 +149,7 @@ export default function Home() {
         excludedFactionIds: Array.from(excludedFactionIds),
         extraSlices: useSliceDraft && !usesHyperlanes ? extraSlices : 0,
         mapVariant: usesHyperlanes ? ('hyperlanes' as const) : undefined,
+        blindFactionPick,
         pinnedFactionIds: cheatUnlocked
           ? Array.from(pinnedFactionIds).filter((id) => availableFactions.some((f) => f.id === id))
           : [],
@@ -460,6 +462,46 @@ export default function Home() {
                 </div>
               </div>
             )}
+          </section>
+
+          {/* Blind pick de facções */}
+          <section>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={blindFactionPick}
+              onClick={() => setBlindFactionPick((v) => !v)}
+              className={`flex w-full items-center justify-between gap-4 rounded-2xl border px-4 py-3.5 text-left transition-all ${
+                blindFactionPick
+                  ? 'border-emerald-500/40 bg-emerald-500/10'
+                  : 'border-white/10 bg-white/5 hover:border-white/20'
+              }`}
+            >
+              <span>
+                <span
+                  className={`block text-[10px] font-black uppercase tracking-widest transition-colors ${
+                    blindFactionPick ? 'text-emerald-300' : 'text-slate-400'
+                  }`}
+                >
+                  Blind pick de facções
+                </span>
+                <span className="mt-1 block text-[11px] font-bold text-slate-500">
+                  Todos escolhem a facção ao mesmo tempo, em segredo. Quem escolher a mesma facção escolhe de novo,
+                  sem as que já tentou. Depois segue o draft de speaker, posição{sliceDraftAvailable ? ' e fatia' : ''}.
+                </span>
+              </span>
+              <span
+                className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+                  blindFactionPick ? 'bg-emerald-500' : 'bg-white/15'
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-transform ${
+                    blindFactionPick ? 'translate-x-5' : 'translate-x-0'
+                  }`}
+                />
+              </span>
+            </button>
           </section>
 
           {cheatUnlocked && (

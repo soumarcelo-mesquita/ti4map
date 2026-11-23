@@ -6,11 +6,19 @@ import { Navbar } from '@/components/layout/Navbar';
 import { GalaxyMap, type SeatOccupant } from '@/components/map/GalaxyMap';
 import { SpeakerSection, FactionSection, SliceSection, PositionSection } from '@/components/draft/DraftBoard';
 import { VetoBoard } from '@/components/draft/VetoBoard';
+import { BlindPickBoard } from '@/components/draft/BlindPickBoard';
 import { Roster } from '@/components/draft/Roster';
 import { useRoomStore } from '@/store/roomStore';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { getFaction } from '@/data/factions';
-import { currentPlayerId, nextPlayerId, hasPicked, makePick, finalizeVetoPhase } from '@/lib/draftEngine';
+import {
+  currentPlayerId,
+  nextPlayerId,
+  hasPicked,
+  makePick,
+  finalizeVetoPhase,
+  resolveBlindRound,
+} from '@/lib/draftEngine';
 import type { DraftCategory, DraftPlayer } from '@/types/draft';
 
 interface PendingPick {
@@ -55,7 +63,8 @@ function RoomContent() {
   const search = useSearchParams();
   const playerParam = search.get('player');
 
-  const { state, vetoes, isLoading, error, loadRoom, saveState, submitVeto, leaveRoom } = useRoomStore();
+  const { state, vetoes, blindPicks, isLoading, error, loadRoom, saveState, submitVeto, submitBlindPick, leaveRoom } =
+    useRoomStore();
   const [pickError, setPickError] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingPick | null>(null);
 
@@ -98,6 +107,19 @@ function RoomContent() {
     const unionIds = Array.from(new Set(vetoes.flatMap((v) => v.factionIds)));
     saveState(finalizeVetoPhase(state, unionIds));
   }, [state, vetoes, saveState]);
+
+  // Same pattern for the blind faction pick: once every pending player of the
+  // current round has a pick in, any connected client resolves the round.
+  // Resolution is deterministic, so concurrent resolvers write the same state.
+  useEffect(() => {
+    if (!state || state.status !== 'blind' || !state.blind) return;
+    const { round, pendingPlayerIds } = state.blind;
+    const picks: Record<string, string> = {};
+    for (const b of blindPicks) if (b.round === round) picks[b.playerId] = b.factionId;
+    if (!pendingPlayerIds.every((id) => picks[id])) return;
+    const result = resolveBlindRound(state, picks);
+    if (result.ok) saveState(result.state);
+  }, [state, blindPicks, saveState]);
 
   if (isLoading || !state) {
     return (
@@ -193,6 +215,14 @@ function RoomContent() {
     await submitVeto(params.id, myPlayerId, factionIds);
   };
 
+  const confirmBlindPick = async (factionId: string) => {
+    if (!state.blind) return;
+    await submitBlindPick(params.id, state.blind.round, myPlayerId, factionId);
+  };
+
+  const isBlindPhase = state.status === 'blind' && !!state.blind;
+  const factionsDrafted = !!state.settings.blindFactionPick;
+
   if (state.status === 'veto') {
     return (
       <main className="min-h-screen flex flex-col">
@@ -212,6 +242,9 @@ function RoomContent() {
       <div className="flex-1 flex flex-col gap-6 p-4 lg:p-6">
         {/* Top section (full width): current turn + choices already made */}
         <div className="space-y-4">
+          {isBlindPhase ? (
+            <BlindPickBoard state={state} me={me} blindPicks={blindPicks} onConfirm={confirmBlindPick} />
+          ) : (
           <div className="glass rounded-2xl p-4 border border-white/10">
             {state.status === 'complete' ? (
               <div className="space-y-1">
@@ -229,7 +262,8 @@ function RoomContent() {
                   {isMyTurn ? 'Sua vez de escolher' : `Vez de ${turnPlayer?.name ?? '...'}`}
                 </h2>
                 <p className="text-xs text-slate-400">
-                  Escolha <b>um</b>: speaker, facção{state.pools.slices.length > 0 ? ', fatia' : ''}
+                  Escolha <b>um</b>: speaker{factionsDrafted ? '' : ', facção'}
+                  {state.pools.slices.length > 0 ? ', fatia' : ''}
                   {state.pools.speakerAvailable ? '' : ' ou posição'}.
                   {state.pools.speakerAvailable && (
                     <> <span className="text-amber-400/80">Posições liberam após o speaker ser escolhido.</span></>
@@ -245,6 +279,7 @@ function RoomContent() {
             )}
             {pickError && <p className="mt-2 text-xs font-bold text-red-400">{pickError}</p>}
           </div>
+          )}
 
           <div className="glass rounded-2xl p-4 border border-white/10">
             <Roster state={state} myPlayerId={myPlayerId} />
@@ -255,7 +290,7 @@ function RoomContent() {
         {state.status === 'drafting' && (
           <div className="glass rounded-2xl p-4 border border-white/10 space-y-6">
             <SpeakerSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
-            <FactionSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
+            {!factionsDrafted && <FactionSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />}
           </div>
         )}
 
@@ -275,7 +310,7 @@ function RoomContent() {
           </div>
         </div>
 
-        {state.status === 'drafting' && (
+        {(state.status === 'drafting' || isBlindPhase) && (
           <SliceSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
         )}
       </div>

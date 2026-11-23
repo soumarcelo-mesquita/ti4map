@@ -1,4 +1,4 @@
-import { DraftCategory, DraftPlayer, DraftState, DraftSettings } from '@/types/draft';
+import { BlindPickState, DraftCategory, DraftPlayer, DraftState, DraftSettings } from '@/types/draft';
 import { factionPool } from '@/data/factions';
 import { getLayout, seatsClockwiseFrom, type MapVariant } from '@/data/seats';
 import { getSliceLayouts, buildSliceModeMapString, type SliceLayout } from '@/data/slices';
@@ -124,6 +124,8 @@ export interface CreateDraftConfig {
   pinnedFactionIds?: string[];
   /** alternative board; its map string comes pre-rolled (see `generateHyperlaneMap`) */
   mapVariant?: MapVariant;
+  /** factions are picked simultaneously and in secret before the turn-based draft */
+  blindFactionPick?: boolean;
 }
 
 function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[] {
@@ -175,6 +177,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     extraSlices,
   };
   if (mapVariant) settings.mapVariant = mapVariant;
+  if (config.blindFactionPick) settings.blindFactionPick = true;
   if (isSliceDraft && sliceLayouts) {
     const balanceConfig = sliceLayouts[0].tiles.length <= 5 ? FIVE_TILE_SLICE_BALANCE_CONFIG : DEFAULT_SLICE_BALANCE_CONFIG;
     const { assignment, seed } = generateBalancedAssignment(sliceLayouts, balanceConfig, undefined, includePoK, includeTE);
@@ -182,7 +185,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     settings.sliceAssignment = assignment;
   }
 
-  return {
+  const state: DraftState = {
     status: 'drafting',
     mapString,
     settings,
@@ -193,6 +196,11 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     isSnakeDescending: true,
     gameOrder: null,
   };
+  if (config.blindFactionPick) {
+    state.status = 'blind';
+    state.blind = { round: 1, pendingPlayerIds: players.map((p) => p.id), tried: {}, log: [] };
+  }
+  return state;
 }
 
 export interface CreateVetoPhaseConfig extends CreateDraftConfig {
@@ -227,6 +235,7 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
   };
   if (config.pinnedFactionIds?.length) settings.pinnedFactionIds = config.pinnedFactionIds;
   if (config.mapVariant) settings.mapVariant = config.mapVariant;
+  if (config.blindFactionPick) settings.blindFactionPick = true;
 
   return {
     status: 'veto',
@@ -272,7 +281,98 @@ export function finalizeVetoPhase(state: DraftState, vetoedFactionIds: string[])
     extraSlices: settings.extraSlices,
     pinnedFactionIds: settings.pinnedFactionIds,
     mapVariant: settings.mapVariant,
+    blindFactionPick: settings.blindFactionPick,
   });
+}
+
+/**
+ * Factions a player may choose in the current blind round: the pool (which
+ * already excludes factions locked by other players) minus every faction this
+ * player tried in an earlier round and lost to a collision.
+ */
+export function blindOptions(state: DraftState, playerId: string): string[] {
+  const tried = state.blind?.tried[playerId] ?? [];
+  return state.pools.factions.filter((f) => !tried.includes(f));
+}
+
+/**
+ * Resolves one blind-pick round. `picks` maps each pending player to the
+ * faction they secretly chose. A faction chosen by exactly one player is
+ * locked for them; factions chosen by 2+ players go to nobody — those players
+ * play another round among themselves, with the contested faction (and any
+ * they lost before) no longer offered to them.
+ *
+ * Degenerate case: a player who has already tried every faction still in the
+ * pool gets one assigned at random (the pool always holds at least as many
+ * factions as unresolved players, so a distinct one always exists).
+ *
+ * Deterministic except for that fallback, so every client resolving the same
+ * round converges on the same state.
+ */
+export function resolveBlindRound(state: DraftState, picks: Record<string, string>): PickResult {
+  const blind = state.blind;
+  if (state.status !== 'blind' || !blind) {
+    return { ok: false, state, error: 'Draft is not in the blind pick phase.' };
+  }
+  for (const pid of blind.pendingPlayerIds) {
+    const f = picks[pid];
+    if (!f) return { ok: false, state, error: `Missing blind pick for ${pid}.` };
+    if (!blindOptions(state, pid).includes(f)) return { ok: false, state, error: `Invalid blind pick for ${pid}.` };
+  }
+
+  const byFaction = new Map<string, string[]>();
+  for (const pid of blind.pendingPlayerIds) {
+    const f = picks[pid];
+    byFaction.set(f, [...(byFaction.get(f) ?? []), pid]);
+  }
+
+  const players = state.players.map((p) => ({ ...p }));
+  let factions = [...state.pools.factions];
+  const tried: Record<string, string[]> = { ...blind.tried };
+  const collisions: Record<string, string[]> = {};
+  let pending: string[] = [];
+
+  // Iterate in pending order so the result doesn't depend on Map/obj ordering quirks.
+  for (const pid of blind.pendingPlayerIds) {
+    const f = picks[pid];
+    const pickers = byFaction.get(f)!;
+    if (pickers.length === 1) {
+      players.find((p) => p.id === pid)!.faction = f;
+      factions = factions.filter((x) => x !== f);
+    } else {
+      collisions[f] = pickers;
+      tried[pid] = [...(tried[pid] ?? []), f];
+      pending.push(pid);
+    }
+  }
+
+  // Fallback: anyone left without options gets a random faction still in the pool.
+  const autoAssigned: string[] = [];
+  for (;;) {
+    const stuck = pending.find((pid) => factions.every((f) => (tried[pid] ?? []).includes(f)));
+    if (!stuck) break;
+    const f = factions[Math.floor(Math.random() * factions.length)];
+    players.find((p) => p.id === stuck)!.faction = f;
+    factions = factions.filter((x) => x !== f);
+    pending = pending.filter((x) => x !== stuck);
+    autoAssigned.push(stuck);
+  }
+
+  const log = [
+    ...blind.log,
+    { round: blind.round, collisions, ...(autoAssigned.length ? { autoAssigned } : {}) },
+  ];
+  const nextBlind: BlindPickState = { round: blind.round + 1, pendingPlayerIds: pending, tried, log };
+  const next: DraftState = {
+    ...state,
+    players,
+    pools: { ...state.pools, factions },
+    blind: nextBlind,
+    status: pending.length > 0 ? 'blind' : 'drafting',
+  };
+  // Every player now has a faction, but the speaker is still open, so the
+  // snake's first player always has a legal pick — no turn adjustment needed.
+  return { ok: true, state: next };
 }
 
 export function currentPlayerId(state: DraftState): string | null {

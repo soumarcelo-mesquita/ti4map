@@ -40,10 +40,32 @@ export interface DraftSettings {
   pinnedFactionIds?: string[];
   /** alternative board (e.g. 5p hyperlanes); absent = standard layout for playerCount */
   mapVariant?: MapVariant;
+  /** factions are chosen simultaneously and in secret (blind pick) before the turn-based draft */
+  blindFactionPick?: boolean;
+}
+
+/** One resolved blind-pick round: which factions were contested and by whom. */
+export interface BlindRoundLog {
+  round: number;
+  /** factionId -> player ids that picked it (only factions picked by 2+ players) */
+  collisions: Record<string, string[]>;
+  /** player ids that got a faction assigned at random because they ran out of options */
+  autoAssigned?: string[];
+}
+
+/** Progress of the blind faction pick (only while/after `status === 'blind'`). */
+export interface BlindPickState {
+  /** current round, starting at 1 */
+  round: number;
+  /** players that still have to pick in this round (round 1: everyone; later: only those who collided) */
+  pendingPlayerIds: string[];
+  /** playerId -> factions that player already tried and lost to a collision (no longer offered to them) */
+  tried: Record<string, string[]>;
+  log: BlindRoundLog[];
 }
 
 export interface DraftState {
-  status: 'veto' | 'drafting' | 'complete';
+  status: 'veto' | 'blind' | 'drafting' | 'complete';
   mapString: string;
   settings: DraftSettings;
   players: DraftPlayer[];
@@ -53,10 +75,19 @@ export interface DraftState {
   isSnakeDescending: boolean;
   /** final game order (player ids by speaker slot), set when complete */
   gameOrder: string[] | null;
+  /** blind faction pick progress; absent in rooms without blind pick */
+  blind?: BlindPickState;
 }
 
 /** One player's secret faction vetoes, as stored in the `room_vetoes` table. */
 export interface VetoSubmission {
   playerId: string;
   factionIds: string[];
+}
+
+/** One player's secret blind faction pick for a given round (stored in `room_vetoes` under a `blind:` key). */
+export interface BlindPickSubmission {
+  round: number;
+  playerId: string;
+  factionId: string;
 }

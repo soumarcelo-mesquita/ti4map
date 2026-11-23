@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
-import type { DraftState, VetoSubmission } from '@/types/draft';
+import type { BlindPickSubmission, DraftState, VetoSubmission } from '@/types/draft';
 
 interface RoomStore {
   roomId: string | null;
   roomName: string | null;
   state: DraftState | null;
   vetoes: VetoSubmission[];
+  blindPicks: BlindPickSubmission[];
   isLoading: boolean;
   error: string | null;
 
@@ -15,14 +16,46 @@ interface RoomStore {
   saveState: (state: DraftState) => Promise<void>;
   createRoom: (name: string, state: DraftState) => Promise<string | null>;
   submitVeto: (roomId: string, playerId: string, factionIds: string[]) => Promise<VetoSubmission[]>;
+  submitBlindPick: (roomId: string, round: number, playerId: string, factionId: string) => Promise<void>;
   leaveRoom: () => void;
 }
 
 let channel: RealtimeChannel | null = null;
 let vetoChannel: RealtimeChannel | null = null;
 
-function toVetoSubmission(row: { player_id: string; faction_ids: unknown }): VetoSubmission {
+type VetoRow = { player_id: string; faction_ids: unknown };
+
+function toVetoSubmission(row: VetoRow): VetoSubmission {
   return { playerId: row.player_id, factionIds: (row.faction_ids as string[]) ?? [] };
+}
+
+/**
+ * Blind picks reuse the `room_vetoes` table (one row per player per round,
+ * same secret-write/realtime mechanics) under a namespaced player_id, so no
+ * extra table/migration is needed: `blind:<round>:<playerId>`.
+ */
+const BLIND_PREFIX = 'blind:';
+const blindKey = (round: number, playerId: string) => `${BLIND_PREFIX}${round}:${playerId}`;
+
+function toBlindPick(row: VetoRow): BlindPickSubmission | null {
+  const m = row.player_id.match(/^blind:(\d+):(.+)$/);
+  const factionId = (row.faction_ids as string[] | null)?.[0];
+  if (!m || !factionId) return null;
+  return { round: Number(m[1]), playerId: m[2], factionId };
+}
+
+function splitRows(rows: VetoRow[]): { vetoes: VetoSubmission[]; blindPicks: BlindPickSubmission[] } {
+  const vetoes: VetoSubmission[] = [];
+  const blindPicks: BlindPickSubmission[] = [];
+  for (const row of rows) {
+    if (row.player_id.startsWith(BLIND_PREFIX)) {
+      const pick = toBlindPick(row);
+      if (pick) blindPicks.push(pick);
+    } else {
+      vetoes.push(toVetoSubmission(row));
+    }
+  }
+  return { vetoes, blindPicks };
 }
 
 export const useRoomStore = create<RoomStore>((set, get) => ({
@@ -30,6 +63,7 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
   roomName: null,
   state: null,
   vetoes: [],
+  blindPicks: [],
   isLoading: false,
   error: null,
 
@@ -56,7 +90,7 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
       roomId: data.id,
       roomName: data.name,
       state: data.state as DraftState,
-      vetoes: (vetoRows ?? []).map(toVetoSubmission),
+      ...splitRows((vetoRows ?? []) as VetoRow[]),
       isLoading: false,
     });
 
@@ -87,7 +121,19 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
         'postgres_changes',
         { event: '*', schema: 'public', table: 'room_vetoes', filter: `room_id=eq.${id}` },
         (payload) => {
-          const row = payload.new as { player_id: string; faction_ids: unknown };
+          const row = payload.new as VetoRow;
+          if (!row?.player_id) return;
+          if (row.player_id.startsWith(BLIND_PREFIX)) {
+            const pick = toBlindPick(row);
+            if (!pick) return;
+            set((s) => ({
+              blindPicks: [
+                ...s.blindPicks.filter((b) => !(b.round === pick.round && b.playerId === pick.playerId)),
+                pick,
+              ],
+            }));
+            return;
+          }
           set((s) => ({
             vetoes: [...s.vetoes.filter((v) => v.playerId !== row.player_id), toVetoSubmission(row)],
           }));
@@ -131,6 +177,25 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
     return next;
   },
 
+  submitBlindPick: async (roomId, round, playerId, factionId) => {
+    const { error } = await supabase
+      .from('room_vetoes')
+      .upsert(
+        { room_id: roomId, player_id: blindKey(round, playerId), faction_ids: [factionId] },
+        { onConflict: 'room_id,player_id' },
+      );
+    if (error) {
+      set({ error: error.message });
+      return;
+    }
+    set((s) => ({
+      blindPicks: [
+        ...s.blindPicks.filter((b) => !(b.round === round && b.playerId === playerId)),
+        { round, playerId, factionId },
+      ],
+    }));
+  },
+
   leaveRoom: () => {
     if (channel) {
       supabase.removeChannel(channel);
@@ -140,6 +205,6 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
       supabase.removeChannel(vetoChannel);
       vetoChannel = null;
     }
-    set({ roomId: null, roomName: null, state: null, vetoes: [], error: null });
+    set({ roomId: null, roomName: null, state: null, vetoes: [], blindPicks: [], error: null });
   },
 }));
