@@ -2,12 +2,31 @@
 
 import Image from 'next/image';
 import { useMemo } from 'react';
-import type { DraftState } from '@/types/draft';
+import type { BlindPickSubmission, DraftState } from '@/types/draft';
 import { getFaction, factionImage } from '@/data/factions';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { currentPlayerId, nextPlayerId } from '@/lib/draftEngine';
 
-export function Roster({ state, myPlayerId }: { state: DraftState; myPlayerId: string }) {
+type BlindStatus = 'picking' | 'picked' | 'locked';
+
+export function Roster({
+  state,
+  myPlayerId,
+  blindPicks = [],
+}: {
+  state: DraftState;
+  myPlayerId: string;
+  /** secret picks of the blind phase — only used to tell who already chose (never what) */
+  blindPicks?: BlindPickSubmission[];
+}) {
+  // During the blind pick each card shows whether that player already chose
+  // this round, or already has a faction locked from an earlier round.
+  const blind = state.status === 'blind' ? state.blind : undefined;
+  const blindStatus = (playerId: string): BlindStatus | null => {
+    if (!blind) return null;
+    if (!blind.pendingPlayerIds.includes(playerId)) return 'locked';
+    return blindPicks.some((b) => b.round === blind.round && b.playerId === playerId) ? 'picked' : 'picking';
+  };
   const turnId = currentPlayerId(state);
   const upNextId = nextPlayerId(state);
   const layout = getLayout(state.settings.playerCount, state.settings.mapVariant);
@@ -38,6 +57,7 @@ export function Roster({ state, myPlayerId }: { state: DraftState; myPlayerId: s
         const isNext = !isTurn && p.id === upNextId;
         const isMe = p.id === myPlayerId;
         const faction = p.faction ? getFaction(p.faction) : null;
+        const bStatus = blindStatus(p.id);
         return (
           <div
             key={p.id}
@@ -63,6 +83,21 @@ export function Roster({ state, myPlayerId }: { state: DraftState; myPlayerId: s
                 {isTurn && (
                   <span className="text-[9px] font-black text-slate-950 bg-primary rounded-full px-2 py-0.5 uppercase">
                     Jogando
+                  </span>
+                )}
+                {bStatus === 'picking' && (
+                  <span className="text-[9px] font-black text-slate-400 border border-white/15 rounded-full px-2 py-0.5 uppercase">
+                    ⏳ Escolhendo
+                  </span>
+                )}
+                {bStatus === 'picked' && (
+                  <span className="text-[9px] font-black text-slate-950 bg-emerald-400 rounded-full px-2 py-0.5 uppercase">
+                    ✓ Escolheu
+                  </span>
+                )}
+                {bStatus === 'locked' && (
+                  <span className="text-[9px] font-black text-emerald-300 border border-emerald-400/50 rounded-full px-2 py-0.5 uppercase">
+                    ✓ Facção definida
                   </span>
                 )}
                 {isNext && (

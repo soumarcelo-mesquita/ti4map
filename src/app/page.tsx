@@ -76,6 +76,8 @@ export default function Home() {
   const usesHyperlanes = playerCount === 5;
   /** 7–8 players: no map layout yet, the room is only a blind faction pick. */
   const factionsOnly = isFactionsOnlyCount(playerCount);
+  /** blind pick: every eligible faction is on offer (no drawn pool) */
+  const usesBlindPick = blindFactionPick || factionsOnly;
 
   // How many surplus fatias the current tile pool can actually support, on
   // top of the one-per-player base — caps the "fatias extras" input so a
@@ -225,8 +227,8 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Expansion + faction pool */}
-          <section className="grid grid-cols-2 gap-4">
+          {/* Expansion + faction pool (blind pick offers every faction, so no pool size) */}
+          <section className={`grid gap-4 ${usesBlindPick ? 'grid-cols-1' : 'grid-cols-2'}`}>
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Expansões</label>
               <div className="flex gap-2">
@@ -252,6 +254,7 @@ export default function Home() {
                 </button>
               </div>
             </div>
+            {!usesBlindPick && (
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
                 Pool de facções
@@ -269,6 +272,7 @@ export default function Home() {
                 className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-center text-sm font-bold text-white focus:outline-none"
               />
             </div>
+            )}
           </section>
 
           {factionsOnly && (
@@ -278,7 +282,7 @@ export default function Home() {
               </span>
               <span className="mt-1 block text-[11px] font-bold text-slate-400">
                 Com {playerCount} jogadores a sala faz apenas o blind pick de facções: todos escolhem ao mesmo tempo,
-                em segredo, e quem repetir escolhe de novo. Sem mapa, posição, fatia ou speaker.
+                em segredo, entre todas as facções, e quem repetir escolhe de novo. Sem mapa, posição, fatia ou speaker.
               </span>
             </section>
           )}
@@ -506,7 +510,7 @@ export default function Home() {
                   Blind pick de facções
                 </span>
                 <span className="mt-1 block text-[11px] font-bold text-slate-500">
-                  Todos escolhem a facção ao mesmo tempo, em segredo. Quem escolher a mesma facção escolhe de novo,
+                  Todos escolhem a facção ao mesmo tempo, em segredo, entre todas as facções. Quem escolher a mesma facção escolhe de novo,
                   sem as que já tentou. Depois segue o draft de speaker, posição{sliceDraftAvailable ? ' e fatia' : ''}.
                 </span>
               </span>

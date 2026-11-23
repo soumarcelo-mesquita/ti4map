@@ -145,9 +145,9 @@ function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[]
 export function createDraftState(config: CreateDraftConfig): DraftState {
   const { playerNames, playerCount, mapString, includePoK } = config;
   const includeTE = config.includeTE ?? false;
-  const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
   const excludedFactionIds = config.excludedFactionIds ?? [];
   const factionsOnly = factionsOnlyRoom(playerCount);
+  const blindFactionPick = !!config.blindFactionPick || factionsOnly;
   const mapVariant = factionsOnly ? undefined : config.mapVariant;
 
   const layout = getLayout(playerCount, mapVariant);
@@ -159,6 +159,9 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
 
   const eligibleFactions = factionPool(includePoK, includeTE).filter((f) => !excludedFactionIds.includes(f.id));
   const eligibleIds = eligibleFactions.map((f) => f.id);
+  // Blind pick offers every eligible faction (expansions on, minus host
+  // exclusions and vetoes) — there is no drawn pool to choose from.
+  const factionPoolSize = blindFactionPick ? eligibleIds.length : (config.factionPoolSize ?? playerCount + 2);
   const pinnedFactionIds = config.pinnedFactionIds ?? [];
   // Pinned factions always make the pool unless the host excluded them or a
   // player vetoed them (both end up in `excludedFactionIds`).
@@ -181,7 +184,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     extraSlices,
   };
   if (mapVariant) settings.mapVariant = mapVariant;
-  if (config.blindFactionPick || factionsOnly) settings.blindFactionPick = true;
+  if (blindFactionPick) settings.blindFactionPick = true;
   if (factionsOnly) settings.factionsOnly = true;
   if (isSliceDraft && sliceLayouts) {
     const balanceConfig = sliceLayouts[0].tiles.length <= 5 ? FIVE_TILE_SLICE_BALANCE_CONFIG : DEFAULT_SLICE_BALANCE_CONFIG;

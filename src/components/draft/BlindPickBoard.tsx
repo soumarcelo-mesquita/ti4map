@@ -32,7 +32,8 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
   const [selected, setSelected] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const options = blindOptions(state, me.id);
+  // Every eligible faction is offered, so list them by name to make them easy to find.
+  const options = blindOptions(state, me.id).sort((a, b) => factionName(a).localeCompare(factionName(b)));
   const myTried = blind.tried[me.id] ?? [];
   const nameOf = (id: string) => state.players.find((p) => p.id === id)?.name ?? id;
 
@@ -49,33 +50,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
     setSubmitting(false);
     setSelected(null);
   };
-
-  const statusList = (
-    <ul className="space-y-1.5">
-      {state.players.map((p) => {
-        const isPending = pending.includes(p.id);
-        const done = isPending && submittedIds.has(p.id);
-        return (
-          <li
-            key={p.id}
-            className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-bold"
-          >
-            <span className={p.id === me.id ? 'text-white' : 'text-slate-300'}>
-              {p.name}
-              {p.id === me.id && ' (você)'}
-            </span>
-            {!isPending ? (
-              <span className="text-emerald-400">✓ facção definida</span>
-            ) : (
-              <span className={done ? 'text-emerald-400' : 'text-slate-500'}>
-                {done ? '✓ escolheu' : '⏳ escolhendo'}
-              </span>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
 
   const roundLog =
     blind.log.length > 0 ? (
@@ -133,7 +107,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
             </p>
           </div>
         </div>
-        {statusList}
         {roundLog}
       </div>
     );
@@ -153,7 +126,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
             </p>
           </div>
         </div>
-        {statusList}
         {roundLog}
       </div>
     );
@@ -212,7 +184,6 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
         {submitting ? 'Enviando...' : selected ? `Confirmar ${factionName(selected)}` : 'Selecione uma facção'}
       </button>
 
-      {statusList}
       {roundLog}
     </div>
   );

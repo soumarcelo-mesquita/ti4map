@@ -293,7 +293,7 @@ function RoomContent() {
           )}
 
           <div className="glass rounded-2xl p-4 border border-white/10">
-            <Roster state={state} myPlayerId={myPlayerId} />
+            <Roster state={state} myPlayerId={myPlayerId} blindPicks={blindPicks} />
           </div>
         </div>
 
