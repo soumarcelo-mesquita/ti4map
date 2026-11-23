@@ -1,6 +1,6 @@
 import { BlindPickState, DraftCategory, DraftPlayer, DraftState, DraftSettings } from '@/types/draft';
 import { factionPool } from '@/data/factions';
-import { getLayout, seatsClockwiseFrom, type MapVariant } from '@/data/seats';
+import { getLayout, isFactionsOnlyCount, seatsClockwiseFrom, type MapVariant } from '@/data/seats';
 import { getSliceLayouts, buildSliceModeMapString, type SliceLayout } from '@/data/slices';
 import { HYPERLANE_TILES } from '@/data/hyperlanes';
 import { MAP_POSITIONS } from '@/lib/mapString';
@@ -128,6 +128,9 @@ export interface CreateDraftConfig {
   blindFactionPick?: boolean;
 }
 
+/** 7/8-player rooms have no map layout: they only run the blind faction pick. */
+const factionsOnlyRoom = (playerCount: number) => isFactionsOnlyCount(playerCount);
+
 function buildPlayers(playerNames: string[], playerCount: number): DraftPlayer[] {
   return Array.from({ length: playerCount }, (_, i) => ({
     id: `player-${i}`,
@@ -144,10 +147,11 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
   const includeTE = config.includeTE ?? false;
   const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
   const excludedFactionIds = config.excludedFactionIds ?? [];
-  const mapVariant = config.mapVariant;
+  const factionsOnly = factionsOnlyRoom(playerCount);
+  const mapVariant = factionsOnly ? undefined : config.mapVariant;
 
   const layout = getLayout(playerCount, mapVariant);
-  if (!layout) {
+  if (!layout && !factionsOnly) {
     throw new Error(`Unsupported player count: ${playerCount}`);
   }
 
@@ -162,9 +166,9 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
   const rest = shuffle(eligibleIds.filter((id) => !pinned.includes(id))).slice(0, factionPoolSize - pinned.length);
   const factions = shuffle([...pinned, ...rest]);
   const extraSlices = config.extraSlices ?? 0;
-  const sliceLayouts = mapVariant ? undefined : getSliceLayouts(playerCount, extraSlices);
+  const sliceLayouts = mapVariant || factionsOnly ? undefined : getSliceLayouts(playerCount, extraSlices);
   const isSliceDraft = sliceLayouts !== undefined && mapString.trim() === buildSliceModeMapString().trim();
-  const seats = layout.seats.map((s) => s.id);
+  const seats = layout?.seats.map((s) => s.id) ?? [];
   const slices = isSliceDraft && sliceLayouts ? sliceLayouts.map((s) => s.id) : [];
 
   const settings: DraftSettings = {
@@ -177,7 +181,8 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     extraSlices,
   };
   if (mapVariant) settings.mapVariant = mapVariant;
-  if (config.blindFactionPick) settings.blindFactionPick = true;
+  if (config.blindFactionPick || factionsOnly) settings.blindFactionPick = true;
+  if (factionsOnly) settings.factionsOnly = true;
   if (isSliceDraft && sliceLayouts) {
     const balanceConfig = sliceLayouts[0].tiles.length <= 5 ? FIVE_TILE_SLICE_BALANCE_CONFIG : DEFAULT_SLICE_BALANCE_CONFIG;
     const { assignment, seed } = generateBalancedAssignment(sliceLayouts, balanceConfig, undefined, includePoK, includeTE);
@@ -196,7 +201,7 @@ export function createDraftState(config: CreateDraftConfig): DraftState {
     isSnakeDescending: true,
     gameOrder: null,
   };
-  if (config.blindFactionPick) {
+  if (settings.blindFactionPick) {
     state.status = 'blind';
     state.blind = { round: 1, pendingPlayerIds: players.map((p) => p.id), tried: {}, log: [] };
   }
@@ -219,7 +224,8 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
   const factionPoolSize = config.factionPoolSize ?? playerCount + 2;
   const excludedFactionIds = config.excludedFactionIds ?? [];
 
-  if (!getLayout(playerCount, config.mapVariant)) {
+  const factionsOnly = factionsOnlyRoom(playerCount);
+  if (!factionsOnly && !getLayout(playerCount, config.mapVariant)) {
     throw new Error(`Unsupported player count: ${playerCount}`);
   }
 
@@ -234,8 +240,9 @@ export function createVetoState(config: CreateVetoPhaseConfig): DraftState {
     extraSlices: config.extraSlices ?? 0,
   };
   if (config.pinnedFactionIds?.length) settings.pinnedFactionIds = config.pinnedFactionIds;
-  if (config.mapVariant) settings.mapVariant = config.mapVariant;
-  if (config.blindFactionPick) settings.blindFactionPick = true;
+  if (config.mapVariant && !factionsOnly) settings.mapVariant = config.mapVariant;
+  if (config.blindFactionPick || factionsOnly) settings.blindFactionPick = true;
+  if (factionsOnly) settings.factionsOnly = true;
 
   return {
     status: 'veto',
@@ -368,7 +375,8 @@ export function resolveBlindRound(state: DraftState, picks: Record<string, strin
     players,
     pools: { ...state.pools, factions },
     blind: nextBlind,
-    status: pending.length > 0 ? 'blind' : 'drafting',
+    // Faction-only rooms (7/8p) end with the blind pick; others go on to the snake draft.
+    status: pending.length > 0 ? 'blind' : state.settings.factionsOnly ? 'complete' : 'drafting',
   };
   // Every player now has a faction, but the speaker is still open, so the
   // snake's first player always has a legal pick — no turn adjustment needed.

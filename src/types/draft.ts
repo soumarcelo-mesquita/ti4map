@@ -42,6 +42,8 @@ export interface DraftSettings {
   mapVariant?: MapVariant;
   /** factions are chosen simultaneously and in secret (blind pick) before the turn-based draft */
   blindFactionPick?: boolean;
+  /** no map: the room only drafts factions (blind pick) and ends there — used for 7/8 players */
+  factionsOnly?: boolean;
 }
 
 /** One resolved blind-pick round: which factions were contested and by whom. */

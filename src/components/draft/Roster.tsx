@@ -71,11 +71,15 @@ export function Roster({ state, myPlayerId }: { state: DraftState; myPlayerId: s
                   </span>
                 )}
               </div>
+              {state.settings.factionsOnly ? (
+                <div className="text-xs text-slate-400 font-bold mt-0.5 truncate">{faction?.name ?? '—'}</div>
+              ) : (
               <div className="text-xs text-slate-400 font-bold flex gap-2 mt-0.5">
                 <span className={p.isSpeaker ? 'text-amber-400' : undefined}>{roleLabel(p)}</span>
                 <span>·</span>
                 <span>{seatLabel(p.seatId)}</span>
               </div>
+              )}
             </div>
           </div>
         );

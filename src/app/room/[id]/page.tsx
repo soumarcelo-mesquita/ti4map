@@ -222,6 +222,8 @@ function RoomContent() {
 
   const isBlindPhase = state.status === 'blind' && !!state.blind;
   const factionsDrafted = !!state.settings.blindFactionPick;
+  /** 7/8p rooms: blind faction pick only — no map, seats, slices or speaker */
+  const factionsOnly = !!state.settings.factionsOnly;
 
   if (state.status === 'veto') {
     return (
@@ -249,12 +251,21 @@ function RoomContent() {
             {state.status === 'complete' ? (
               <div className="space-y-1">
                 <h2 className="text-lg font-black text-emerald-400">Draft completo!</h2>
+                {factionsOnly ? (
+                  <p className="text-xs text-slate-400">
+                    Todas as facções foram definidas
+                    {state.blind && state.blind.log.length > 1
+                      ? ` em ${state.blind.log.length} rodadas de blind pick.`
+                      : ' no blind pick.'}
+                  </p>
+                ) : (
                 <p className="text-xs text-slate-400">
                   Ordem de jogo:{' '}
                   {state.gameOrder
                     ?.map((id) => state.players.find((p) => p.id === id)?.name)
                     .join(' → ')}
                 </p>
+                )}
               </div>
             ) : (
               <div className="space-y-1">
@@ -294,6 +305,7 @@ function RoomContent() {
           </div>
         )}
 
+        {!factionsOnly && (
         <div className="glass rounded-3xl p-3 sm:p-4 border border-white/10 space-y-3">
           {state.status === 'drafting' && (
             <PositionSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />
@@ -309,6 +321,7 @@ function RoomContent() {
             />
           </div>
         </div>
+        )}
 
         {(state.status === 'drafting' || isBlindPhase) && (
           <SliceSection state={state} me={me} isMyTurn={isMyTurn} onPick={requestPick} />

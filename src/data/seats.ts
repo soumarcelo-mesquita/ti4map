@@ -40,6 +40,15 @@ export const SUPPORTED_PLAYER_COUNTS = [4, 5, 6] as const;
  */
 export const SELECTABLE_PLAYER_COUNTS = [4, 5, 6] as const;
 
+/**
+ * Counts with no map/seat layout yet: rooms for them only run the blind
+ * faction pick (no galaxy, seats, slices or speaker).
+ */
+export const FACTIONS_ONLY_PLAYER_COUNTS = [7, 8] as const;
+
+export const isFactionsOnlyCount = (playerCount: number) =>
+  (FACTIONS_ONLY_PLAYER_COUNTS as readonly number[]).includes(playerCount);
+
 /** Alternative board for a player count; absent = the standard `LAYOUTS` entry. */
 export type MapVariant = 'hyperlanes';
 

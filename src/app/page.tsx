@@ -7,12 +7,15 @@ import { Navbar } from '@/components/layout/Navbar';
 import { useRoomStore } from '@/store/roomStore';
 import { createDraftState, createVetoState, generateHyperlaneMap } from '@/lib/draftEngine';
 import { isValidMapString } from '@/lib/mapString';
-import { SELECTABLE_PLAYER_COUNTS } from '@/data/seats';
+import { FACTIONS_ONLY_PLAYER_COUNTS, SELECTABLE_PLAYER_COUNTS, isFactionsOnlyCount } from '@/data/seats';
 import { factionPool, factionImage } from '@/data/factions';
 import { getSliceLayouts, buildSliceModeMapString } from '@/data/slices';
 import { draftableTilePool } from '@/lib/sliceBalance';
 
 const DEFAULT_NAMES = ['Marcelo', 'Wesley', 'Sam', 'Lucas', 'Estranho', 'Saulo'];
+
+/** 4–6 get the full draft with map; 7–8 only run the blind faction pick. */
+const PLAYER_COUNT_OPTIONS = [...SELECTABLE_PLAYER_COUNTS, ...FACTIONS_ONLY_PLAYER_COUNTS];
 
 /** Padrões derivados do número de jogadores. */
 const defaultFactionPoolSize = (playerCount: number) => playerCount * 2;
@@ -71,6 +74,8 @@ export default function Home() {
   const sliceDraftAvailable = getSliceLayouts(playerCount) !== undefined;
   /** 5p is always played on the PoK hyperlane board, rolled automatically. */
   const usesHyperlanes = playerCount === 5;
+  /** 7–8 players: no map layout yet, the room is only a blind faction pick. */
+  const factionsOnly = isFactionsOnlyCount(playerCount);
 
   // How many surplus fatias the current tile pool can actually support, on
   // top of the one-per-player base — caps the "fatias extras" input so a
@@ -124,12 +129,14 @@ export default function Home() {
 
   const handleCreate = async () => {
     setError(null);
-    const finalMapString = usesHyperlanes
+    const finalMapString = factionsOnly
+      ? ''
+      : usesHyperlanes
       ? generateHyperlaneMap(playerCount, includePoK, includeTE).mapString
       : useSliceDraft
         ? buildSliceModeMapString()
         : mapString.trim();
-    if (!usesHyperlanes && !useSliceDraft && !isValidMapString(mapString)) {
+    if (!factionsOnly && !usesHyperlanes && !useSliceDraft && !isValidMapString(mapString)) {
       setError('Cole uma map string válida (lista de IDs de tile separados por espaço).');
       return;
     }
@@ -149,7 +156,7 @@ export default function Home() {
         excludedFactionIds: Array.from(excludedFactionIds),
         extraSlices: useSliceDraft && !usesHyperlanes ? extraSlices : 0,
         mapVariant: usesHyperlanes ? ('hyperlanes' as const) : undefined,
-        blindFactionPick,
+        blindFactionPick: blindFactionPick || factionsOnly,
         pinnedFactionIds: cheatUnlocked
           ? Array.from(pinnedFactionIds).filter((id) => availableFactions.some((f) => f.id === id))
           : [],
@@ -184,7 +191,7 @@ export default function Home() {
           <section className="space-y-3">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Jogadores</label>
             <div className="flex gap-2">
-              {SELECTABLE_PLAYER_COUNTS.map((c) => (
+              {PLAYER_COUNT_OPTIONS.map((c) => (
                 <button
                   key={c}
                   onClick={() => setCount(c)}
@@ -264,8 +271,20 @@ export default function Home() {
             </div>
           </section>
 
+          {factionsOnly && (
+            <section className="rounded-2xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3.5">
+              <span className="block text-[10px] font-black uppercase tracking-widest text-indigo-300">
+                Só facções (blind pick)
+              </span>
+              <span className="mt-1 block text-[11px] font-bold text-slate-400">
+                Com {playerCount} jogadores a sala faz apenas o blind pick de facções: todos escolhem ao mesmo tempo,
+                em segredo, e quem repetir escolhe de novo. Sem mapa, posição, fatia ou speaker.
+              </span>
+            </section>
+          )}
+
           {/* Slice draft toggle (only for player counts with a defined slice layout) */}
-          {sliceDraftAvailable && (
+          {sliceDraftAvailable && !factionsOnly && (
             <section className="space-y-2">
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
                 Modo de mapa
@@ -331,7 +350,7 @@ export default function Home() {
           )}
 
           {/* Map string */}
-          {!useSliceDraft && !usesHyperlanes && (
+          {!useSliceDraft && !usesHyperlanes && !factionsOnly && (
             <section className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Map string</label>
@@ -464,7 +483,8 @@ export default function Home() {
             )}
           </section>
 
-          {/* Blind pick de facções */}
+          {/* Blind pick de facções (sempre ligado em 7–8 jogadores) */}
+          {!factionsOnly && (
           <section>
             <button
               type="button"
@@ -503,6 +523,7 @@ export default function Home() {
               </span>
             </button>
           </section>
+          )}
 
           {cheatUnlocked && (
             <section className="space-y-3 rounded-2xl border border-dashed border-amber-500/40 bg-amber-500/5 p-4">
