@@ -7,6 +7,7 @@ import { getLayout } from '@/data/seats';
 import { getSliceLayouts } from '@/data/slices';
 import { hasPicked } from '@/lib/draftEngine';
 import { SliceCard } from './SliceCard';
+import { FactionInfoButton } from './FactionReference';
 
 /** Shared props of every draft section (page composes them full-width, in order). */
 export interface DraftSectionProps {
@@ -83,10 +84,13 @@ export function FactionSection(props: DraftSectionProps) {
         {state.pools.factions.map((fid) => {
           const f = getFaction(fid);
           return (
-            <PoolButton key={fid} disabled={lock(props, 'faction')} onClick={() => onPick('faction', fid)}>
-              <Image src={factionImage(fid)} alt={f?.name ?? fid} width={28} height={28} />
-              <span className="text-[9px] opacity-80 text-center leading-tight">{f?.name ?? fid}</span>
-            </PoolButton>
+            <div key={fid} className="relative grid">
+              <PoolButton disabled={lock(props, 'faction')} onClick={() => onPick('faction', fid)}>
+                <Image src={factionImage(fid)} alt={f?.name ?? fid} width={28} height={28} />
+                <span className="text-[9px] opacity-80 text-center leading-tight">{f?.name ?? fid}</span>
+              </PoolButton>
+              <FactionInfoButton factionId={fid} className="absolute top-1 right-1" />
+            </div>
           );
         })}
       </div>

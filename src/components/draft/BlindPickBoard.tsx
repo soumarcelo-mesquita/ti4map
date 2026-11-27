@@ -5,6 +5,7 @@ import Image from 'next/image';
 import type { BlindPickSubmission, DraftPlayer, DraftState } from '@/types/draft';
 import { factionImage, getFaction } from '@/data/factions';
 import { blindOptions } from '@/lib/draftEngine';
+import { FactionInfoButton } from './FactionReference';
 
 interface BlindPickBoardProps {
   state: DraftState;
@@ -86,6 +87,7 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
           <div>
             <h2 className="text-base font-black text-emerald-400">
               Sua facção: {me.faction ? factionName(me.faction) : '—'}
+              {me.faction && <FactionInfoButton factionId={me.faction} className="ml-2 inline-flex! align-middle" />}
             </h2>
             <p className="text-xs text-slate-400">
               {myAutoAssigned
@@ -108,7 +110,10 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
         <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
           <Image src={factionImage(myPick.factionId)} alt="" width={40} height={40} />
           <div>
-            <h2 className="text-base font-black text-white">Escolha enviada: {factionName(myPick.factionId)}</h2>
+            <h2 className="text-base font-black text-white">
+              Escolha enviada: {factionName(myPick.factionId)}
+              <FactionInfoButton factionId={myPick.factionId} className="ml-2 inline-flex! align-middle" />
+            </h2>
             <p className="text-xs text-slate-400">
               Ninguém vê sua escolha. Se outro jogador escolher a mesma facção, vocês escolhem de novo.
             </p>
@@ -154,11 +159,11 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
           const tried = myTried.includes(fid);
           const disabled = !options.has(fid);
           return (
+            <div key={fid} className="relative">
             <button
-              key={fid}
               disabled={disabled}
               onClick={() => setSelected(fid)}
-              className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
+              className={`w-full h-full flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
                 disabled
                   ? tried
                     ? 'border-red-500/30 bg-red-500/5 text-slate-500 cursor-not-allowed opacity-50'
@@ -182,6 +187,8 @@ export function BlindPickBoard({ state, me, blindPicks, onConfirm }: BlindPickBo
                 </span>
               )}
             </button>
+            <FactionInfoButton factionId={fid} className="absolute top-1 right-1" />
+            </div>
           );
         })}
       </div>

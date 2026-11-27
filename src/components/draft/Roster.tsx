@@ -6,6 +6,7 @@ import type { BlindPickSubmission, DraftState } from '@/types/draft';
 import { getFaction, factionImage } from '@/data/factions';
 import { getLayout, seatsClockwiseFrom } from '@/data/seats';
 import { currentPlayerId, nextPlayerId } from '@/lib/draftEngine';
+import { FactionInfoButton } from './FactionReference';
 
 type BlindStatus = 'picking' | 'picked' | 'locked';
 
@@ -57,8 +58,9 @@ export function Roster({
         const isNext = !isTurn && p.id === upNextId;
         const isMe = p.id === myPlayerId;
         const bStatus = blindStatus(p.id);
-        // Other players' factions stay secret until the blind pick is over for everyone.
-        const shownFactionId = blind && !isMe ? null : p.faction;
+        // In blind-pick rooms other players' factions stay secret for good — also
+        // after the blind phase and once the draft is complete.
+        const shownFactionId = state.settings.blindFactionPick && !isMe ? null : p.faction;
         const faction = shownFactionId ? getFaction(shownFactionId) : null;
         return (
           <div
@@ -71,12 +73,15 @@ export function Roster({
                   : 'border-white/10 bg-white/5'
             }`}
           >
+            <div className="relative shrink-0">
             <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
               {shownFactionId ? (
                 <Image src={factionImage(shownFactionId)} alt={faction?.name ?? shownFactionId} width={52} height={52} />
               ) : (
                 <span className="text-slate-600 font-black text-2xl">?</span>
               )}
+            </div>
+            {shownFactionId && <FactionInfoButton factionId={shownFactionId} className="absolute -top-1.5 -right-1.5" />}
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
