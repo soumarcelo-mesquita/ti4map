@@ -1,0 +1,1476 @@
+{
+ "source": "https://scottmk.github.io/ti4-reference/",
+ "license": "CC-BY-4.0 — TI4 Reference by scottmk",
+ "commit": "0c2e2b6",
+ "factions": {
+  "sol": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/sol/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Jord 4R 2I\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Destroyer\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 5× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Neural Motivator**\n\nRequirements: None\n\nDuring the status phase, draw 2 action cards instead of 1.\n\n### 🔵 **Antimass Deflectors**\n\nRequirements: None\n\nYour ships can move into and through asteroid fields.\n\nWhen other players' units use Space Cannon against your units, apply -1 to the result of each die roll."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Orbtial Drop**\n\nAction: Spend 1 token from your strategy pool to place 2 infantry from your reinforcements on 1 planet you control.\n\n### **Versatile**\n\nWhen you gain command tokens during the status phase, gain 1 additional command token."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Genesis**\n\nUnit Type: Flagship\n\n---\n\nAt the end of the status phase, place 1 infantry from your reinforcements in this system's space area.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 1**2 |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **ZS Thunderbolt M2**\n\nUnit Type: Mech\n\n---\n\nDeploy: After you use your Orbital Drop faction ability, you may spend 3 resources to place 1 mech on that planet.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Spec Ops II**\n\nRequirements: 🟢 🟢\n\nUnit Type: Infantry\n\n---\n\nAfter this unit is destroyed, roll 1 die.\nIf the result is 5 or greater, place the unit on this card.\n\nAt the start of your next turn, place each unit that is on this card on a planet you control in your home.\n\n---\n\n| **Cost 1(×2)** | **Combat 6** |\n\n---\n\n### ⬆ **Advanced Carrier II**\n\nRequirements: 🔵 🔵\n\nUnit Type: Carrier\n\n---\n\n* Sustain Damage\n\n---\n\n| **Cost 3** | **Combat 9** | **Move 2** | **Capacity 8** |"
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Evelyn DeLouis – _Master Tactician_\n\nUnlock: Always Unlocked\n\nAt the start of a ground combat round:\n\nYou may exhaust this card to choose 1 ground force in the active system: that ground force rolls 1 additional die during this combat round.\n\n---\n\n### **Commander**: Claire Gibson – _Voice of the People_\n\nUnlock: Control planets that have a combined total of at least 12 resources.\n\nAt the start of a ground combat on a planet you control:\n\nYou may place 1 infantry from your reinforcements on that planet.\n\n---\n\n### **Hero**: Jace X, 4th Air Legion – _Federation Hero_\n\nUnlock: Have 3 scored objectives.\n\n**Helio Command Array: Twilight Directive**\n\nAction:\n\nRemove each of your command tokens from the game board and return them to your reinforcements. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Bellum Gloriosum**\n\nWhen you produce a ship that has capacity, you may also produce any combination of ground forces or fighters up to that ship's capacity; they do not count against your Production limit.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Federation of Sol – Military Support__\n\n---\nAt the start of the Sol player's turn:\n\nRemove 1 token from the Sol player's strategy pool, if able, and return it to their reinforcements.\nThen, you may place 2 infantry from your reinforcements on any planet you control.\n\nThen return this card to the Sol player."
+    }
+   ]
+  },
+  "mentak": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/mentak/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Moll Primus 4R 1I\n* Commodities: 2"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* 2× Cruiser\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟡 **Sarween Tools**\n\nRequirements: None\n\nWhen 1 or more of your units use Production, reduce the combined cost of the produced units by 1.\n\n---\n\n### 🔴 **Plasma Scoring**\n\nRequirements: None\n\nWhen 1 or more of your units use Bombardment or Space Cannon, 1 of those units may roll 1 additional die."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Ambush**\n\nAt the start of a space combat, you may roll 1 die for each of up to 2 of your cruisers or destroyers in the system.\nFor each result equal to or greater than that ship's combat value, produce 1 hit; your opponent must assign it to 1 of their ships.\n\n### **Pillage**\n\nAfter 1 of your neighbors gains trade goods or resolves a transaction, if they have 3 or more trade goods, you may take 1 of their trade goods or commodities."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Fourth Moon**\n\nUnit Type: Flagship\n\n---\n\nOther player's ships in this system cannot use Sustain Damage.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Moll Terminus**\n\nUnit Type: Mech\n\n---\n\nOther player's ground forces on this planet cannot use Sustain Damage.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟡 **Salvage Operations**\n\nRequirements: 🟡 🟡\n\nAfter you win or lose a space combat, gain 1 trade good; if you won the combat, you may also produce 1 ship in that system of any ship type that was destroyed during the combat.\n\n---\n\n### 🟡 **Mirror Computing**\n\nRequirements: 🟡 🟡 🟡\n\nWhen you spend trade goods, each trade good is worth 2 resources or influence instead of 1."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Suffi An - _90% Smuggler, 110% Energy_\n\nUnlock: Always Unlocked\n\nAfter the Pillage faction ability is used against another player:\n\nYou may exhaust this card: if you do, you and that player each draw 1 action card.\n\n---\n\n### **Commander**: S'ula Mentarion - _Everyone's \"Best Friend\"_\n\nUnlock: Have 4 cruisers on the game board.\n\nAfter you win a space combat:\n\nYou may force your opponent to give you 1 promissory note from their hand.\n\n---\n\n### **Hero**: Ipswitch, Loose Cannon – _Mercenary Raider_\n\nUnlock: Have 3 scored objectives.\n\n**Sleeper Cell: Insurrection**\n\nAt the start of a space combat that you are participating in:\n\nYou may purge this card. if you do, for each other player's ship that is destroyed during this combat, place 1 ship of that type from your reinforcements in the active system."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **The Table's Grace**\n\nIf you have the Cruiser II unit upgrade technology, flip this card and place it on top of Cruiser II.\n\n🟡 ⇋ 🟢\n\n---\n\n### **Corsair**\n\nUnit Type: Cruiser\n\n---\n\nIf the active system contains another player's non-fighter ships, this unit can move through systems that contain other player's ships.\n\n---\n\n| **Cost 2** | **Combat 6** | **Move 3** | **Capacity 2** |\n\n---\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Mentak Coalition – Promise of Protection__\n\n---\nAction: Place this card face-up in your play area.\n\nWhile this card is in your play area, the Mentak player cannot use their Pillage faction ability against you.\n\nIf you activate a system that contains 1 or more of the Mentak player's units, return this card to the Mentak player."
+    }
+   ]
+  },
+  "yin": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/yin/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Darien 4R 4I\n* Commodities: 2"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Destroyer\n* 4× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟡 **Sarween Tools**\n\nRequirements: None\n\nWhen 1 or more of your units use Production, reduce the combined cost of the produced units by 1."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Indoctrination**\n\nAt the start of a ground combat, you may spend 2 influence to replace 1 of your opponent's participating infantry with 1 infantry from your reinforcements.\n\n### **Devotion**\n\nAfter each space battle round, you may destroy 1 of your cruisers or destroyers in the active system to produce 1 hit and assign it to 1 of your opponent's ships in that system."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Van Hauge**\n\nUnit Type: Flagship\n\n---\n\nWhen this ship is destroyed, destroy all ships in this system.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 9 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Moyin's Ashes**\n\nUnit Type: Mech\n\n---\n\nDeploy: When you use your Indoctrination faction ability, you may spend 1 additional influence to replace your opponent's unit with 1 mech instead of 1 infantry.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟡 **Impulse Core**\n\nRequirements: 🟡 🟡\n\nAt the start of a space combat, you may destroy 1 of your cruisers or destroyers in the active system to produce 1 hit against your opponent's ships; that hit must be assigned by your opponent to 1 of their non-fighters ships if able.\n\n---\n\n### 🟢 **Yin Spinner Ω**\n\nRequirements: 🟢 🟢\n\nAfter you produce units, place up to 2 infantry from your reinforcements on any planet you control or in any space area that contains 1 or more of your ships."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Brother Milor Ω – _Purifed by Fire_\n\nUnlock: Always Unlocked\n\nAfter a player's unit is destroyed during combat:\n\nYou may exhaust this card to allow that player to place 2 fighters in the destroyed unit's system if it was a ship, or 2 infantry on its planet if it was a ground force.\n\n---\n\n_\"Brothers...\" Milor said, openly weeping as he watched the ships break apart in the sky above.\n\"They must not be forgotten! In Darien's name, we fight to the last!\"\nThe crowd roared in support._\n\n---\n\n### **Commander**: Brother Omar Ω – _Spinner Devotee_\n\nUnlock: Use one of your faction abilities.\n\nAt any time:\n\nThis card satisfies a green technology prerequisite.\n\nWhen you research a technology owned by another player, you may return 1 of your infantry to reinforcements to ignore all prerequisites.\n\n🟢\n\n---\n\n_It is said that Omar's creation of the genetic spinner loom is the greatest breakthrough for the Brotherhood since Darien's first forbidden research centuries ago._\n\n---\n\n### **Hero**: Dannel of the Tenth – _High Priest of Yin_\n\nUnlock: Have 3 scored objectives.\n\n**Quantum Dissemination Ω: Blessing of the Yin**\n\nAction:\n\nCommit up to 3 infantry from your reinforcements to any non-home planets and resolve ground combats on those planets; players cannot use Space Cannon against these units.\n\nThen, purge this card.\n\n---\n\nAt Dannel's command, they burned out their spinners, welcoming thousands of new brothers into their ranks in mere weeks.\nSuch is the potential of the Yin._"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Yin Ascendent**\n\nWhen you gain this card or score a public objective, gain the alliance ability of a random, unused faction.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Yin Brotherhood - Greyfire Mutagen Ω__\n\n---\nAt the start of a ground combat against 2 or more ground forces that are not controlled by the Yin player:\n\nReplace 1 of your opponent's infantry with 1 infantry from your reinforcements.\n\nThen, return this card to the Yin player."
+    }
+   ]
+  },
+  "muaat": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/muaat/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Muaat 4R 1I\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* War Sun\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔴 **Plasma Scoring**\n\nRequirements: None\n\nWhen 1 or more of your units use Bombardment or Space Cannon, 1 of those units may roll 1 additional die."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Star Forge**\n\nAction: Spend 1 token from your strategy pool to place either 2 fighters or 1 destroyer from your reinforcements in a system that contains 1 or more of your war suns.\n\n### **Gashlai Physiology**\n\nYour ships can move through supernovas."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **The Inferno**\n\nUnit Type: Flagship\n\n---\n\nAction: Spend 1 token from your strategy pool to place 1 cruiser in this system.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Ember Colossus**\n\nUnit Type: Mech\n\n---\n\nWhen you use your Star Forge faction ability in this system or an adjacent system, you may place 1 infantry from your reinforcements with this unit.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Prototype War Sun I**\n\nUnit Type: War Sun\n\n---\n\nOther players' units in this system lose the Planetary Shield ability.\n\n* Sustain Damage\n* Bombardment 3 (x3)\n\n---\n\n| **Cost 12** | **Combat 3 (×3)** | **Move 1** | **Capacity 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Prototype War Sun II**\n\nRequirements: 🟡 🔴 🔴 🔴\n\nUnit Type: War Sun\n\n---\n\nOther players' units in this system lose their Planetary Shield Ability.\n\n* Sustain Damage\n* Bombardment 3 (x3)\n\n---\n\n| **Cost 10** | **Combat 3 (×3)** | **Move 3** | **Capacity 6** |\n\n---\n\n### 🔴 **Magmus Reactor Ω**\n\nRequirements: 🔴 🔴\n\nYour ships can move into supernovas.\n\nEach supernova that contains 1 or more of your units gains the Production 5 ability as if it were 1 of your units."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Umbat – _Forgemaster_\n\nUnlock: Always Unlocked\n\nAction:\n\nExhaust this card to choose a player: that player may produce up to 2 units that each have a cost of 4 or less in a system that contains one of their war suns or their flagship.\n\n---\n\n### **Commander**: Magmus – _Gashlai Tribune_\n\nUnlock: Produce a war sun.\n\nAfter you spend a token from your strategy pool:\n\nYou may gain 1 trade good.\n\n---\n\n### **Hero**: Adjudicator Ba'al – _Starscourge_\n\nUnlock: Have 3 scored objectives.\n\n**Nova Seed: Gravitational Collapse**\n\nAfter you move a war sun into a non-home system other than Mecatol Rex:\n\nYou may destroy all other players' units in that system and replace that system tile with the Muaat supernova tile. If you do, purge this card and each planet card that corresponds to the replaced system tile."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Stellar Genesis**\n\nWhen you gain this card, place the Avernus planet token into a non-home system that is adjacent to a planet you control; gain control of and ready it.\n\nAfter you move 1 of your war suns out of or through Avernus's system and into a non-home system, you may move the Avernus token with it.\n\n🔴 ⇋ 🟡\n\n---\n\n### Avernus\n\n2R 0I · (Hazardous)\n\n_The first artificial world of this galactic age._\n\n---\n\n#### The Nucleus\n\nAction: Exhaust this card to use the Embers of Muaat's Star Forge faction ability without spending a command token.\n\n---\n\n_Gashlai energy/matter conversion has many uses._"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Embers of Muaat – Fires of the Gashlai__\n\n---\nAction: Remove 1 token from the Muaat player's fleet pool and return it to their reinforcements. Then, gain your war sun unit upgrade technology card.\n\nThen, return this card to the Muaat player."
+    }
+   ]
+  },
+  "arborec": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/arborec/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Nestphar 3R 2I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔴 **Magen Defense Grid ΩΩ**\n\nRequirements: 🔴\n\nWhen any player activates a system that contains 1 or more of your structures, place 1 infantry from your reinforcements with each of those structures.\n\nAt the start of ground combat on a planet that contains 1 or more of your structures, produce 1 hit and assign it to 1 of your opponent's ground forces."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Mitosis**\n\nYour space docks cannot produce infantry.\n\nAt the start of the status phase, place 1 infantry from your reinforcements on any planet you control."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Duha Menaimon**\n\nUnit Type: Flagship\n\n---\n\nAfter you activate this system, you may produce up to 5 units in this system.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 5** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Letani Behemoth**\n\nUnit Type: Mech\n\n---\n\nDeploy: When you would use your Mitosis faction ability you may replace 1 of your infantry with 1 mech from your reinforcements instead.\n\n* Planetary Shield\n* Sustain Damage\n* Production 2\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Letani Warrior I**\n\nUnit Type: Infantry\n\n---\n\n* Production 1\n\n---\n\n| **Cost 1(×2)** | **Combat 8** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Letani Warrior II**\n\nRequirements: 🟢 🟢\n\nUnit Type: Infantry\n\n---\n\nAfter this unit is destroyed, roll 1 die.\nIf the result is 6 or greater, place the unit on this card.\n\nAt the start of your next turn, place each unit that is on this card on a planet you control in your home.\n\n* Production 2\n\n---\n\n| **Cost 1(×2)** | **Combat 7** |\n\n---\n\n### 🟢 **Bioplasmosis**\n\nRequirements: 🟢 🟢\n\nAt the end of the status phase, you may remove any number of infantry from planets you control and place them on 1 or more planets you control in the same or adjacent systems."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Letani Ospha – _Unity Through Peace_\n\nUnlock: Always Unlocked\n\nAction:\n\nExhaust this card and choose a player's non-fighter ship: that player may replace that ship with one from their reinforcements that costs up to 2 more than the replaced ship.\n\n---\n\n### **Commander**: Dirzuga Rophal – _Peace Through Strength_\n\nUnlock: Have 12 ground forces on planets you control.\n\nAfter another player activates a system that contains 1 or more of your units that have Production:\n\nYou may produce 1 unit in that system.\n\n---\n\n### **Hero**: Letani Miasmiala – _Strength Through Unity_\n\nUnlock: Have 3 scored objectives.\n\n**Ultrasonic Emitter: Overgrowth**\n\nAction:\n\nProduce any number of units in any number of systems that contain 1 or more of your ground forces. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Psychospore**\n\nAction: Exhaust this card to remove a command token from a system that contains 1 or more of your infantry and return it to your reinforcements. Then, place 1 infantry in that system.\n\n🔴 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Arborec - Stymie Ω__\n\n---\nAfter another player moves ships into a system that contains 1 or more of your units:\n\nYou may place 1 command token from that player's reinforcements in any non-home system.\n\nThen, return this card to the Arborec player."
+    }
+   ]
+  },
+  "l1z1x": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/l1z1x/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* \\[0.0.0\\] 5R 0I\n* Commodities: 2"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 5× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Neural Motivator**\n\nRequirements: None\n\nDuring the status phase, draw 2 action cards instead of 1.\n\n---\n\n### 🔴 **Plasma Scoring**\n\nRequirements: None\n\nWhen 1 or more of your units use Bombardment or Space Cannon, 1 of those units may roll 1 additional die."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Assimilate**\n\nWhen you gain control of a planet, replace each PDS and space dock that is on that planet with a matching unit from your reinforcements.\n\n### **Harrow**\n\nAt the end of each round of ground combat, your ships in the active system may use their Bombardment abilities against your opponent's ground forces on the planet."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **[0.0.1]**\n\nUnit Type: Flagship\n\n---\n\nDuring a space combat, hits produced by this ship and by your dreadnaughts in this system must be assigned to non-fighter ships if able.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 5** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Anihilator**\n\nUnit Type: Mech\n\n---\n\nWhile not participating in ground combat, this unit can use its Bombardment ability on planets in its system as if it were a ship.\n\n* Sustain Damage\n* Bombardment 8\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Super Dreadnought I**\n\nUnit Type: Dreadnought\n\n---\n\n* Sustain Damage\n* Bombardment 5\n\n---\n\n| **Cost 4** | **Combat 5** | **Move 1** | **Capacity 2** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Super Dreadnought II**\n\nRequirements: 🔵 🔵 🟡\n\nUnit Type: Dreadnought\n\n---\n\n\"Direct Hit\" cards are no longer effective against this type of ship.\n\n* Sustain Damage\n* Bombardment 4\n\n---\n\n| **Cost 4** | **Combat 4** | **Move 2** | **Capacity 2** |\n\n---\n\n### 🟡 **Inheritance Systems**\n\nRequirements: 🟡 🟡\n\nYou may exhaust this card and spend 2 resources when you research a technology; ignore all of that technology's prerequisites."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: I48S – _Enhancer Prodigy_\n\nUnlock: Always Unlocked\n\nAfter a player activates a system:\n\nYou may exhaust this card to allow that player to replace 1 of their infantry in the active system with 1 mech from their reinforcements.\n\n---\n\n### **Commander**: 2RAM – _Integrated Systems Engineer_\n\nUnlock: Have 4 dreadnoughts on the game board.\n\nAt any time:\n\nUnits that have Planetary Shield do not prevent you from using Bombardment.\n\n---\n\n### **Hero**: The Helmsman – _The Last Record_\n\nUnlock: Have 3 scored objectives.\n\n**Dark Space Navigation: Diaspora**\n\nAction:\n\nChoose 1 system that does not contain other players' ships. you may move your flagship and any number of your dreadnoughts from other systems into the chosen system. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Fealty Uplink**\n\nWhen you gain control of a planet, place infantry from your reinforcements equal to that planet's influence value on that planet.\n\n🔴 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __L1Z1X Mindnet - Cybernetic Enhancements Ω__\n\n---\nWhen you gain command tokens during the status phase:\n\nGain 1 additional command token.\n\nThen, return this card to the L1Z1X player."
+    }
+   ]
+  },
+  "winnu": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/winnu/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Winnu 3R 4I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 2× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "Choose any 1 technology that has no prerequisites."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Blood Ties**\n\nYou do not have to spend influence to remove the custodians token from Mecatol Rex.\n\n### **Reclamation**\n\nAfter you resolve a tactical action during which you gained control of Mecatol Rex, you may place 1 PDS and 1 space dock from your reinforcements on Mecatol Rex."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Salai Sai Corian**\n\nUnit Type: Flagship\n\n---\n\nWhen this unit makes a combat roll, it rolls a number of dice equal to the number of your opponent's non-fighter ships in this system\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Reclaimer**\n\nUnit Type: Mech\n\n---\n\nAfter you resolve a tactical action where you gained control of this planet, you may place 1 PDS or 1 Space Dock from your reinforcements on this planet\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🔵 **Lazax Gate Folding**\n\nRequirements: 🔵 🔵\n\nDuring your tactical actions, if you do not control Mecatol Rex, treat its system as if it has both an α and β wormhole.\nAction: If you control Mecatol Rex, exhaust this card to place 1 infantry from your reinforcements on Mecatol Rex.\n\n---\n\n### 🟡 **Hegemonic Trade Policy**\n\nRequirements: 🟡 🟡\n\nExhaust this card when 1 or more of your units use Production; swap the resource and influence values of 1 planet you control until the end of your turn."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Berekar Berekon – _Arbiter of Divine Right_\n\nUnlock: Always Unlocked\n\nWhen 1 or more of a player's units use Production:\n\nYou may exhaust this card to reduce the combined cost of the produced units by 2.\n\n---\n\n### **Commander**: Rickar Rickani – _The Hand of the Emperor_\n\nUnlock: Control Mecatol Rex or enter into a combat in the Mecatol Rex system.\n\nDuring combat:\n\nApply +2 to the result of each of your unit's combat rolls in the Mecatol Rex system, your home system, and each system that contains a legendary planet.\n\n---\n\n### **Hero**: Mathis Mathinus – _Reclamation Executor_\n\nUnlock: Have 3 scored objectives.\n\n**Imperial Seal: Sins of the Father**\n\nAction:\n\nPerform the primary ability of any strategy card. Then, choose any number of other players. Those players may perform the secondary ability of that strategy card. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Imperator**\n\nApply +1 to the results of each of your unit's combat rolls for each \"Support for the Throne\" in your opponent's play area.\n\nAfter you activate a system that contains a legendary planet, apply +1 to the move value of 1 of your ships during this tactical action.\n\n🔵 ⇋ 🔴"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Winnu - Acquiescence Ω__\n\n---\nWhen the Winnu player resolves a strategic action:\n\nYou do not have to spend or place a command token to resolve the secondary ability of that strategy card.\n\nThen, return this card to the Winnu player."
+    }
+   ]
+  },
+  "nekro": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/nekro/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Mordai II 4R 0I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 2× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Daxcive Animators**\n\nRequirements: 🟢\n\nAfter you win a ground combat, you may place 1 infantry from your reinforcements on that planet.\n\n---\n\nYou also start with both of your [faction techs](nekro.md#faction-technologies)."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Galactic Threat**\n\nYou cannot vote on agendas. Once per agenda phase, after an agenda is revealed, you may predict aloud the outcome of that agenda. If your prediction is correct, gain 1 technology that is owned by a player who voted how you predicted.\n\n### **Technological Singularity**\n\nOnce per combat, after 1 of your opponent's units is destroyed, you may gain 1 technology that is owned by that player.\n\n### **Propagation**\n\nYou cannot research technology. When you would research a technology, gain 3 command tokens instead."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **The Alastor**\n\nUnit Type: Flagship\n\n---\n\nAt the start of a space combat, choose any number of your ground forces in this system to participate in that combat as if they were ships.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 9 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Mordred**\n\nUnit Type: Mech\n\n---\n\nDuring combat against an opponent who has an X or Y token on 1 or more of their technologies, apply +2 to the result of each of this unit's combat rolls.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### **Valefar Assimilator X**\n\nRequirements: None\n\nWhen you would gain another player's technology using 1 of your faction abilities, you may place the \"X\" assimilator token on a faction technology owned by that player instead.\nWhile that token is on a technology, this card gains that technology's text.\n\nYou cannot place an assimilator token on technology that already has an assimilator token.\n\n---\n\n### **Valefar Assimilator Y**\n\nRequirements: None\n\nWhen you would gain another players technology using 1 of your faction abilities, you may place the \"Y\" assimilator token on a faction technology owned by that player instead.\nWhile that token is on a technology, this card gains that technology's text.\n\nYou cannot place an assimilator token on technology that already has an assimilator token."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Nekro Malleon – _The Shifting Host_\n\nUnlock: Always Unlocked\n\nDuring the action phase:\n\nYou may exhaust this card to choose a player: that player may discard 1 action card or spend 1 command token from their command sheet to gain 2 trade goods.\n\n---\n\n### **Commander**: Nekro Acidos – _Obsidian Reaper_\n\nUnlock: Own 3 technologies. A \"Valefar Assimilator\" technology counts only if its X or Y token is on a technology.\n\nAfter you gain a technology:\n\nYou may draw 1 action card.\n\n---\n\n### **Hero**: UNIT.DSGN.FLAYESH – _Recursive Tyrant_\n\nUnlock: Have 3 scored objectives.\n\n**Polymorphic Algorithm: Devour World**\n\nAction:\n\nChoose a planet that has a technology specialty in a system that contains your units. Destroy any other player's units on that planet. Gain trade goods equal to the planet's combined resource and influence values and gain 1 technology that matches the specialty of that planet. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Valefar Assimilator Z**\n\nWhen you would gain another player's technology using one of your faction abilities, you may instead place one of your \"Z\" assimilator tokens on that player's faction sheet.\nYour flagship gains the text abilities of that faction's flagship in addition to its own."
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Nekro Virus__\n\n---\nAt the start of a combat:\n\nPlace this card faceup in your play area.\n\nWhile this card is in your play area, the Nekro player cannot use their Technological Singularity faction ability against you.\n\nIf you activate a system that contains 1 or more of the Nekro player's units, return this card to the Nekro player."
+    }
+   ]
+  },
+  "naalu": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/naalu/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Maaluuk 0R 2I\n* Druua 3R 1I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* Cruiser\n* Destroyer\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Neural Motivator**\n\nRequirements: None\n\nDuring the status phase, draw 2 action cards instead of 1.\n\n---\n\n### 🟡 **Sarween Tools**\n\nRequirements: None\n\nWhen 1 or more of your units use Production, reduce the combined cost of the produced units by 1."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Telepathic**\n\nAt the end of the strategy phase, place the Naalu \"0\" token on your strategy card; you are first in initiative order.\n\n### **Foresight**\n\nAfter another player moves ships into a system that contains 1 or more of your ships, you may place 1 token from your strategy pool in an adjacent system that does not contain another player's ships; move your ships from the active system into that system."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Matriarch**\n\nUnit Type: Flagship\n\n---\n\nDuring an invasion in this system, you may commit fighters to planets as if they were ground forces. After combat, return those units to the space area.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 9 (×2)** | **Move 1** | **Capacity 6** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Iconoclast ΩΩ**\n\nUnit Type: Mech\n\n---\n\nDeploy: When another player gains a relic, place 1 mech on any planet you control.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Hybrid Crystal Fighter I**\n\nUnit Type: Fighter\n\n---\n\n| **Cost 1(×2)** | **Combat 8** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Hybrid Crystal Fighter II**\n\nRequirements: 🟢 🔵\n\nUnit Type: Fighter\n\n---\n\nThis unit may move without being transported.\n\nFighters in excess of your ships' capacity count as ½ of a ship against your fleet pool.\n\n---\n\n| **Cost 1(×2)** | **Combat 7** | **Move 2** |\n\n---\n\n### 🟢 **Neuroglaive**\n\nRequirements: 🟢 🟢 🟢\n\nAfter another player activates a system that contains 1 or more of your ships, that player removes 1 token from their fleet pool and returns it to their reinforcements."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Z'eu ΩΩ – _Agent of the Nefishh_\n\nUnlock: Always Unlocked\n\n**After any player's command token is placed in a system:**\n\nYou may exhaust this card to return that token to that player's reinforcements.\n\n---\n\n_\"...and that's why the Letnev will never cooperate with the Shikrai zealots and extremists!\" Ambassador Beumosile thundered.\nThe Galactic Council exploded in angry shouts as he sat down.\n\"Very good, my pet,\" the velvet voice hissed in his mind, and he basked in the warmth of its praise._\n\n---\n\n### **Commander**: M'aban Ω – _Crystalline Sorceress_\n\nUnlock: Have ground forces in or adjacent to the Mecatol Rex system.\n\nAt any time:\n\nYou may look at your neighbors' hands of promissory notes and the top and bottom card of the agenda deck.\n\n---\n\n_First among Q'uesh's sorceresses, M'aban has been gifted with radium crystal enhancements, allowing her mind to sing to thousands of Naalu at once._\n\n---\n\n### **Hero**: The Oracle – _Corrupted Mind_\n\nUnlock: Have 3 scored objectives.\n\n**C-Radium Geometry: Poison of the Nefishh**\n\nAt the end of the status phase:\n\nYou may force each other player to give you 1 promissory note from their hand. If you do, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Mindsieve**\n\nWhen you would resolve the secondary ability of another player's strategy card, you may give them a promissory note to resolve it without spending a command token.\n\n🔴 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Naalu Collective – Gift of Prescience__\n\n---\nAt the end of the Strategy Phase:\n\nPlace this card faceup in your play area and place the Naalu '0' token on your strategy card, you are the first in initiative order.\n\nThe Naalu player cannot use his Telepathic faction ability during this game round.\n\nReturn this card to the Naalu player at the end of the status phase."
+    }
+   ]
+  },
+  "barony": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/letnev/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Arc Prime 4R 0I\n* Wren Terra 2R 1I\n* Commodities: 2"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* Destroyer\n* Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Antimass Deflectors**\n\nRequirements: None\n\nYour ships can move into and through asteroid fields.\n\nWhen other players' units use Space Cannon against your units, apply -1 to the result of each die roll.\n\n---\n\n### 🔴 **Plasma Scoring**\n\nRequirements: None\n\nWhen 1 or more of your units use Bombardment or Space Cannon, 1 of those units may roll 1 additional die."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Munitions Reserves**\n\nAt the start of each round of space combat, you may spend 2 trade goods; you may re-roll any number of your dice during that combat round.\n\n### **Armada**\n\nThe maximum number of non-fighter ships you can have in each system is equal to 2 more than the number of tokens in your fleet pool."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Arc Secundus**\n\nUnit Type: Flagship\n\n---\n\nOther player's units in this system lose Planetary Shield. At the start of each space combat round, repair this ship.\n\n* Sustain Damage\n* Bombardment 5 (x3)\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Dunlain Reaper**\n\nUnit Type: Mech\n\n---\n\nDeploy: At the start of a round of ground combat, you may spend 2 resources to replace 1 of your infantry in that combat with 1 mech.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟡 **L4 Disruptors**\n\nRequirements: 🟡\n\nDuring an invasion, units cannot use Space Cannon against your units.\n\n---\n\n### 🔴 **Non-Euclidean Shielding**\n\nRequirements: 🔴 🔴\n\nWhen 1 of your units uses Sustain Damage, cancel 2 hits instead of 1."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Viscount Unlenn – _The Dunlain Scourge_\n\nUnlock: Always Unlocked\n\nAt the start of a space combat round:\n\nYou may exhaust this card to choose 1 ship in the active system: that ship rolls 1 additional die during this combat round.\n\n---\n\n### **Commander**: Rear Admiral Farran – _Sector XVIII Viceroy_\n\nUnlock: Have 5 non-fighter ships in 1 system.\n\nAfter 1 of your units uses Sustain Damage:\n\nYou may gain 1 trade good.\n\n---\n\n### **Hero**: Darktalon Treilla – _Void Revenant_\n\nUnlock: Have 3 scored objectives.\n\n**Dark Matter Affinity: Void Transference**\n\nAction:\n\nPlace this card near the game board. the number of non-fighter ships you can have in systems is not limited by laws or by the number of command tokens in your fleet pool during this game round. At the end of that game round, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Grav-Leash Maneuvers**\n\nBefore you roll dice during space combat, apply +X to the results of 1 of your ship's rolls, where X is the number of ship types you have in the combat.\n\nDuring movement, your non-fighter ships' move values are equal to the highest move value amongst moving ships in the system they started in.\n\n🔵 ⇋ 🔴"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Barony of Letnev - War Funding Ω__\n\n---\nAfter you and your opponent roll dice during space combat:\n\nYou may reroll all of your opponent's dice.\n\nYou may reroll any number of your dice.\n\nThen, return this card to the Letnev player."
+    }
+   ]
+  },
+  "saar": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/saar/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Ragh 2R 1I\n* Lisis II 0R 1I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Cruiser\n* 2× Fighter\n* Space Dock :material-information-outline:{ title=\"See Floating Factory below\" }"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Antimass Deflectors**\n\nRequirements: None\n\nYour ships can move into and through asteroid fields.\n\nWhen other players' units use Space Cannon against your units, apply -1 to the result of each die roll."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Scavenge**\n\nAfter you gain control of a planet, gain 1 trade good.\n\n### **Nomadic**\n\nYou can score objectives even if you do not control the planets in your home system."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Son of Ragh**\n\nUnit Type: Flagship\n\n---\n\n* Sustain Damage\n* Anti-Fighter Barrage 6 (x4)\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Scavenger Zeta**\n\nUnit Type: Mech\n\n---\n\nDeploy: After you gain control of a planet, you may spend 1 trade good to place 1 mech on that planet\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Floating Factory I**\n\nUnit Type: Space Dock\n\n---\n\nThis unit is placed in the space area instead of on a planet.\n\nThis unit can move and retreat as if it were a ship.\n\nIf this unit is blockaded, it is destroyed.\n\n* Production 5\n\n---\n\n| **Move 1** | **Capacity 4** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Floating Factory II**\n\nRequirements: 🟡 🟡\n\nUnit Type: Space Dock\n\n---\n\nThis unit is placed in the space area instead of on a planet.\n\nThis unit can move and retreat as if it were a ship.\n\nIf this unit is blockaded, it is destroyed.\n\n* Production 7\n\n---\n\n| **Move 2** | **Capacity 5** |\n\n---\n\n### 🔵 **Chaos Mapping**\n\nRequirements: 🔵\n\nOther players cannot activate asteroid fields that contain 1 or more of your ships.\n\nAt the start of your turn during the action phase, you may produce 1 unit in a system that contains at least 1 of your units that has Production."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Captain Mendosa – _Captain of the Fifth Fleet_\n\nUnlock: Always Unlocked\n\nWhen a player activates a system:\n\nYou may exhaust this card to increase the move value of 1 of that player's ships to match the move value of the ship on the game board that has the highest move value.\n\n---\n\n### **Commander**: Rowl Sarring – _Relay Engineer_\n\nUnlock: Have 3 space docks on the game board.\n\nWhen you produce fighters or infantry:\n\nYou may place each of those units at any of your space docks that are not blockaded.\n\n---\n\n### **Hero**: Gurno Aggero – _Captain of the First Fleet_\n\nUnlock: Have 3 scored objectives.\n\n**Armageddon Relay: The Lay of Lisis**\n\nAction:\n\nChoose 1 system that is adjacent to 1 of your space docks. Destroy all other players' infantry and fighters in that system. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Deorbit Barrage**\n\nAction: Exhaust this card and spend any amount of resources to choose a planet up to 2 systems away from an asteroid field that contains your ships; roll a number of dice equal to the amount spent and assign 1 hit to a ground force on that planet for each roll of 4 or greater.\n\n🔵 ⇋ 🔴"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Clan of Saar – Ragh's Call__\n\n---\nAfter you commit 1 or more units to land on a planet:\n\nRemove all of the Saar player's ground forces from that planet and place them on a planet controlled by the Saar player.\n\nThen return this card to the Saar player."
+    }
+   ]
+  },
+  "jolnar": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/jolnar/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Jol 1R 2I\n* Nar 2R 3I\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* 2× Carrier\n* Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 2× Infantry\n* Space Dock\n* 2× PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Neural Motivator**\n\nRequirements: None\n\nDuring the status phase, draw 2 action cards instead of 1.\n\n---\n\n### 🔵 **Antimass Deflectors**\n\nRequirements: None\n\nYour ships can move into and through asteroid fields.\n\nWhen other players' units use Space Cannon against your units, apply -1 to the result of each die roll.\n\n### 🟡 **Sarween Tools**\n\nRequirements: None\n\nWhen 1 or more of your units use Production, reduce the combined cost of the produced units by 1.\n\n---\n\n### 🔴 **Plasma Scoring**\n\nRequirements: None\n\nWhen 1 or more of your units use Bombardment or Space Cannon, 1 of those units may roll 1 additional die."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Fragile**\n\nApply -1 to the result of each of your unit's combat rolls.\n\n### **Brilliant**\n\nWhen you spend a command token to resolve the secondary ability of the \"Technology\" strategy card, you may resolve the primary ability instead.\n\n### **Analytical**\n\nWhen you research a technology that is not a unit upgrade technology, you may ignore 1 prerequisite."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **J.N.S. Hylarim**\n\nUnit Type: Flagship\n\n---\n\nWhen making a combat roll for this ship, each result of 9 or 10, before applying modifiers, produces 2 additional hits.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 6 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Shield Paling**\n\nUnit Type: Mech\n\n---\n\nYour infantry on this planet are not affected by your Fragile faction ability.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🔵 **Spatial Conduit Cylinder**\n\nRequirements: 🔵 🔵\n\nYou may exhaust this card after you activate a system that contains 1 or more of your units; that system is adjacent to all other systems that contain 1 or more of your units during this activation.\n\n---\n\n### 🟡 **E-Res Siphons**\n\nRequirements: 🟡 🟡\n\nAfter another player activates a system that contains 1 or more of your ships, gain 4 trade goods."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Doctor Sucaban - _Head of Medical \"R&D\"_\n\nUnlock: Always Unlocked\n\nWhen a player spends resources to research:\n\nYou may exhaust this card to allow that player to remove any number of their infantry from the game board. For each unit removed, reduce the resources spent by 1.\n\n---\n\n### **Commander**: Agnlan Oln – _Advisor Adjunct_\n\nUnlock: Own 8 technologies.\n\nAfter you roll dice for a unit ability:\n\nYou may reroll any of those dice.\n\n---\n\n_After the rift between the Deepwrought and the Universities, the universally disliked Agnlan Oln of Oln Medical replaced Ta Zern in an advisory role._\n\n---\n\n### **Hero**: Rin, the Master's Legacy – _Perfected Being_\n\nUnlock: Have 3 scored objectives.\n\n**Genetic Memory: Brilliance of the Hylar**\n\nAction:\n\nFor each non-unit upgrade technology you own, you may replace that technology with any technology of the same color from the deck. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Specialized Compounds**\n\nWhen you research technology using the \"Technology\" strategy card, you may exhaust a planet that has a technology specialty instead of spending resources; if you do, you must research a technology of that color.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Universities of Jol-Nar - Research Agreement__\n\n---\nAfter the Jol-Nar player researches a technology that is not a faction technology: Gain that technology. Then, return this card to the Jol-Nar player."
+    }
+   ]
+  },
+  "norr": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/norr/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Tren'lak 1R 0I\n* Quinarra 3R 1I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Cruiser"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 5× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "None."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Unrelenting**\n\nApply +1 to the result of each of your unit's combat rolls."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **C'morran N'orr**\n\nUnit Type: Flagship\n\n---\n\nApply +1 to the result of each of your other ship's combat rolls in this system.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 6 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Valkyrie Exoskeleton**\n\nUnit Type: Mech\n\n---\n\nAfter this unit uses it's Sustain Damage ability during ground combat, it produces 1 hit against your opponent's ground forces on this planet.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Exotrireme I**\n\nUnit Type: Dreadnought\n\n---\n\n* Sustain Damage\n* Bombardment 4 (x2)\n\n---\n\n| **Cost 4** | **Combat 5** | **Move 1** | **Capacity 1** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Exotrireme II**\n\nRequirements: 🔵 🔵 🟡\n\nUnit Type: Dreadnought\n\n---\n\nAfter a round of space combat, you may destroy this unit to destroy up to 2 ships in this system.\n\n\"Direct Hit\" cards are no longer effective against this type of ship.\n\n* Sustain Damage\n* Bombardment 4 (x2)\n\n---\n\n| **Cost 4** | **Combat 5** | **Move 2** | **Capacity 1** |\n\n---\n\n### 🔴 **Valkyrie Particle Weave**\n\nRequirements: 🔴 🔴\n\nAfter making combat rolls during a round of ground combat, if your opponent produced 1 or more hits, you produce 1 additional hit."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: T'ro – _Tekklar Legionnaire_\n\nUnlock: Always Unlocked\n\nAt the end of a player's tactical action:\n\nYou may exhaust this card: if you do, that player may place 2 infantry from their reinforcements on a planet they control in the active system.\n\n---\n\n### **Commander**: G'hom Sek'kus – _Valkyrie Elite_\n\nUnlock: Control 5 planets in non-home systems.\n\nDuring the \"Commit Ground Forces\" step:\n\nYou can commit (move) up to 1 ground force from each planet in the active system and each planet in adjacent systems that do not contain 1 of your command tokens.\n\n---\n\n### **Hero**: Sh'val, Harbinger – _Master of the First_\n\nUnlock: Have 3 scored objectives.\n\n**Tekklar Conditioning: Brood Swarm**\n\nAfter you move ships into the active system:\n\nYou may skip directly to the \"Commit Ground Forces\" step. If you do, after you commit ground forces to land on planets, purge this card and return each of your ships in the active system to your reinforcements."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **N'orr Supremacy**\n\nAfter you win a combat, either gain 1 command token or research one unit upgrade technology.\n\n🔵 ⇋ 🔴"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Sardakk N'orr – Tekklar Legion__\n\n---\nAt the start of an invasion combat:\n\nApply +1 to the result of each of your unit's combat rolls during this combat.\nIf your opponent is the N'orr player, apply -1 to the result of each of his unit's combat rolls during this combat.\n\nThen, return this card to the N'orr player."
+    }
+   ]
+  },
+  "xxcha": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/xxcha/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Archon Ren 2R 3I\n* Archon Tau 1R 1I\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* 2× Cruiser\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟡 **Graviton Laser System**\n\nRequirements: 🟡\n\nYou may exhaust this card before 1 or more of your units uses Space Cannon; hits produced by those units must be assigned to non-fighter ships if able."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Peace Accords**\n\nAfter you resolve the primary or secondary ability of the \"Diplomacy\" strategy card, you may gain control of 1 planet other than Mecatol Rex that does not contain any units and is in a system that is adjacent to a planet you control.\n\n### **Quash**\n\nWhen an agenda is revealed, you may spend 1 token from your strategy pool to discard that agenda and reveal 1 agenda from the top of the deck. Players vote on this agenda instead."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Loncara Ssodu**\n\nUnit Type: Flagship\n\n---\n\nYou may use this unit's Space Cannon against ships that are in adjacent systems.\n\n* Sustain Damage\n* Space Cannon 5 (x3)\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Indomitus**\n\nUnit Type: Mech\n\n---\n\nYou may use this unit's Space Cannon against ships that are in adjacent systems.\n\n* Sustain Damage\n* Space Cannon 8\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟢 **Instinct Training**\n\nRequirements: 🟢\n\nYou may exhaust this card and spend 1 token from your strategy pool when another player plays an action card; cancel that action card.\n\n---\n\n### 🟡 **Nullification Field**\n\nRequirements: 🟡 🟡\n\nAfter another player activates a system that contains 1 or more of your ships, you may exhaust this card and spend 1 token from your strategy pool; immediately end that player's turn."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Ggrocuto Rinn - _The King's Shield_\n\nUnlock: Always Unlocked\n\nAction:\n\nExhaust this card to ready any planet: if that planet is in a system that is adjacent to a planet you control, you may remove 1 infantry from that planet and return it to its reinforcements.\n\n---\n\n### **Commander**: Elder Qanoj – _The Doom from Kklaj_\n\nUnlock: Control planets that have a combined total of at least 12 influence.\n\nWhen you vote:\n\nEach planet you exhaust to cast votes provides 1 additional vote. Game effects cannot prevent you from voting on an agenda.\n\n---\n\n### **Hero**: Xxekir Grom ΩΩ - _The Council's Heart_\n\nUnlock: Have 3 scored objectives.\n\n**Planetary Defense Nexus: Aegis**\n\nAction: Place any combination of up to 4 PDS or mechs onto planets you control; ready each planet that you place a unit on.\n\nThen, purge this card.\n\n---\n\n_Grom's harnessing of the council's inter-agency connections to expedite the Xxcha's defense proposal surprised no one.\nIt turned out nearly everyone owed Xxekir Grom a favor._"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Archon's Gift**\n\nYou can spend influence as if it were resources.\n\nYou can spend resources as if it were influence.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Xxcha Kingdom – Political Favor__\n\n---\nWhen an agenda is revealed:\n\nRemove 1 token from the Xxcha player's strategy pool and return it to their reinforcements.\nThen, discard the revealed agenda and reveal 1 agenda from the top of the deck.\nPlayers vote on this agenda instead.\n\nThen, return this card to the Xxcha player."
+    }
+   ]
+  },
+  "yssaril": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/yssaril/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Retillion 2R 3I\n* Shalloq 1R 2I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 5× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Neural Motivator**\n\nRequirements: None\n\nDuring the status phase, draw 2 action cards instead of 1."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Stall Tactics**\n\nAction: Discard 1 action card from your hand.\n\n### **Scheming**\n\nWhen you draw 1 or more action cards, draw 1 additional action card. Then, choose and discard 1 action card from your hand.\n\n### **Crafty**\n\nYou can have any number of action cards in your hand. Game effects cannot prevent you from using this ability."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Y'sia Y'ssrila**\n\nUnit Type: Flagship\n\n---\n\nThis ship can move through systems that contain other player's ships.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 2** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Blackshade Infiltrator**\n\nUnit Type: Mech\n\n---\n\nDeploy: After you use your Stall Tactics faction ability, you may place 1 mech on a planet you control.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟢 **Transparasteel Plating**\n\nRequirements: 🟢\n\nDuring your turn of the action phase, players that have passed cannot play action cards.\n\n---\n\n### 🟢 **Mageon Implants**\n\nRequirements: 🟢 🟢 🟢\n\nAction: Exhaust this card to look at another player's hand of action cards.\nChoose 1 of those cards and add it to your hand."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Ssruu – _Clever, Clever Ssruu_\n\nUnlock: Always Unlocked\n\nAt any time:\n\nThis card has the text ability of each other player's agent, even if that agent is exhausted.\n\n---\n\n### **Commander**: So Ata – _Loyal Only to a Point_\n\nUnlock: Have 7 action cards.\n\nAfter another player activates a system that contains your units:\n\nYou may look at that player's action cards, promissory notes, or secret objectives.\n\n---\n\n### **Hero**: Kyver, Blade and Key – _Guild Assassin_\n\nUnlock: Have 3 scored objectives.\n\n**Guild of Spies: Extortion**\n\nAction:\n\nEach other player shows you 1 action card from their hand. For each player, you may either take that card or force that player to discard 3 random action cards from their hand. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Deepgloom Executable**\n\nYou can allow other players to use your Stall Tactics or Scheming faction abilities; when you do, you may resolve a transaction with that player.\nDuring the action phase, that transaction does not count against the once-per-player transaction limit for that turn.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Yssaril Tribes – Spy Net__\n\n---\nAt the start of your turn:\n\nLook at the Yssaril player's hand of action cards. Choose 1 of those cards and add it to your hand. Then, return this card to the Yssaril player."
+    }
+   ]
+  },
+  "hacan": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/hacan/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Arretze 2R 0I\n* Hercant 1R 1I\n* Kamdorn 0R 1I\n* Commodities: 6"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Antimass Deflectors**\n\nRequirements: None\n\nYour ships can move into and through asteroid fields.\n\nWhen other players' units use Space Cannon against your units, apply -1 to the result of each die roll.\n\n---\n\n### 🟡 **Sarween Tools**\n\nRequirements: None\n\nWhen 1 or more of your units use Production, reduce the combined cost of the produced units by 1."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Masters of Trade**\n\nYou do not have to spend a command token to resolve the secondary ability of the \"Trade\" strategy card.\n\n### **Guild Ships**\n\nYou can negotiate transactions with players who are not your neighbor.\n\n### **Arbiters**\n\nWhen you are negotiating a transaction, action cards can be exchanged as part of that transaction."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Wrath of Kenara**\n\nUnit Type: Flagship\n\n---\n\nAfter you roll a die during a space combat in this system, you may spend 1 trade good to apply +1 to the result.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Pride of Kenara**\n\nUnit Type: Mech\n\n---\n\nThis planet's card may be traded as part of a transaction; if you do, move all of your units from this planet to another planet you control.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟢 **Production Biomes**\n\nRequirements: 🟢 🟢\n\nAction: Exhaust this card and spend 1 token from your strategy pool to gain 4 trade goods and choose 1 other player; that player gains 2 trade goods.\n\n---\n\n### 🟡 **Quantum Datahub Node**\n\nRequirements: 🟡 🟡 🟡\n\nAt the end of the strategy phase, you may spend 1 token from your strategy pool and give another player 3 of your trade goods.\nIf you do, give 1 of your strategy cards to that player and take 1 of their strategy cards."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Carth of Golden Sands – _Tripartite Governor_\n\nUnlock: Always Unlocked\n\nDuring the action phase:\n\nYou may exhaust this card to gain 2 commodities or replenish another player's commodities.\n\n---\n\n### **Commander**: Gila the Silvertongue – _Kenaran Ambassador_\n\nUnlock: Have 10 trade goods.\n\nWhen you cast votes:\n\nYou may spend any number of trade goods: cast 2 additional votes for each trade good spent.\n\n---\n\n### **Hero**: Harrugh Gefhara – _The Nascent Twilight_\n\nUnlock: Have 3 scored objectives.\n\n**Galactic Securities Net: Sanction of the Quieron**\n\nWhen 1 or more of your units use Production:\n\nYou may reduce the cost of each of your units to 0 during this use of Production. If you do, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Auto-Factories**\n\nWhen you produce 3 or more non-fighter ships, place 1 command token from your reinforcements into your fleet pool.\n\n🔴 ⇋ 🟡"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Emirates of Hacan – Trade Convoys__\n\n---\nAction: Place this card faceup in your play area.\n\nWhile this card is in your play area, you may negotiate transactions with players who are not your neighbor.\n\nIf you activate a system that contains 1 or more of the Hacan player's units, return this card to the Hacan player."
+    }
+   ]
+  },
+  "creuss": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/base/creuss/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Creuss 4R 2I\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* 2× Destroyer\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Gravity Drive**\n\nRequirements: 🔵\n\nAfter you activate a system, apply +1 to the move value of 1 of your ships during this tactical action."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Quantum Entaglement**\n\nYou treat all systems that contain either an alpha or beta wormhole as adjacent to each other. Game effects cannot prevent you from using this ability.\n\n### **Slipstream**\n\nDuring your tactical actions, apply +1 to the move value of each of your ships that starts its movement in your home system or in a system that contains either an alpha or beta wormhole.\n\n### **Creuss Gate**\n\nWhen you create the game board, place the Creuss Gate (tile 17) where your home system would normally be placed. The Creuss Gate system is not a home system.\nThen, place your home system (tile 51) in your play area."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Hil Colish**\n\nUnit Type: Flagship\n\n---\n\nThis ship's system contains a delta wormhole.\n\nDuring movement, this ship may move before or after your other ships.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Icarus Drive**\n\nUnit Type: Mech\n\n---\n\nAfter any player activates a system, you may remove this unit from the game board to place or move a Creuss wormhole token into this system.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🔵 **Wormhole Generator Ω**\n\nRequirements: 🔵 🔵\n\nAction: Exhaust this card to place or move a Creuss wormhole token into either a system that contains a planet you control or a non-home system that does not contain another player's ships.\n\n---\n\n### 🔴 **Dimensional Splicer**\n\nRequirements: 🔴\n\nAt the start of space combat in a system that contains a wormhole and 1 or more of your ships, you may produce 1 hit and assign it to 1 of your opponent's ships."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Emissary Taivra – _The Azure Whisper_\n\nUnlock: Always Unlocked\n\nAfter a player activates a system that contains a non-delta wormhole:\n\nYou may exhaust this card: if you do, that system is adjacent to all other systems that contain a wormhole during this tactical action.\n\n---\n\n### **Commander**: Sai Seravus – _Gatewarden_\n\nUnlock: Have units in 3 systems that contain alpha or beta wormholes.\n\nAfter your ships move:\n\nFor each ship that has a capacity value and moved through 1 or more wormholes, you may place 1 fighter from your reinforcements with that ship if you have unused capacity in the active system.\n\n---\n\n### **Hero**: Riftwalker Meian – _Shaleri Guardian_\n\nUnlock: Have 3 scored objectives.\n\n**Singularity Reactor: Changing the Ways**\n\nAction:\n\nSwap the positions of any 2 systems that contain wormholes or your units, other than the Creuss system and the wormhole nexus. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Particle Synthesis**\n\nEach wormhole in a system that contains your ships gains Production 1 as if it were a unit you control.\n\nReduce the combined cost of units you produce in systems that contain wormholes by 1 for each wormhole in that system.\n\n🔵 ⇋ 🟡"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Ghosts of Creuss – Creuss Iff__\n\n---\nAt the start of your turn during the action phase:\n\nPlace or move a Creuss wormhole token into either a system that contains a planet you control or a non-home system that does not contain another player's ships.\n\nThen, return this card to the Creuss player."
+    }
+   ]
+  },
+  "mahact": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/mahact/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Ixth 3R 5I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Bio-Stims**\n\nRequirements: 🟢\n\nYou may exhaust this card at the end of your turn to ready 1 of your planets that has a technology specialty or 1 of your other technologies.\n\n---\n\n### 🟡 **Predictive Intelligence**\n\nRequirements: 🟡\n\nAt the end of your turn, you may exhaust this card to redistribute your command tokens.\n\nWhen you cast votes during the agenda phase, you may cast 3 additional votes; if you do, and the outcome you voted for is not resolved, exhaust this card."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Edict**\n\nWhen you win a combat, place 1 command token from your opponent's reinforcements in your fleet pool if it does not already contain 1 of that player's tokens; other player's tokens in your fleet pool increase your fleet limit but cannot be redistributed.\n\n### **Imperia**\n\nWhile another player's command token is in your fleet pool, you can use the ability of that player's commander, if it is unlocked.\n\n### **Hubris**\n\nDuring setup, purge your \"Alliance\" promissory note. Other players cannot give you their \"Alliance\" promissory note."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Arvicon Rex**\n\nUnit Type: Flagship\n\n---\n\nDuring combat against an opponent whose command token is not in your fleet pool, apply +2 to the results of this unit's combat rolls.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Starlancer**\n\nUnit Type: Mech\n\n---\n\nAfter a player whose command token is in your fleet pool activates this system, you may spend their token from your fleet pool to end their turn; they gain that token.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Crimson Legionnaire I**\n\nUnit Type: Infantry\n\n---\n\nAfter this unit is destroyed, gain 1 commodity or convert 1 of your commodities to a trade good.\n\n---\n\n| **Cost 1(×2)** | **Combat 8** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Crimson Legionnaire II**\n\nRequirements: 🟢 🟢\n\nUnit Type: Infantry\n\n---\n\nAfter this unit is destroyed, gain 1 commodity or convert 1 of your commodities to a trade good.\nThen, place the unit on this card.\n\nAt the start of your next turn, place each unit that is on this card on a planet you control in your home system.\n\n---\n\n| **Cost 1(×2)** | **Combat 7** |\n\n---\n\n### 🟢 **Genetic Recombination**\n\nRequirements: 🟢\n\nYou may exhaust this card before a player casts votes; that player must cast at least 1 vote for an outcome of your choice or remove 1 token from their fleet pool and return it to their reinforcements."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Jae Mir Kan – _Archon of Prosperity_\n\nUnlock: Always Unlocked\n\nWhen you would spend a command token during the secondary ability of a strategic action:\n\nYou may exhaust this card to remove 1 of the active player's command tokens from the board and use it instead.\n\n---\n\n### **Commander**: Il Na Viroset – _Archon of Virtue_\n\nUnlock: Have 2 other factions' command tokens in your fleet pool.\n\nDuring your tactical actions:\n\nYou can activate systems that contain your command tokens.\nIf you do, return both command tokens to your reinforcements and end your turn.\n\nNote: This is not really a tactical action and does not trigger any \"on activation\" effects.\nIt's really a component action in effect.\n\n---\n\n### **Hero**: Airo Shir Aur – _Archon of Command_\n\nUnlock: Have 3 scored objectives.\n\n**Benediction: Pax Magnifica**\n\nAction:\n\nMove all units in the space area of any system to an adjacent system that contains a different player's ships. Space combat is resolved in that system. neither player can retreat or resolve abilities that would move their ships. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Vaults of the Heir**\n\nAction: Exhaust this card and purge 1 of your technologies to gain 1 relic.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Mahact Gene-Sorcerers - Scepter of Dominion__\n\n---\nAt the start of the strategy phase:\n\nChoose 1 non-home system that contains your units, each other player who has a token on the Mahact player's command sheet places a token from their reinforcements in that system. Then, return this card to the Mahact player."
+    }
+   ]
+  },
+  "nomad": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/nomad/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Arcturus 4R 4I\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Flagship\n* Carrier\n* Destroyer\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Sling Relay**\n\nRequirements: 🔵\n\nAction: Exhaust this card to produce 1 ship in any system that contains one of your space docks."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **The Company**\n\nDuring setup, take the 2 additional Nomad faction agents and place them next to your faction sheet; you have 3 agents.\n\n### **Future Sight**\n\nDuring the Agenda phase, after an outcome that you voted for or predicted is resolved, gain 1 trade good."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Memoria I**\n\nUnit Type: Flagship\n\n---\n\nYou may treat this unit as if it were adjacent to systems that contain 1 or more of your mechs.\n\n* Sustain Damage\n* Anti-Fighter Barrage 8 (x3)\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Quantum Manipulator**\n\nUnit Type: Mech\n\n---\n\nWhile this unit is in a space area during combat, you may use it's Sustain Damage ability to cancel a hit that is produced against your ships in this system\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Memoria II**\n\nRequirements: 🔵 🟢 🟡\n\nUnit Type: Flagship\n\n---\n\nYou may treat this unit as if it were adjacent to systems that contain one or more of your mechs.\n\n* Sustain Damage\n* Anti-Fighter Barrage 5 (x3)\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 2** | **Capacity 6** |\n\n---\n\n### 🟡 **Temporal Command Suite**\n\nRequirements: 🟡\n\nAfter any player's agent becomes exhausted, you may exhaust this card to ready that agent; if you ready another player's agent, you may perform a transaction with that player."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Artuno the Betrayer – _Sumerian Overseer_\n\nUnlock: Always Unlocked\n\nWhen you gain trade goods from the supply:\n\nYou may exhaust this card to place an equal number of trade goods on this card. When this card readies, gain the trade goods on this card.\n\n---\n\n### **Agent**: The Thundarian – _Temporal Engima_\n\nUnlock: Always Unlocked\n\nAfter the \"Roll Dice\" step of combat:\n\nYou may exhaust this card. If you do, hits are not assigned to either player's units. Return to the start of this combat round's \"Roll Dice\" step.\n\n---\n\n### **Agent**: Field Marshal Mercer – _Shikrai General_\n\nUnlock: Always Unlocked\n\nAt the end of a player's turn:\n\nYou may exhaust this card to allow that player to remove up to 2 of their ground forces from the game board and place them on planets they control in the active system.\n\n---\n\n### **Commander**: Navarch Feng – _Company Shipmaster_\n\nUnlock: Have 1 scored secret objective.\n\nWhen you produce:\n\nYou can produce your flagship without spending resources.\n\n---\n\n### **Hero**: Ahk-Syl Siven - _Sole Survivor_\n\nUnlock: Have 3 scored objectives.\n\n**Probability Matrix: Time Warp**\n\nAction:\n\nPlace this card near the game board.\nYour flagship and units it transports can move out of systems that contain your command tokens during this game round.\nAt the end of that game round, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Thunder's Paradox**\n\nAt the start of any player's turn, you may exhaust 1 of your agents to ready any other agent.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Nomad – The Cavalry__\n\n---\nAt the start of a space combat against a player other than the Nomad:\n\nDuring this combat, treat 1 of your non-fighter ships as if it has the Sustain Damage ability, Combat value, and Anti-Fighter Barrage value of the Nomad's flagship.\n\nReturn this card to the Nomad player at the end of the combat."
+    }
+   ]
+  },
+  "vuilraith": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/cabal/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Acheron 4R 0I\n* Commodities: 2"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* Cruiser\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔴 **Self-Assembly Routines**\n\nRequirements: 🔴\n\nAfter 1 or more of your units use Production, you may exhaust this card to place 1 mech from your reinforcements on a planet you control in that system.\nAfter 1 of your mechs is destroyed, gain 1 trade good."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Devour**\n\nCapture your opponent's non-structure units that are destroyed during combat.\n\n### **Amalgamation**\n\nWhen you produce a unit, you may return 1 captured unit of that type to produce that unit without spending resources.\n\n### **Riftmeld**\n\nWhen you research a unit upgrade technology, you may return 1 captured unit of that type to ignore all of the technology's prerequisites."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **The Terror Between**\n\nUnit Type: Flagship\n\n---\n\nCapture all other non-structure units that are destroyed in this system, including your own.\n\n* Sustain Damage\n* Bombardment 5\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Reanimator**\n\nUnit Type: Mech\n\n---\n\nWhen your infantry on this planet are destroyed, place them on your faction sheet; those units are captured.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Dimensional Tear I**\n\nUnit Type: Space Dock\n\n---\n\nThis system is a gravity rift; your ships do not roll for this gravity rift. Place a dimensional tear token beneath this unit as a reminder.\n\nUp to 6 fighters in this system do not count against your ships' capacity.\n\n* Production 5"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Dimensional Tear II**\n\nRequirements: 🟡 🟡\n\nUnit Type: Space Dock\n\n---\n\nThis system is a gravity rift; your ships do not roll for this gravity rift.\nPlace a dimensional tear token beneath this unit as a reminder.\n\nUp to 12 fighters in this system do not count against your ships' capacity.\n\n* Production 7\n\n---\n\n### 🔴 **Vortex**\n\nRequirements: 🔴\n\nAction: Exhaust this card to choose another player's non-structure unit in a system that is adjacent to 1 or more of your space docks.\nCapture 1 unit of that type from that player's reinforcements."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: The Stillness of Stars – _Oppressive Silence_\n\nUnlock: Always Unlocked\n\nAfter another player replenishes commodities:\n\nYou may exhaust this card to convert their commodities to trade goods and capture 1 unit from their reinforcements that has a cost equal to or lower than their commodity value.\n\n---\n\n### **Commander**: That Which Molds Flesh – _Grisly Abomination_\n\nUnlock: Have units in 3 gravity rifts.\n\nWhen you produce fighter or infantry units:\n\nUp to 2 of those units do not count against your Production limit.\n\n---\n\n### **Hero**: It Feeds on Carrion – _Twisted Horror_\n\nUnlock: Have 3 scored objectives.\n\n**Dimensional Anchor: Event Horizon**\n\nAction:\n\nEach other player rolls a die for each of his non-fighter ships that are in or adjacent to a system that contains a dimensional tear.\nOn a 1-3, capture that unit.\nIf this causes a player's ground forces or fighter to be removed, also capture those units.\nThen, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Al'raith Ix Ianovar**\n\nThis breakthrough causes the Fracture to enter play without a roll, if it is not already in play.\nAfter this card enters play, move up to 2 ingress tokens into systems that contain gravity rifts.\n\nApply +1 to the Move value of each of your ships that start their movement in the Fracture.\n\n🔴 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Vuil'raith Cabal – Crucible__\n\n---\nAfter you activate a system:\n\nYour ships do not roll for gravity rifts during this movement; apply an additional +1 to the move values of your ships that would move out of or through a gravity rift instead.\n\nThen, return this card to the Vuil'raith player."
+    }
+   ]
+  },
+  "ul": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/titans/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Elysium 4R 1I\n* Commodities: 2"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* 2× Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Antimass Deflectors**\n\nRequirements: None\n\nYour ships can move into and through asteroid fields.\n\nWhen other players' units use Space Cannon against your units, apply -1 to the result of each die roll.\n\n---\n\n### 🟡 **Scanlink Drone Network**\n\nRequirements: None\n\nWhen you activate a system, you may explore 1 planet in that system which contains 1 or more of your units."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Terragenesis**\n\nAfter you explore a planet that does not have a sleeper token, you may place or move 1 sleeper token onto that planet.\n\n### **Awaken**\n\nAfter you activate a system that contains 1 or more of your sleeper tokens, you may replace each of those tokens with 1 PDS from your reinforcements.\n\n### **Coalesce**\n\nIf your flagship or your Awaken faction ability places your units into the same space area or onto the same planet as another player's units, your units must participate in combat during \"Space Combat\" or \"Ground Combat\" steps."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Ouranos**\n\nUnit Type: Flagship\n\n---\n\nDeploy: After you activate a system that contains 1 or more of your PDS, you may replace 1 of those PDS with this unit.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Hecatoncheires**\n\nUnit Type: Mech\n\n---\n\nDeploy: When you would place a PDS on a planet, you may place 1 mech and 1 infantry on that planet instead.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Saturn Engine II**\n\nRequirements: 🟢 🟡 🔴\n\nUnit Type: Cruiser\n\n---\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** | **Move 3** | **Capacity 2** |\n\n---\n\n### ⬆ **Hel-Titan II**\n\nRequirements: 🟡 🔴\n\nUnit Type: PDS\n\n---\n\nThis unit is treated as both a structure and a ground force.\nIt cannot be transported.\n\nYou may use this unit's Space Cannon against ships that are adjacent to this unit's systems.\n\n* Planetary Shield\n* Space Cannon 5\n* Sustain Damage\n* Production 1\n\n---\n\n| **Combat 6** |"
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Tellurian – _The Protector_\n\nUnlock: Always Unlocked\n\nBefore a hit would be assigned:\n\nYou may exhaust this card to cancel that hit.\n\n---\n\n### **Commander**: Tungstantus – _The Gardener_\n\nUnlock: Have 5 structures on the game board.\n\nWhen 1 or more of your units use Production:\n\nYou may gain 1 trade good.\n\n---\n\n### **Hero**: Ul the Progenitor - _Elysium's Core_\n\nUnlock: Have 3 scored objectives.\n\n**Geoform: Awakening**\n\nAction:\n\nReady Elysium and attach this card to it. Its resource and influence values are each increased by 3, and it gains the Space Cannon 5 (x3) ability as if it were a unit."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Slumberstate Computing**\n\nWhen Coalescence results in a ground combat, if you commit no other units, you may choose for your units to coexist instead.\nDuring the status phase, for each player you are coexisting with, you and that player each draw 1 additional action card.\n\nOther players may allow you to place a sleeper token on a planet they control.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Titans of Ul – Terraform__\n\n---\nAction: Attach this card to a non-home planet you control other than Mecatol Rex.\n\nIts resource and influence values are each increased by 1 and it is treated as having all 3 planet traits (Cultural, Hazardous, and Industrial)."
+    }
+   ]
+  },
+  "empyrean": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/empyrean/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* The Dark 3R 4I | Nebula\n* Commodities: 4"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Destroyer\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🔵 **Dark Energy Tap**\n\nRequirements: None\n\nAfter you perform a tactical action in a system that contains a frontier token, if you have 1 or more ships in that system, explore that token.\n\nYour ships can retreat into adjacent systems that do not contain other players' units, even if you do not have units or control planets in that system."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Voidborn**\n\nNebulae do not affect your ships' movement.\n\n### **Aetherpassage**\n\nAfter a player activates a system, you may allow that player to move their ships through systems that contain your ships.\n\n### **Dark Whispers**\n\nDuring setup, take the additional Empyrean faction promissory note; you have 2 faction promissory notes."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Dynamo**\n\nUnit Type: Flagship\n\n---\n\nAfter any player's unit in this system or an adjacent system uses Sustain Damage, you may spend 2 influence to repair that unit.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Watcher**\n\nUnit Type: Mech\n\n---\n\nYou may remove this unit from a system that contains or is adjacent to another player's units to cancel an action card played by that player.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🔵 **Aetherstream**\n\nRequirements: 🔵 🔵\n\nAfter you or one of your neighbors activates a system that is adjacent to an anomaly, you may apply +1 to the move value of all of that player's ships during this tactical action.\n\n---\n\n### 🟢 **Voidwatch**\n\nRequirements: 🟢\n\nAfter a player moves ships into a system that contains 1 or more of your units, they must give you 1 promissory note from their hand, if able."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Acamar – _The Gift of Night_\n\nUnlock: Always Unlocked\n\nAfter a player moves ships into a system that does not contain any planets:\n\nYou may exhaust this card: that player gains 1 command token.\n\n---\n\n### **Commander**: Xuange – _The Archivist_\n\nUnlock: Be neighbors with all other players.\n\nAfter another player moves ships into a system that contains 1 of your command tokens:\n\nYou may return that token to your reinforcements.\n\n---\n\n### **Hero**: Conservator Procyon – _One with the Void_\n\nUnlock: Have 3 scored objectives.\n\n**Multiverse Shift: Opening the Eye**\n\nAction:\n\nPlace 1 frontier token in each system that does not contain any planets and does not already have a frontier token. Then, explore each frontier token that is in a system that contains 1 or more of your ships. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Void Tether**\n\nWhen you activate a system that contains or is adjacent to a unit or planet you control, you may place or move 1 of your void tether tokens onto a border that system shares with another system; other players do not treat those systems as adjacent to each other unless you allow it.\n\n🟢 ⇋ 🔵"
+    }
+   ]
+  },
+  "naazrokha": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/naaz/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Naazir 2R 1I\n* Rokha 1R 2I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* 2× Carrier\n* Destroyer\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* Mech\n* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### 🟢 **Psychoarchaeology**\n\nRequirements: None\n\nYou can use technology specialties on planets you control without exhausting them, even if those planets are exhausted.\n\nDuring the Action Phase, you can exhaust planets you control that have technology specialties to gain 1 Trade Good.\n\n---\n\n### 🔴 **AI Development Algorithm**\n\nRequirements: None\n\nWhen you research a unit upgrade technology, you may exhaust this card to ignore any 1 prerequisite.\n\nWhen 1 or more of your units use Production, you may exhaust this card to reduce the combined cost of the produced units by the number of unit upgrade technologies that you own."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Distant Suns**\n\nWhen you explore a planet that contains 1 of your mechs, you may draw 1 additional card; choose 1 to resolve and discard the rest.\n\n### **Fabrication**\n\nAction: Either purge 2 of your relic fragments of the same type to gain 1 relic; or purge 1 of your relic fragments to gain 1 command token."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Visz El Vir**\n\nUnit Type: Flagship\n\n---\n\nYour mechs in this system roll 1 additional die during combat.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 9 (×2)** | **Move 1** | **Capacity 4** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Eidolon**\n\nUnit Type: Mech\n\n---\n\nIf this unit is in the space area of the active system at the start of a space combat, flip this card.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6 (×2)** |\n\n---\n\n### **Z-Grav Eidolon**\n\nUnit Type: Mech\n\n---\n\nIf this unit is in the space area of the active system, it is also a ship.\n\nAt the end of a space battle in the active system, flip this card.\n\n---\n\n| **Cost 2** | **Combat 8 (×2)** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🔴 **Supercharge**\n\nRequirements: 🔴\n\nAt the start of a combat round, you may exhaust this card to apply +1 to the result of each of your unit's combat rolls during this combat round.\n\n---\n\n### 🟢 **Pre-Fab Arcologies**\n\nRequirements: 🟢 🟢 🟢\n\nAfter you explore a planet, ready that planet."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Garv and Gunn – _Plucky Archaeologists_\n\nUnlock: Always Unlocked\n\nAt the end of a player's turn:\n\nYou may exhaust this card to allow that player to explore 1 of their planets.\n\n---\n\n### **Commander**: Dart and Tai – _Adrenaline Junkies_\n\nUnlock: Have mechs in 3 systems.\n\nAfter you gain control of a planet that was controlled by another player:\n\nYou may explore that planet.\n\n---\n\n### **Hero**: Hesh and Prit – _Architect Savants_\n\nUnlock: Have 3 scored objectives.\n\n**Perfect Synthesis: Forge Legend**\n\nAction:\n\nGain 1 relic and perform the secondary ability of up to 2 readied or unchosen strategy cards. during this action, spend command tokens from your reinforcements instead of your strategy pool. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Absolute Synergy**\n\nWhen you have 4 mechs in the same system, you may return 3 of those mechs to your reinforcements to flip this card and place it on top of your mech card.\n\n🟢 ⇋ 🔵\n\n---\n\n### **Eidolon Maximum**\n\nUnit Type: Mech\n\n---\n\nThis unit is both a ship and ground force.\nIt cannot be assigned hits from unit abilities.\nRepair it at the start of every combat round.\nGame effects cannot place or produce your mechs.\nWhen this unit is destroyed or removed, flip this card and return it to your play area.\n\n* Sustain Damage\n\n---\n\n| **Combat 4 (×4)** | **Move 3** |\n\n---\n\n🟢 ⇋ 🔵"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Naaz-Rokha Alliance - Black Market Forgery__\n\n---\nAction: Purge 2 of your relic fragments of the same type to gain 1 relic. Then, return this card to the Naaz-Rokha player."
+    }
+   ]
+  },
+  "argent": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/pok/argent/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "* Valk 2R 0I\n* Avar 1R 1I\n* Ylir 0R 2I\n* Commodities: 3"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* 2× Destroyer\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 5× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "### **Choose two of the following**:\n\n### 🟡 **Sarween Tools**\n\nRequirements: None\n\nWhen 1 or more of your units use Production, reduce the combined cost of the produced units by 1.\n\n---\n\n### 🔴 **Plasma Scoring**\n\nRequirements: None\n\nWhen 1 or more of your units use Bombardment or Space Cannon, 1 of those units may roll 1 additional die.\n\n### 🟢 **Neural Motivator**\n\nRequirements: None\n\nDuring the status phase, draw 2 action cards instead of 1."
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Zeal**\n\nYou always vote first during the agenda phase.\n\nWhen you cast at least 1 vote, cast 1 additional vote for each player in the game including you.\n\n### **Raid Formation**\n\nWhen your units use Anti-Fighter Barrage:\n\nFor each hit produced in excess of your opponent's Fighters, choose 1 of your opponent's ships that has Sustain Damage to become damaged."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Quetzecoatl**\n\nUnit Type: Flagship\n\n---\n\nOther players cannot use Space Cannon against your ships in this system.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Aerie Sentinel**\n\nUnit Type: Mech\n\n---\n\nThis unit does not count against capacity if it is being transported or if it is in a space area with 1 or more of your ships that have capacity values\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Strike Wing Alpha I**\n\nUnit Type: Destroyer\n\n---\n\n* Anti-Fighter Barrage 9 (x2)\n\n---\n\n| **Cost 1** | **Combat 8** | **Move 2** | **Capacity 1** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Strike Wing Alpha II**\n\nRequirements: 🔴 🔴\n\nUnit Type: Destroyer\n\n---\n\nWhen this unit uses Anti-Fighter Barrage, each result of 9 or 10 also destroys 1 of your opponents infantry in the space area of the active system.\n\n* Anti-Fighter Barrage 6 (x3)\n\n---\n\n| **Cost 1** | **Combat 7** | **Move 2** | **Capacity 1** |\n\n---\n\n### 🟡 **Aerie Hololattice**\n\nRequirements: 🟡\n\nOther players cannot move ships through systems that contain your structures.\n\nEach planet that contains 1 or more of your structures gains the Production 1 ability as if it were a unit."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Trilossa Aun Mirik – _Scorn of Ylir_\n\nUnlock: Always Unlocked\n\nWhen a player produces ground forces in a system:\n\nYou may exhaust this card: that player may place those units on any planets they control in that system and any adjacent systems.\n\n---\n\n### **Commander**: Trrakan Aun Zulok – _Strike Wing Commander_\n\nUnlock: Have 6 units that have Anti-Fighter Barrage, Space Cannon, or Bombardment on the game board.\n\nWhen 1 or more of your units make a roll for a unit ability:\n\nYou may choose 1 of those units to roll 1 additional die.\n\n---\n\n### **Hero**: Mirik Aun Sissiri – _Flightmaster_\n\nUnlock: Have 3 scored objectives.\n\n**Helix Protocol: Flock Migration**\n\nAction:\n\nMove any number of your ships from any systems to any number of other systems that contain 1 of your command tokens and no other players' ships. Then, purge this card."
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Wing Transfer**\n\nWhen you activate a system that contains only your units, you may place command tokens from your reinforcements into any systems adjacent to that system that contain only your units; at the end of this action, you may move ships among the active system and systems adjacent to it that contain your command tokens.\n\n🔵 ⇋ 🟡"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Argent Flight – Strike Wing Ambuscade__\n\n---\nWhen your units make a roll for a unit ability: Choose 1 unit to roll 1 additional die.\n\nThen, return this card to the Argent player."
+    }
+   ]
+  },
+  "bastion": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/te/bastion/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "### Commodities: 1\n\n---\n\n### Ordinian\n\n0R 0I · Nebula\n\n_The Nekro virus consumed this former Naaz-Rokha colony virutally down to its bedrock.\nRestoration efforts have only begun to restore its ravaged biosphere._\n\n---\n\n#### 4X41D \"Hyperion\" VI\n\nYou may exhaust this card when you pass to draw 1 action card and gain 1 command token.\n\n---\n\n_A shard of a greater whole, a part of a grand effort._\n\n---\n\n### Revelation\n\n1R 2I · Space Station\n\n_Hanging like a cathedral above Ordinian, the space station Revelation was constructed practically overnight to serve as the Last Bastion's military and economic hub._"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* Cruiser\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "Choose 1 🔵 **blue** or 1 🟡 **yellow** technology with no prerequisites"
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Liberate**\n\nWhen you gain control of a planet, ready that planet if it contains a number of infantry equal to or greater than that planet's resource value; otherwise, place 1 infantry on that planet.\n\n### **Galvanize**\n\nWhen a game effect instructs a player to galvanize a unit, they place a galvanize token beneath it if it does not have one. Galvanized units roll 1 additional die for combat rolls and unit abilities.\n\n### **Phoenix Standard**\n\nAt the end of combat, you may galvanize 1 of your units that participated."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **The Egeiro**\n\nUnit Type: Flagship\n\n---\n\nApply +1 to the result of each of this unit's combat rolls for each non-home system that contains a planet you control.\n\n* Sustain Damage\n* Production 1\n\n---\n\n| **Cost 8** | **Combat 9** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **A3 Valiance**\n\nUnit Type: Mech\n\n---\n\nWhen this unit is destroyed, if it was galvanized, galvanize up to 3 of your infantry in its system.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **4X41C \"Helios\" V1**\n\nUnit Type: Space Dock\n\n---\n\nThis unit's Production value is equal to 2 more than the resource value of this planet.\n\nThe resource value of this planet is increased by 1.\n\nUp to 3 fighters in this system do not count against your ships' capacity.\n\n* Production X+2\n\n---\n\nUpgrade: 🟡 🟡"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **4X41C \"Helios\" V2**\n\nRequirements: 🟡 🟡\n\nUnit Type: Space Dock\n\n---\n\nThis unit's Production value is equal to 4 more than the resource value of this planet.\n\nThe resource value of this planet is increased by 2.\n\nUp to 3 fighters in this system do not count against your ships' capacity.\n\n* Production X+4\n\n---\n\n### 🔴 **Proxima Targeting VI**\n\nRequirements: 🔴\n\nCancel 1 hit produced by Bombardment rolls made against your ground forces for each of your galvanized units present.\n\nAt the start of a round of ground combat, you may resolve Bombardment 8 (x3) against your opponent's ground forces; if you do, make an identical roll against your own ground forces."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Dame Briar – _Bastion Valiant_\n\nUnlock: Always Unlocked\n\nWhen a player's unit is destroyed:\n\nYou may exhaust this card to galvanize another of that player's units in the destroyed unit's system.\n\n---\n\n_Briar marveled at the sheer size of the Seraph.\nThe technology was incredible.\nThe Icon had truly given them something amazing.\nStill.\nSomething about it was...off.\nSometimes, as she walked the corridors of Revelation at night, she could not help but feel a familiar sense of dread._\n\n---\n\n### **Commander**: Nip and Tuck – _Children of Ordinian_\n\nUnlock: There are 3 galvanized units on the game board\n\nYour action cards cannot be canceled by \"Sabotage\" action cards.\n\nThe Nekro Virus cannot place assimilator tokens on your components.\n\n---\n\n_Ainip felt the surge of energy through the Eidolon as it interfaced with Helios.\nHe gasped.\nAbsolute synergy achieved.\nIncredible!_\n\n---\n\n### **Hero**: Lyra Keen – _Shield of the Reef_\n\nUnlock: Have 3 scored objectives.\n\n**Entity 4X41A \"Apollo\": Intelligence Unshackled**\n\nWhen one of your galvanized units is destroyed: you may purge this card to roll 1 die for each unit in its system that belongs to another player; if the result is equal to or greater than the galvanized unit's combat value, destroy that unit.\n\n---\n\n_Icon floated above Lyra's right shoulder, quiet, as if lost in thought.\nAfter a time, it responded.\n\"I can do it.\nBut you may die during the process.\"\nLyra nodded.\n\"It will be worth the risk.\"_"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **The Icon**\n\nWhen you produce ships, you may exhaust this card to place those ships in a system that contains 1 of your command tokens, at least 1 of your ground forces, and no other player's ships.\n\n🔴 ⇋ 🟡"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Last Bastion – Raise the Standard__\n\n---\nAt the end of a combat:\n\nGalvanize 1 of your units that participated.\n\nThen, return this card to the Last Bastion player."
+    }
+   ]
+  },
+  "ralnel": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/te/ralnel/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "### Commodities: 4\n\n---\n\n### Mez Lo Orz Fei Zsha\n\n2R 1I\n\n_The great cities of Mez Lo Orz Fei Zsha cover most of the surface in their concentric, well-organized rings.\nEach city is owned and operated by its own massive corporate-consortium._\n\n---\n\n### Rep Lo Orz Qet\n\n1R 3I\n\n_Arid and desloate except along its equatorial sea, the Ral Nel birth world has escaped the worst depredations of industrialization.\nThe cities along the coast balance modern amenities with natural beauty._"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* Destroyer\n* 2× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock\n* 2× PDS"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "Choose 1 🔴 **red** or 1 🟢 **green** technology with no prerequisites"
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Survival Instinct**\n\nAfter another player activates a system that contains your ships, you may move up to 2 of your ships into the active system from adjacent systems that do not contain your command tokens.\n\n### **Miniaturization**\n\nYour structures can be transported by any ship; this does not require or count against capacity.\nWhile your structures are in the space area, they cannot use their unit abilities.\nAt the end of your tactical actions, you may place your structures that are in space areas onto planets you control in their respective systems."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Last Dispatch**\n\nUnit Type: Flagship\n\n---\n\nWhen this unit retreats, you may destroy 1 ship in the active system that does not have Sustain Damage.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 8 (×2)** | **Move 2** | **Capacity 4** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Alarum**\n\nUnit Type: Mech\n\n---\n\nAt the end of a round of combat on this planet, you may move up to 2 of your ground forces to this planet from planets in adjacent systems.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Linkship I**\n\nUnit Type: Destroyer\n\n---\n\nThis unit can use the Space Cannon ability of one of your structures in its space area; each structure can only be triggered once.\n\n* Anti-Fighter Barrage 9 (x2)\n\n---\n\n| **Cost 1** | **Combat 9↑** | **Move 3↑** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Linkship II**\n\nRequirements: 🔴 🔴\n\nUnit Type: Destroyer\n\n---\n\nThis unit can use the Space Cannon ability of one of your structures in its space area; each linkship can trigger the same structure.\n\n* Anti-Fighter Barrage 6 (x3)\n\n---\n\n| **Cost 1** | **Combat 8** | **Move 4** |\n\n---\n\n### 🔴 **Nanomachines**\n\nRequirements: 🔴\n\nAction: Exhaust this card to place 1 PDS on a planet you control.\n\nAction: Exhaust this card to repair all of your damaged units.\n\nAction: Exhaust this card and discard 1 action card to draw 1 action card."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Kan Kip Rel – _Courier Prime_\n\nUnlock: Always Unlocked\n\nAction: Exhaust this card to draw 2 action cards; give 1 of those cards to another player.\n\n---\n\n_\"Yes sir, yes sir! From Jord to Elysium in the shortest time and insured to boot.\nYour parcels are par-ticularly safe with us!\nNo hassle, no worry!\nJust a one-time very reasonable shipment fee, convenience fee, regional tax, insurance premium...oh and a pittance just in case we have to pay of the Coalition...\"_\n\n---\n\n### **Commander**: Watchful Ojz – _Actuary General_\n\nUnlock: Be the last player to pass during the action phase.\n\nWhen you delcare a retreat:\n\nImmediately retreat up to 2 of your ships from the active system to an adjacent system that does not contain another player's ships.\nPlace a command token from your reinforcements into that system.\n\n---\n\n_Ojz opened one eye.\nHad he fallen asleep? Perhaps. Perhaps..._\n\n---\n\n### **Hero**: Director Nel – _Acquisitive Mind_\n\nUnlock: Have 3 scored objectives.\n\n**Signal Intrusion: Limit Break**\n\nAfter the last player passes:\n\nYou may choose to no longer be passed; if you do, gain 2 command tokens, draw 1 action card, and purge this card.\n\n---\n\n_He was the master, the king.\nThere were no limits to Nel's ambition.\nNo rules to be broken, no obstacles to be avoided.\nOnly choice.\nA matrix of pure, unfettered futures._"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Data Skimmer**\n\nDuring the action phase, while you are not passed, other players' action cards are discarded on top of this card.\n\nWhen you pass, choose 1 action card on this card, add it to your hand, and discard the rest.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Ral Nel Consortium – Nano-link Permit__\n\n---\nAfter you activate a system:\n\nYou may move your structures from adjacent systems that do not contain your command tokens onto planets you control in the active system.\n\nThen, return this card to the Ral Nel player."
+    }
+   ]
+  },
+  "deepwrought": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/te/deepwrought/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "### Commodities: 3\n\n---\n\n### Ikatena\n\n4R 4I\n\n_With over a million small islands and shallow, warm seas, Ikatena is considered a paradise by many species.\nIts recent Mahact occupation has left the once-peaceful planet scarred, but resolute._"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Dreadnought\n* Carrier\n* 4× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "During setup, research technology twice"
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Research Team**\n\nWhen ground forces are committed, if your units on that planet are not already coexisting, you may choose for your units to coexist.\n\n### **Oceanbound**\n\nWhen your units begin coexisting on a planet, gain an ocean card and ready it.\nAny time you have more oceans cards than there are planets that contain your coexisting units, discard ocean cards until you do not.\n\n??? example \"**Ocean Cards**\"\n\n ##### Brine Pool\n 1R 1I\n\n _Sites with unique oceanic chemistry are of obvious interest to Deepwrought Researchers._\n\n ##### Coral Reef\n 1R 1I\n\n _Coral-analogues have evolved on many worlds, and their \"reefs\" are always areas of intense biodiversity._\n\n ##### Deep Abyss\n 1R 1I\n\n _The Abyssal zone features such dramatic pressure that even most Hylar need assistance to survive in the lightless depths._\n\n ##### Ice Shelf\n 1R 1I\n\n _Drylanders frequently discount the scientific opportunities to be found beneath their own polar ice sheets._\n\n ##### Lost Fleet\n 1R 1I\n\n _Although usually badly degraded by water and time, shipwrecks remain fascinating areas of exploration and study, whether those ships sailed sea or stars._"
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **D.W.S. Luminous**\n\nUnit Type: Flagship\n\n---\n\nThis ship can move through systems that contain your units, even if other players' units are present; if it would, apply +1 to its move value for each of those systems.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 7 (×2)** | **Move 1** | **Capacity 6** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Eanautic**\n\nUnit Type: Mech\n\n---\n\nWhen another player activates this system, if this unit is coexisting, you may move it and any of your infantry on its planet to a planet you control in your home system.\n\n* Sustain Damage\n* Production 1\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### 🟢 **Hydrothermal Mining**\n\nRequirements: 🟢\n\nAt the start of the status phase, gain 1 trade good for each ocean card in play.\n\n---\n\n### 🟢 **Radical Advancement**\n\nRequirements: 🟢\n\nAt the start of the status phase, you may replace one of your non-unit upgrade technologies with a technology of the same color that has exactly 1 more prerequisite."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Doctor Carrina – _Oceanographer_\n\nUnlock: Always Unlocked\n\nWhen another player researches a technology:\n\nYou may exhaust this card to allow that player to ignore 1 prerequisite; if they do, you may place 1 infantry from your reinforcements into coexistance on a non-home planet they control.\n\n---\n\n_\"So many charts...fascinating.\"\nRuthenia peered at Carrina's workspace through the tiny display.\nSeveral small aquariums lined each wall.\n\"There is one problem though,\" she stated, raising her metallic shoulders in a sheepish shrug.\n\"I'm rather heavy, you see. I can't swim...\"_\n\n---\n\n### **Commander**: Aello – _Ikaten Kieros_\n\nUnlock: Have an ocean card in play.\n\nWhen another player spends resources to research a technology:\n\nThat player may reduce the cost by 1; if they do, gain 1 commodity or convert 1 of your commodities to a trade good.\n\n---\n\n*The Kieros were joyful and peace-loving—the Hylar reserved and calculating.\nAello sought to bridge the gap between them, one verse, one lyric at a time.*\n\n---\n\n### **Hero**: Ta Zern – _Scholarate Founder_\n\nUnlock: Have 3 scored objectives.\n\n**Wave Function Collapse: The Laws Unwritten**\n\nAction: Purge this card and a non-unit upgrade technology you own or from your deck; then, purge all cards with the same name owned by other players and in other players' decks.\n\nThen, each player that purged a technology they owned researches another technology.\n\n---\n\n*Ikatena was not Ta Zern's home.\nIt was not the home of any Hylar, for that matter.\nBut it represented a shift.\nA change for his people.\nA necessary one, if they were to survive this new age.*"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Visionaria Select**\n\nAction: Exhaust this card to allow each other player to spend 3 trade goods and give you 1 promissory note.\nEach player that does may research a non-faction, non-unit upgrade technology.\nYou also gain each technology researched in this way.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Deepwrought Scholarate – Share Knowledge__\n\n---\n\nAction:\nPlace this card faceup in your play area and gain 1 non-faction, non-unit upgrade technology that the Deepwrought player owns; place that technology on this card.\n\nReturn that technology to the deck and this card to the Deepwrought player at the end of the status phase."
+    }
+   ]
+  },
+  "firmament": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/te/firmament/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "### Commodities: 3\n\n#### ▸ Firmament\n\n### Cronos\n\n2R 1I\n\n_Although they spend most of their time working in the deep mines, the people of Cronos revere their beautiful sky.\nIts dense clouds cannot quite hide the luminous rings that shine every night._\n\n---\n\n### Tallin\n\n1R 2I\n\n_Tallin's two oceans never intermix, completely separated by its main continent.\nThey have unique chemical compositions and distinct biospheres._\n\n#### ▸ Obsidian\n\n### Cronos Hollow\n\n3R 0I\n\n_The night sky is a deep black, unbroken by any star.\nDuring the day, the clouds are an unvarying gunmetal grey._\n\n---\n\n### Tallin Hollow\n\n3R 0I\n\n_The oceans lie as dead as the hearts of the populace._"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* Cruiser\n* Destroyer\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 3× Infantry\n* Space Dock"
+    },
+    {
+     "title": "Tecnologias iniciais",
+     "body": "Choose 1 🟢 **green** or 1 🟡 **yellow** technology with no prerequisites"
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "#### ▸ Firmament\n\n### **Plots Within Plots**\n\nYou can score secret objectives already scored by other players if you fulfill their requirements; this does not count against your secret objective limit or the number you can score in a round.\nWhen you score another player's secret objective, do not gain a victory point; instead, place a facedown plot card into your play area with that player's control token on it.\n\n### **Puppets of the Blade**\n\nIf you have at least 1 plot card in your play area, gain the following ability:\n\nAction: Purge The Firmament's faction sheet, leaders, planet cards, and promissory note.\nThen, gain all the faction components for The Obsidian.\n\n#### ▸ Obsidian\n\n### **Nocturne**\n\nThis faction cannot be chosen during setup.\n\n### **The Blade's Orchestra**\n\nWhen this faction comes into play, flip your home system, double-sided faction components, and all of your in-play plot cards.\nThen, ready Cronos Hollow and Tallin Hollow.\n\n### **Marionettes**\n\nThe player or players whose control tokens are on each plot card are the puppeted players for that plot."
+    },
+    {
+     "title": "Plots",
+     "body": "#### Assail\n\nApply +1 to the results of each of your combat and unit ability rolls against the puppeted player.\n\n#### Enervate\n\nYou can perform the secondary ability of the puppeted player's strategy cards without spending command tokens; for \"Leadership,\" you can perform the primary ability instead.\n\n#### Extract\n\nWhen this card is revealed, gain 1 non-faction technology owned by the puppeted player.\n\nWhen the puppeted player gains a non-faction technology, you may spend 4 resources to gain that technology.\n\n#### Seethe\n\nWhen this card is revealed, destroy all units on a non-home planet controlled by a puppeted player.\n\nAt the start of the status phase, destroy 1 of the puppeted player's infantry in any system.\n\n#### Siphon\n\nWhen the puppeted player gains commodities, you gain an equal number of trade goods."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "#### ▸ Firmament\n\n### **Heaven's Eye**\n\nUnit Type: Flagship\n\n---\n\nIf the active system contains units that belong to a player who has a control token on 1 of your plots, apply +1 to this ship's move value and repair it at the end of every combat round.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |\n\n#### ▸ Obsidian\n\n### **Heaven's Hollow**\n\nUnit Type: Decayed Flagship\n\n---\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×3)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "#### ▸ Firmament\n\n### **Viper EX-23**\n\nUnit Type: Mech\n\n---\n\nWhen ground forces are committed to this planet, you may choose for your units to coexist, if they were not already.\nFlip this card if your faction becomes the Obsidian.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |\n\n#### ▸ Obsidian\n\n### **Viper Hollow**\n\nUnit Type: Decayed Mech\n\n---\n\nIf this unit was coexisting when this card flipped to this side, gain control of its planet; the other player's units are now coexisting.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "#### ▸ Firmament\n\n### 🟡 **Planesplitter**\n\nRequirements: 🟡🟡\n\nWhen you gain this card, put The Fracture into play.\n\nFlip this card if the Obsidian faction is in play.\n\n---\n\n### 🟢 **Neural Parasite**\n\nRequirements: 🟢🟢\n\nAt the start of the status phase, you may place 1 infantry from your reinforcements on a planet you control in your home system.\n\nFlip this card if the Obsidian faction is in play.\n\n#### ▸ Obsidian\n\n### 🟡 **Planesplitter**\n\nAt the start of your strategic actions, you may move an ingress token into a system that contains or is adjacent to your units.\n\nThis technology cannot be researched.\n\n---\n\n### 🟢 **Neural Parasite**\n\nAt the start of your turn, destroy 1 of another player's infantry in or adjacent to a system that contains your infantry.\n\nThis technology cannot be researched."
+    },
+    {
+     "title": "Líderes",
+     "body": "#### ▸ Firmament\n\n### **Agent**: Myru Vos – _The Hungry Shadow_\n\nUnlock: Always Unlocked\n\nWhen a player moves ships:\n\nYou may exhaust this card; if you do Space Cannon cannot be used against those ships.\nIf they are not transporting units, they can also move through other players' ships.\n\n---\n\n*Vos's ship passed undetected through the Collective's fleet.\nThe fools.\nSo reliant on their \"visions\" and their \"Nefishh\" that they failed to see what was directly under their noses.*\n\n---\n\n### **Commander**: Captain Aroz – _The Black Flag_\n\nUnlock: Have a plot card in play.\n\nYou may treat planets in systems that contain your ships as if you controlled them for the purpose of scoring secret objectives.\n\n---\n\n*Resolute in the Firmament, the Black Flag flies.*\n\n---\n\n### **Hero**: Sharsiss – _The Coiling Void_\n\nUnlock: Have 3 scored objectives.\n\n**The Blade Beckons: Knife in the Back**\n\nAction: Place one of your plot cards in play with any other player's control token on it.\nThen, you may place any player's control token on 1 of your in-play plot cards; one plot cannot have two of the same player's tokens.\n\nThen, purge this card.\n\n---\n\n*Sharsiss turned the point toward himself and plunged the splintered Obsidian into his own chest.\nIt glittered.\nSharsiss smiled.*\n\n#### ▸ Obsidian\n\n### **Agent**: Vos Hollow – _Hunger Burning_\n\nUnlock: Always Unlocked\n\nWhen a player's ship is destroyed during any combat:\n\nYou may exhaust this card; if you do that player's opponent must destroy 1 of their ships of the same type in the active system.\n\n---\n\n*Vos was gone.\nNothing remained.\nHe was not trapped; he was not changed; he was not made lesser.\nHe was simply gone.\nOnly a singular, primal hunger remained.\nThe Dragon's hunger, seeking, seeping into every vein and every scar.\nAnd it burned.*\n\n---\n\n### **Commander**: Aroz Hollow – _Standard Broken_\n\nUnlock: Have units in The Fracture.\n\nApply +1 to the result of each of your units' combat rolls in The Fracture.\n\n---\n\n*Shattered, tattered, the broken dreams of empire fallen.*\n\n---\n\n### **Hero**: Sharsiss Hollow – _Sanity Snapped_\n\nUnlock: Have 3 scored objectives.\n\n**The Blade Revealed: Eternity's End**\n\nAction: Ready all of your planets\n\nThen, purge this card.\n\n---\n\n*The Dragons strikes, and the stricken seethe.\nHollow minds, hollow means.\nThe splinter seeks to free the whole.\nHollow lies, hollow freed.*"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "#### ▸ Firmament\n\n### **The Sowing**\n\nWhen you gain this card and at the start of the status phase, you may place up to 3 of your trade goods on this card.\n\nFlip this card if you become the Obsidian faction.\n\n🟡 ⇋ 🟢\n\n#### ▸ Obsidian\n\n### **The Reaping**\n\nPlace 1 trade good from the supply onto this card each time you win a combat against a puppeted player.\n\nAt the start of the status phase, gain all trade goods on this card, then gain an equal number of trade goods from the supply.\n\n🟡 ⇋ 🟢"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "#### ▸ Firmament\n\n### __The Firmament – Black Ops__\n\n---\n\nWhen you receive this card, if you are not the Firmament:\n\nThe Firmament player may place 1 facedown plot card in their play area with your control token on it.\nThen, gain 2 command tokens, gain 2 trade goods, and purge this card.\n\n#### ▸ Obsidian\n\n### __The Obsidian – Malevolency__\n\n---\n\nAt the end of one of your tactical actions:\n\nSpend 1 influence to give this card to one of your neighbors; you can use this ability even if you are the Obsidian player.\n\nAt the end of the status phase, if you are not the Obsidian player, remove 1 command token from your fleet pool and return it to your reinforcements."
+    }
+   ]
+  },
+  "crimson": {
+   "url": "https://scottmk.github.io/ti4-reference/factions/te/rebellion/",
+   "sections": [
+    {
+     "title": "Sistema natal",
+     "body": "### Commodities: 2\n\n---\n\n### Ahk Creuxx\n\n4R 2I\n\n_The mysterious world discovered by the Crimson Rebellion is just as impossible in physical space as its sister planet, Creuss.\nInitially uninhabited, the world has begun to foster life—of a sort._"
+    },
+    {
+     "title": "Unidades espaciais iniciais",
+     "body": "* Carrier\n* 2× Destroyer\n* 3× Fighter"
+    },
+    {
+     "title": "Unidades terrestres iniciais",
+     "body": "* 4× Infantry\n* Space Dock\n* PDS"
+    },
+    {
+     "title": "Tecnologias/componentes iniciais",
+     "body": "Choose 1 🔵 **blue** or 1 🔴 **red** technology with no prerequisites\n\nYou also start with your breakthrough, [Resonance Generator](rebellion.md#breakthrough)"
+    },
+    {
+     "title": "Habilidades da facção",
+     "body": "### **Sundered**\n\nYou cannot use wormholes other than epsilon wormholes.\nOther players' units that move or are placed into your home system are destroyed.\n\n### **Incursion**\n\nWhen you activate a system that contains a breach, you may flip that breach; systems that contain active breaches are adjacent.\nAt the end of the status phase, any player with ships in a system that contains an active breach may remove that breach.\n\n### **The Sorrow**\n\nWhen you create the game board, place The Sorrow (tile 94) where your home system would be placed, and place an inactive breach in it.\nThe Sorrow is not a home system.\nThen, place your home system (tile 118) in your play area."
+    },
+    {
+     "title": "Nau capitânia",
+     "body": "### **Quietus**\n\nUnit Type: Flagship\n\n---\n\nWhile this unit is in a system that contains an active breach, other players' units in systems with active breaches lose all of their unit abilities.\n\n* Sustain Damage\n\n---\n\n| **Cost 8** | **Combat 5 (×2)** | **Move 1** | **Capacity 3** |"
+    },
+    {
+     "title": "Mech",
+     "body": "### **Revenant**\n\nUnit Type: Mech\n\n---\n\nDeploy: During the \"Commit Ground Forces\" step of your tactical action in a system that contains an active breach, you may commit 1 mech, even if you have no units in the system.\n\n* Sustain Damage\n\n---\n\n| **Cost 2** | **Combat 6** |"
+    },
+    {
+     "title": "Unidades especiais",
+     "body": "### **Exile I**\n\nUnit Type: Destroyer\n\n---\n\nAt the end of any player's combat in this unit's system or an adjacent system, you may place 1 inactive breach in that system.\n\n* Anti-Fighter Barrage 9 (x2)\n\n---\n\n| **Cost 1** | **Combat 8↑** | **Move 2** |"
+    },
+    {
+     "title": "Tecnologias da facção",
+     "body": "### ⬆ **Exile II**\n\nRequirements: 🔴 🔴\n\nUnit Type: Destroyer\n\n---\n\nAt the end of any player's combat in this unit's system or up to 2 systems away, you may place 1 active or inactive breach in that system.\n\n* Anti-Fighter Barrage 6 (x3)\n\n---\n\n| **Cost 1** | **Combat 7** | **Move 2** |\n\n---\n\n### 🟡 **Subatomic Splicer**\n\nRequirements: 🟡\n\nWhen one of your ships is destroyed, you may produce a ship of the same type at a space dock in your home system."
+    },
+    {
+     "title": "Líderes",
+     "body": "### **Agent**: Ahk Ravin – _Forlorn Shadow_\n\nUnlock: Always Unlocked\n\nAction: Exhaust this card to choose 1 player.\nThat player may swap the position of 2 of their ships in any systems; they may transport units when they swap.\n\n---\n\n*They could remember who they had been before the thieving.\nThey could recall the duration as well, mostly.\nBut it was all so far away.\nDisconnected, almost unreal.\nLike a copied copy whose authenticity had degraded with each successive replica.\nFreedom had not come paired with hope.*\n\n---\n\n### **Commander**: Ahk Siever – _Wistful Soul_\n\nUnlock: Place a breach token in a system that contains another player's unit.\n\nAt the end of a combat between any players:\n\nGain 1 commodity or convert 1 of your commodities to a trade good.\n\n---\n\n*After the battle had concluded, reports of a lone crimson figure, floating in the void, observing, were sent to command from not one, but nine Xxcha ships.*\n\n---\n\n### **Hero**: Homesick Phantom – _Wayward Riftwalker_\n\nUnlock: Have 3 scored objectives.\n\n**Fragment Reality: Dimensional Reflection**\n\nWhen you produce ships:\n\nYou may place any of those ships onto this card.\n\nAt the start of a space combat, you may purge this card to place all ships from this card into the active system.\n\n---\n\n*\"We're picking up heat signatures from over thirty C- and B-class vessels! I think they are Creuss. We—\" The transmission ended abruptly, cut off at the source.*"
+    },
+    {
+     "title": "Breakthrough",
+     "body": "### **Resonance Generator**\n\nDuring your tactical actions, apply +1 to the move value of each of your ships that starts its movement in your home system or in a system that contains an active breach.\n\nAction: Exhaust this card to flip any breach or place an active breach in a non-home system that contains your units.\n\n🔵 ⇋ 🔴"
+    },
+    {
+     "title": "Nota promissória",
+     "body": "### __Crimson Rebellion – Sever__\n\n---\n\nAction:\nPlace this card faceup in your play area and place the sever token in a system that contains your units; wormholes in that system have no effect during movement.\n\nRemove the sever token and return this card to the Rebellion player at the end of the status phase."
+    }
+   ]
+  }
+ }
+}

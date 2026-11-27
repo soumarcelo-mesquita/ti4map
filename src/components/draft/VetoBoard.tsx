@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import type { DraftPlayer, DraftState, VetoSubmission } from '@/types/draft';
 import { factionImage, factionPool } from '@/data/factions';
+import { FactionInfoButton } from './FactionReference';
 
 interface VetoBoardProps {
   state: DraftState;
@@ -93,11 +94,11 @@ export function VetoBoard({ state, me, vetoes, onConfirm }: VetoBoardProps) {
           const isSelected = selected.has(f.id);
           const disabled = !isSelected && selected.size >= vetoCount;
           return (
+            <div key={f.id} className="relative">
             <button
-              key={f.id}
               disabled={disabled}
               onClick={() => toggle(f.id)}
-              className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
+              className={`w-full h-full flex flex-col items-center gap-1 rounded-xl border px-3 py-2.5 text-xs font-black transition-all ${
                 isSelected
                   ? 'border-red-500/60 bg-red-500/20 text-red-300'
                   : disabled
@@ -108,6 +109,8 @@ export function VetoBoard({ state, me, vetoes, onConfirm }: VetoBoardProps) {
               <Image src={factionImage(f.id)} alt={f.name} width={28} height={28} />
               <span className="text-[9px] opacity-80 text-center leading-tight">{f.name}</span>
             </button>
+            <FactionInfoButton factionId={f.id} className="absolute top-1 right-1" />
+            </div>
           );
         })}
       </div>
